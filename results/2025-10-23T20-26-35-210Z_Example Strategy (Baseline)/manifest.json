@@ -1,0 +1,15 @@
+{
+  "strategy": "Example Strategy (Baseline)",
+  "timestamp": "2025-10-23T20-26-35-210Z",
+  "runId": "omega-1761251195205",
+  "params": {},
+  "metrics": {
+    "equityFinal": 5152.61899,
+    "returnTotal": -0.48473810100000003,
+    "cagr": -0.502990966476311,
+    "sharpe": -4.676592756634262,
+    "mdd": 0.5201593762035286,
+    "tradesCount": 120
+  },
+  "notes": "Archivo generado automáticamente por OMEGA Quantum Engine"
+}

@@ -1,0 +1,25 @@
+{
+  "version": "v10",
+  "base": [
+    "v9",
+    "v8.1"
+  ],
+  "generated": "2025-10-25T23:34:04.494Z",
+  "summary": {
+    "sharpe": -1.1031,
+    "mdd": -0.2033,
+    "robustness": 83.2,
+    "balance": "NEGATIVO"
+  },
+  "insight": {
+    "insight": "Desviación cognitiva leve detectada.",
+    "explanation": "La memoria simbiótica detecta un rendimiento negativo sostenido con una robustez estable. Indica posible sobreajuste en estrategias recientes.",
+    "advice": "Ejecuta un nuevo ciclo de optimización Monte Carlo y reduce la sensibilidad de los hiperparámetros.",
+    "tone": "NEGATIVO"
+  },
+  "meta": {
+    "source": "OMEGA Cognitive Core",
+    "compatibleWithTutor": true
+  },
+  "tutor": "🧠 Versión del Tutor: v10.1 (Symbiont Advisor)\n--------------------------------------------\n🔹 Sharpe: -1.1031\n🔹 MDD: -0.2033\n🔹 Robustez: 83.20%\n🔹 Balance general: NEGATIVO\n🔹 Insight: Desviación cognitiva leve detectada.\n\n🧩 Explicación:\nLa memoria simbiótica detecta un rendimiento negativo sostenido con una robustez estable. Indica posible sobreajuste en estrategias recientes.\n\n💡 Sugerencia:\nEjecuta un nuevo ciclo de optimización Monte Carlo y reduce la sensibilidad de los hiperparámetros.\n\n--------------------------------------------\n📘 Generado por OMEGA Learn v10.1 (Capa de Tutoría Cognitiva Adaptativa)"
+}

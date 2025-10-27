@@ -1,0 +1,23 @@
+{
+  "version": "1.0",
+  "generatedAt": "2025-10-22T07:33:17.995Z",
+  "resultsDir": "C:\\Users\\RYZEN\\Desktop\\backtester-pro\\results",
+  "dataset": {
+    "rows": 1,
+    "features": [
+      "Sharpe",
+      "CAGR",
+      "MaxDD",
+      "Trades",
+      "WinRate",
+      "AvgTrade",
+      "FeeBps",
+      "EquityFinal"
+    ],
+    "targetCandidates": [
+      "RobustScore",
+      "Pass"
+    ]
+  },
+  "notes": "Archivo meta generado automáticamente por OMEGA AI Learner. Entrenamiento ONNX se hará en el Nivel 3."
+}

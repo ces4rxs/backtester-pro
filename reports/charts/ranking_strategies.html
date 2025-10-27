@@ -1,0 +1,16 @@
+
+  <html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Ranking Promedio de Equity por Estrategia</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  </head>
+  <body>
+    <div id="plot"></div>
+    <script>
+      var data = [{"x":["UnnamedStrategy","Example Strategy (Baseline)"],"y":[10329.53,5102.2501999999995],"type":"bar","marker":{"color":"#17becf"}}];
+      var layout = {"title":"Ranking Promedio de Equity por Estrategia","xaxis":{"title":"Estrategia"},"yaxis":{"title":"Equity Promedio (USD)"}};
+      Plotly.newPlot('plot', data, layout);
+    </script>
+  </body>
+  </html>

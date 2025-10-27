@@ -1,0 +1,16 @@
+{
+  "version": "v9",
+  "basedOn": [
+    "v6",
+    "v7",
+    "v8.1"
+  ],
+  "sharpeAdaptive": -1.1031,
+  "mddAdaptive": -0.2033,
+  "robustnessAdaptive": 83.2,
+  "cognitiveInference": "Desviación negativa detectada. Ajuste recomendado.",
+  "generated": "2025-10-25T23:09:53.258Z",
+  "notes": [
+    "Sharpe adaptativo < 0"
+  ]
+}

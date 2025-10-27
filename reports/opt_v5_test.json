@@ -1,0 +1,413 @@
+{
+  "goal": {
+    "metric": "sharpe",
+    "direction": "max"
+  },
+  "base": {
+    "id": "demo-unnamed",
+    "name": "SMA(5,30)",
+    "params": {
+      "fast": 5,
+      "slow": 30
+    },
+    "metrics": {
+      "sharpe": 1.2,
+      "mdd": -0.03,
+      "cagr": 0.08
+    }
+  },
+  "variants": 20,
+  "frontier": [
+    {
+      "id": "205c5522-fbb8-40f6-8c7a-fb4bcf8057fb",
+      "name": "SMA(5,30)-v5-0",
+      "params": {
+        "fast": 5.040728799697093,
+        "slow": 31.307912740559697
+      },
+      "judge": {
+        "predictedSharpe": 1.186,
+        "predictedMDD": -0.005,
+        "meta": {
+          "ok": true,
+          "predictedSharpe": 1.186,
+          "predictedMDD": -0.005,
+          "predictedCAGR": -0.0765,
+          "confidence": 0.763,
+          "features": [
+            1.2299026650737503,
+            0.021671636587271705,
+            0.05774243192786366,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "id": "3c9e9813-c97e-474d-b8f5-36675bf4d3a1",
+      "name": "SMA(5,30)-v5-1",
+      "params": {
+        "fast": 5.11379105271883,
+        "slow": 32.65223263503395
+      },
+      "judge": {
+        "predictedSharpe": 1.186,
+        "predictedMDD": -0.005,
+        "meta": {
+          "ok": true,
+          "predictedSharpe": 1.186,
+          "predictedMDD": -0.005,
+          "predictedCAGR": -0.0765,
+          "confidence": 0.763,
+          "features": [
+            1.2299026650737503,
+            0.021671636587271705,
+            0.05774243192786366,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "id": "6aeca63b-1dae-462f-88ef-d12ab6d07d4f",
+      "name": "SMA(5,30)-v5-2",
+      "params": {
+        "fast": 5.116100095999824,
+        "slow": 34.16773833313635
+      },
+      "judge": {
+        "predictedSharpe": 1.186,
+        "predictedMDD": -0.005,
+        "meta": {
+          "ok": true,
+          "predictedSharpe": 1.186,
+          "predictedMDD": -0.005,
+          "predictedCAGR": -0.0765,
+          "confidence": 0.763,
+          "features": [
+            1.2299026650737503,
+            0.021671636587271705,
+            0.05774243192786366,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "id": "09607eb6-6fd6-424d-b629-a1088367bd6e",
+      "name": "SMA(5,30)-v5-3",
+      "params": {
+        "fast": 5.410558516603505,
+        "slow": 31.233396194778575
+      },
+      "judge": {
+        "predictedSharpe": 1.186,
+        "predictedMDD": -0.005,
+        "meta": {
+          "ok": true,
+          "predictedSharpe": 1.186,
+          "predictedMDD": -0.005,
+          "predictedCAGR": -0.0765,
+          "confidence": 0.763,
+          "features": [
+            1.2299026650737503,
+            0.021671636587271705,
+            0.05774243192786366,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "id": "d3ef71fd-3885-4be2-9dd3-5768e0e546a8",
+      "name": "SMA(5,30)-v5-4",
+      "params": {
+        "fast": 4.778263434191658,
+        "slow": 26.835146637169956
+      },
+      "judge": {
+        "predictedSharpe": 1.186,
+        "predictedMDD": -0.005,
+        "meta": {
+          "ok": true,
+          "predictedSharpe": 1.186,
+          "predictedMDD": -0.005,
+          "predictedCAGR": -0.0765,
+          "confidence": 0.763,
+          "features": [
+            1.2299026650737503,
+            0.021671636587271705,
+            0.05774243192786366,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "id": "16ca3370-0cd1-4b12-b41b-be51fdcbc825",
+      "name": "SMA(5,30)-v5-5",
+      "params": {
+        "fast": 4.523554084001985,
+        "slow": 28.270544105427174
+      },
+      "judge": {
+        "predictedSharpe": 1.186,
+        "predictedMDD": -0.005,
+        "meta": {
+          "ok": true,
+          "predictedSharpe": 1.186,
+          "predictedMDD": -0.005,
+          "predictedCAGR": -0.0765,
+          "confidence": 0.763,
+          "features": [
+            1.2299026650737503,
+            0.021671636587271705,
+            0.05774243192786366,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "id": "7f716d15-e46b-4ae8-998b-2e1a1cd4fa76",
+      "name": "SMA(5,30)-v5-6",
+      "params": {
+        "fast": 5.191526488032823,
+        "slow": 32.684918189523025
+      },
+      "judge": {
+        "predictedSharpe": 1.186,
+        "predictedMDD": -0.005,
+        "meta": {
+          "ok": true,
+          "predictedSharpe": 1.186,
+          "predictedMDD": -0.005,
+          "predictedCAGR": -0.0765,
+          "confidence": 0.763,
+          "features": [
+            1.2299026650737503,
+            0.021671636587271705,
+            0.05774243192786366,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "id": "30b00f78-694e-4c3d-80d3-d4f41d72e1c1",
+      "name": "SMA(5,30)-v5-7",
+      "params": {
+        "fast": 4.518069670436521,
+        "slow": 27.847668497893263
+      },
+      "judge": {
+        "predictedSharpe": 1.186,
+        "predictedMDD": -0.005,
+        "meta": {
+          "ok": true,
+          "predictedSharpe": 1.186,
+          "predictedMDD": -0.005,
+          "predictedCAGR": -0.0765,
+          "confidence": 0.763,
+          "features": [
+            1.2299026650737503,
+            0.021671636587271705,
+            0.05774243192786366,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "id": "cb62eb93-ba26-4a76-8bbd-aee61bede22a",
+      "name": "SMA(5,30)-v5-8",
+      "params": {
+        "fast": 5.250701207997997,
+        "slow": 26.609883034890867
+      },
+      "judge": {
+        "predictedSharpe": 1.186,
+        "predictedMDD": -0.005,
+        "meta": {
+          "ok": true,
+          "predictedSharpe": 1.186,
+          "predictedMDD": -0.005,
+          "predictedCAGR": -0.0765,
+          "confidence": 0.763,
+          "features": [
+            1.2299026650737503,
+            0.021671636587271705,
+            0.05774243192786366,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "id": "00acc49f-6fcc-46e0-bd56-0218c382edc0",
+      "name": "SMA(5,30)-v5-9",
+      "params": {
+        "fast": 5.579774738986796,
+        "slow": 29.317155257545423
+      },
+      "judge": {
+        "predictedSharpe": 1.186,
+        "predictedMDD": -0.005,
+        "meta": {
+          "ok": true,
+          "predictedSharpe": 1.186,
+          "predictedMDD": -0.005,
+          "predictedCAGR": -0.0765,
+          "confidence": 0.763,
+          "features": [
+            1.2299026650737503,
+            0.021671636587271705,
+            0.05774243192786366,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "id": "c3e775a3-bc84-47ca-b8ec-15dbc0879abd",
+      "name": "SMA(5,30)-v5-10",
+      "params": {
+        "fast": 5.268147612667727,
+        "slow": 25.96212508535253
+      },
+      "judge": {
+        "predictedSharpe": 1.186,
+        "predictedMDD": -0.005,
+        "meta": {
+          "ok": true,
+          "predictedSharpe": 1.186,
+          "predictedMDD": -0.005,
+          "predictedCAGR": -0.0765,
+          "confidence": 0.763,
+          "features": [
+            1.2299026650737503,
+            0.021671636587271705,
+            0.05774243192786366,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "id": "a5bce5f1-eeeb-433a-bf6f-292eb745786d",
+      "name": "SMA(5,30)-v5-11",
+      "params": {
+        "fast": 5.28949083124129,
+        "slow": 29.956669192213877
+      },
+      "judge": {
+        "predictedSharpe": 1.186,
+        "predictedMDD": -0.005,
+        "meta": {
+          "ok": true,
+          "predictedSharpe": 1.186,
+          "predictedMDD": -0.005,
+          "predictedCAGR": -0.0765,
+          "confidence": 0.763,
+          "features": [
+            1.2299026650737503,
+            0.021671636587271705,
+            0.05774243192786366,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "id": "a0524bb6-35e3-4b45-b5e0-ce141fe02a38",
+      "name": "SMA(5,30)-v5-12",
+      "params": {
+        "fast": 4.687186930229296,
+        "slow": 26.895091021271845
+      },
+      "judge": {
+        "predictedSharpe": 1.186,
+        "predictedMDD": -0.005,
+        "meta": {
+          "ok": true,
+          "predictedSharpe": 1.186,
+          "predictedMDD": -0.005,
+          "predictedCAGR": -0.0765,
+          "confidence": 0.763,
+          "features": [
+            1.2299026650737503,
+            0.021671636587271705,
+            0.05774243192786366,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "id": "3553437d-4f06-4368-9cc8-d61d3df32c62",
+      "name": "SMA(5,30)-v5-13",
+      "params": {
+        "fast": 4.271600979344975,
+        "slow": 33.33702848210414
+      },
+      "judge": {
+        "predictedSharpe": 1.186,
+        "predictedMDD": -0.005,
+        "meta": {
+          "ok": true,
+          "predictedSharpe": 1.186,
+          "predictedMDD": -0.005,
+          "predictedCAGR": -0.0765,
+          "confidence": 0.763,
+          "features": [
+            1.2299026650737503,
+            0.021671636587271705,
+            0.05774243192786366,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "id": "a5ab7373-4306-4ec4-8b95-dfa1fd0a59ae",
+      "name": "SMA(5,30)-v5-14",
+      "params": {
+        "fast": 4.886158948186408,
+        "slow": 33.8970988102515
+      },
+      "judge": {
+        "predictedSharpe": 1.186,
+        "predictedMDD": -0.005,
+        "meta": {
+          "ok": true,
+          "predictedSharpe": 1.186,
+          "predictedMDD": -0.005,
+          "predictedCAGR": -0.0765,
+          "confidence": 0.763,
+          "features": [
+            1.2299026650737503,
+            0.021671636587271705,
+            0.05774243192786366,
+            1,
+            1
+          ]
+        }
+      }
+    }
+  ],
+  "generatedAt": "2025-10-26T04:32:23.266Z"
+}

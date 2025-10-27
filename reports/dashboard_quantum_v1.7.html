@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Quantum+ Backtesting Engine – Visual Report v1.4.1</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    body { font-family: "Segoe UI", sans-serif; background: #0b0c10; color: #eee; margin: 0; padding: 2rem; }
+    h1, h2 { color: #00bcd4; }
+    section { margin-bottom: 4rem; background: #141619; padding: 1rem; border-radius: 10px; box-shadow: 0 0 10px #0004; }
+    .metrics { display: flex; gap: 2rem; justify-content: space-around; background: #111; padding: 1rem; border-radius: 10px; }
+    .metric { text-align: center; }
+    .seal { text-align: center; margin-top: 3rem; color: #0f0; font-family: monospace; }
+    footer { text-align: center; margin-top: 5rem; color: #888; font-size: 0.9rem; }
+    hr { border: none; height: 2px; background: #00bcd4; opacity: 0.2; margin: 3rem 0; }
+  </style>
+</head>
+<body>
+  <h1>⚙️ Quantum+ Backtesting Engine</h1>
+  <h2>Auditoría Consolidada – Visual Dashboard v1.4.1</h2>
+
+  <div class="metrics">
+    <div class="metric"><h3>Promedio Equity</h3><p>5204.75</p></div>
+    <div class="metric"><h3>Promedio Sharpe</h3><p>-4.4810</p></div>
+    <div class="metric"><h3>Promedio CAGR (%)</h3><p>-49.746</p></div>
+    <div class="metric"><h3>Backtests</h3><p>102</p></div>
+  </div>
+
+  <hr/>
+  <section>
+    <div id="plot"></div>
+    <script>
+      var data = [{"x":[10329.53,10329.53,5449.35,5042.42,5060.86,5193.16,4785.54,5347.09,5174.74,5009.17,5143.68,4830.53,4943.57,4968.45,5149.69,4953.08,5159.27,5145.2,5021.25,5097.49,5150.52,5629.07,5294.96,5267.03,5211.32,4785.71,5109.53,5209.35,4959.92,5030.66,4919.5,5267.94,5113.45,5216.16,4812.58,5111.75,5147.91,4894.06,5206.16,5073.83,5156.38,5143.5,5084.89,4910.51,4955.91,4702.89,5125.44,5007.28,5124.25,5227.17,5200.09,5152.62,5445.45,5053.09,5113.38,4889,5204.36,5269.91,5110.41,5102.82,4871.79,5356.53,5543.11,5297.42,4994.75,4995.56,5222.35,5097.91,4771.4,5004.82,4896.45,5220.96,5138.72,5107.69,5287,5262,5283.02,5122.89,4983.8,5167.93,5262.78,5108.34,4917.52,5208.12,5008.89,5024.73,5017.24,4898.8,5382.62,5011.87,5030.99,4733.74,5015.99,5085.05,5424.72,5234.44,5148.17,5004.09,5274.74,4926.5,4956.1,5058.18],"type":"histogram","marker":{"color":"#1f77b4"}}];
+      var layout = {"title":"Distribución de Equity Final","xaxis":{"title":"Equity Final (USD)"},"yaxis":{"title":"Frecuencia"},"bargap":0.1};
+      Plotly.newPlot('plot', data, layout);
+    </script>
+  </section>
+<hr/>
+<section>
+    <div id="plot"></div>
+    <script>
+      var data = [{"x":[0.4985,0.4985,-4.2981,-4.3988,-4.6406,-4.3959,-4.9429,-4.4094,-4.5643,-4.7593,-4.7513,-4.9077,-4.7462,-4.6178,-4.5196,-4.6287,-4.4971,-4.6606,-4.7795,-4.5878,-4.6185,-3.8803,-4.3138,-4.3716,-4.3302,-4.9006,-4.9091,-4.3092,-4.5857,-4.6977,-4.874,-4.2233,-4.637,-4.5671,-4.6815,-4.7832,-4.4404,-4.9516,-4.3351,-4.8335,-4.3727,-4.3636,-4.5965,-4.8292,-4.7855,-5.1682,-4.5759,-4.5992,-4.3668,-4.2927,-4.6621,-4.6766,-4.0752,-4.7998,-4.493,-4.6938,-4.6626,-4.478,-4.6348,-4.5051,-4.8012,-4.4558,-3.9944,-4.1954,-4.7114,-4.8027,-4.4727,-4.355,-4.9602,-4.6099,-4.9854,-4.4141,-4.5057,-4.6351,-4.3476,-4.4475,-4.323,-4.5904,-4.7935,-4.5239,-4.3033,-4.4307,-4.7705,-4.4963,-4.6743,-4.9639,-4.5134,-4.7395,-4.1382,-4.606,-4.6271,-5.0457,-4.6584,-4.6223,-3.9072,-4.4376,-4.6105,-4.7764,-4.457,-4.788,-4.861,-4.7245],"type":"histogram","marker":{"color":"#2ca02c"}}];
+      var layout = {"title":"Distribución del Ratio Sharpe","xaxis":{"title":"Sharpe Ratio"},"yaxis":{"title":"Frecuencia"},"bargap":0.1};
+      Plotly.newPlot('plot', data, layout);
+    </script>
+  </section>
+<hr/>
+<section>
+    <div id="plot"></div>
+    <script>
+      var data = [{"x":[0.4985,0.4985,-4.2981,-4.3988,-4.6406,-4.3959,-4.9429,-4.4094,-4.5643,-4.7593,-4.7513,-4.9077,-4.7462,-4.6178,-4.5196,-4.6287,-4.4971,-4.6606,-4.7795,-4.5878,-4.6185,-3.8803,-4.3138,-4.3716,-4.3302,-4.9006,-4.9091,-4.3092,-4.5857,-4.6977,-4.874,-4.2233,-4.637,-4.5671,-4.6815,-4.7832,-4.4404,-4.9516,-4.3351,-4.8335,-4.3727,-4.3636,-4.5965,-4.8292,-4.7855,-5.1682,-4.5759,-4.5992,-4.3668,-4.2927,-4.6621,-4.6766,-4.0752,-4.7998,-4.493,-4.6938,-4.6626,-4.478,-4.6348,-4.5051,-4.8012,-4.4558,-3.9944,-4.1954,-4.7114,-4.8027,-4.4727,-4.355,-4.9602,-4.6099,-4.9854,-4.4141,-4.5057,-4.6351,-4.3476,-4.4475,-4.323,-4.5904,-4.7935,-4.5239,-4.3033,-4.4307,-4.7705,-4.4963,-4.6743,-4.9639,-4.5134,-4.7395,-4.1382,-4.606,-4.6271,-5.0457,-4.6584,-4.6223,-3.9072,-4.4376,-4.6105,-4.7764,-4.457,-4.788,-4.861,-4.7245],"y":[10329.53,10329.53,5449.35,5042.42,5060.86,5193.16,4785.54,5347.09,5174.74,5009.17,5143.68,4830.53,4943.57,4968.45,5149.69,4953.08,5159.27,5145.2,5021.25,5097.49,5150.52,5629.07,5294.96,5267.03,5211.32,4785.71,5109.53,5209.35,4959.92,5030.66,4919.5,5267.94,5113.45,5216.16,4812.58,5111.75,5147.91,4894.06,5206.16,5073.83,5156.38,5143.5,5084.89,4910.51,4955.91,4702.89,5125.44,5007.28,5124.25,5227.17,5200.09,5152.62,5445.45,5053.09,5113.38,4889,5204.36,5269.91,5110.41,5102.82,4871.79,5356.53,5543.11,5297.42,4994.75,4995.56,5222.35,5097.91,4771.4,5004.82,4896.45,5220.96,5138.72,5107.69,5287,5262,5283.02,5122.89,4983.8,5167.93,5262.78,5108.34,4917.52,5208.12,5008.89,5024.73,5017.24,4898.8,5382.62,5011.87,5030.99,4733.74,5015.99,5085.05,5424.72,5234.44,5148.17,5004.09,5274.74,4926.5,4956.1,5058.18],"mode":"markers","type":"scatter","text":["UnnamedStrategy","UnnamedStrategy","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)","Example Strategy (Baseline)"],"marker":{"color":"#ff7f0e","size":6,"opacity":0.7}}];
+      var layout = {"title":"Equity Final vs. Sharpe Ratio","xaxis":{"title":"Sharpe Ratio"},"yaxis":{"title":"Equity Final (USD)"}};
+      Plotly.newPlot('plot', data, layout);
+    </script>
+  </section>
+<hr/>
+<section>
+    <div id="plot"></div>
+    <script>
+      var data = [{"x":[0.4985,0.4985,-4.2981,-4.3988,-4.6406,-4.3959,-4.9429,-4.4094,-4.5643,-4.7593,-4.7513,-4.9077,-4.7462,-4.6178,-4.5196,-4.6287,-4.4971,-4.6606,-4.7795,-4.5878,-4.6185,-3.8803,-4.3138,-4.3716,-4.3302,-4.9006,-4.9091,-4.3092,-4.5857,-4.6977,-4.874,-4.2233,-4.637,-4.5671,-4.6815,-4.7832,-4.4404,-4.9516,-4.3351,-4.8335,-4.3727,-4.3636,-4.5965,-4.8292,-4.7855,-5.1682,-4.5759,-4.5992,-4.3668,-4.2927,-4.6621,-4.6766,-4.0752,-4.7998,-4.493,-4.6938,-4.6626,-4.478,-4.6348,-4.5051,-4.8012,-4.4558,-3.9944,-4.1954,-4.7114,-4.8027,-4.4727,-4.355,-4.9602,-4.6099,-4.9854,-4.4141,-4.5057,-4.6351,-4.3476,-4.4475,-4.323,-4.5904,-4.7935,-4.5239,-4.3033,-4.4307,-4.7705,-4.4963,-4.6743,-4.9639,-4.5134,-4.7395,-4.1382,-4.606,-4.6271,-5.0457,-4.6584,-4.6223,-3.9072,-4.4376,-4.6105,-4.7764,-4.457,-4.788,-4.861,-4.7245],"y":[3.4799999999999995,3.4799999999999995,-47.28,-51.42,-51.23,-49.89,-54.03,-48.32,-50.07,-51.76,-50.39,-53.56999999999999,-52.42,-52.17,-50.33,-52.33,-50.23,-50.370000000000005,-51.629999999999995,-50.86000000000001,-50.32,-45.440000000000005,-48.85,-49.13,-49.7,-54.02,-50.739999999999995,-49.72,-52.26,-51.54,-52.669999999999995,-49.13,-50.7,-49.65,-53.75,-50.71,-50.349999999999994,-52.93,-49.75,-51.1,-50.260000000000005,-50.39,-50.99,-52.76,-52.300000000000004,-54.86,-50.580000000000005,-51.78,-50.59,-49.54,-49.82,-50.3,-47.32,-51.31,-50.7,-52.980000000000004,-49.769999999999996,-49.11,-50.73,-50.81,-53.15,-48.22,-46.32,-48.83,-51.9,-51.9,-49.59,-50.86000000000001,-54.169999999999995,-51.800000000000004,-52.900000000000006,-49.6,-50.44,-50.760000000000005,-48.93,-49.19,-48.97,-50.6,-52.01,-50.13999999999999,-49.18,-50.74999999999999,-52.690000000000005,-49.730000000000004,-51.76,-51.6,-51.67,-52.88,-47.96,-51.73,-51.54,-54.55,-51.690000000000005,-50.99,-47.53,-49.47,-50.339999999999996,-51.81,-49.059999999999995,-52.6,-52.300000000000004,-51.25999999999999],"mode":"markers","type":"scatter","marker":{"color":"#9467bd","size":6,"opacity":0.7}}];
+      var layout = {"title":"CAGR (%) vs. Sharpe Ratio","xaxis":{"title":"Sharpe Ratio"},"yaxis":{"title":"CAGR (%)"}};
+      Plotly.newPlot('plot', data, layout);
+    </script>
+  </section>
+<hr/>
+<section>
+    <div id="plot"></div>
+    <script>
+      var data = [{"x":["UnnamedStrategy","Example Strategy (Baseline)"],"y":[10329.53,5102.2501999999995],"type":"bar","marker":{"color":"#17becf"}}];
+      var layout = {"title":"Ranking Promedio de Equity por Estrategia","xaxis":{"title":"Estrategia"},"yaxis":{"title":"Equity Promedio (USD)"}};
+      Plotly.newPlot('plot', data, layout);
+    </script>
+  </section>
+
+  <div class="seal">
+    ───────────────────────────────────────────────<br/>
+    🧠 Q U A N T U M  +  R A T I N G:  A+<br/>
+    🔹 Integrity Hash: 6V7OB6FT9R<br/>
+    🔹 Generated: 2025-10-22T00:06:59.648Z<br/>
+    ───────────────────────────────────────────────
+  </div>
+
+  <footer>
+    © 2025 Julio Cesar — Todos los derechos reservados.<br/>
+    Quantum+ Backtesting Engine – Visual Audit Report
+  </footer>
+
+  <section id="risk-coherence" style="margin-top:40px;padding:20px;border-top:2px solid #444;">
+    <h2 style="font-family:Arial,Helvetica,sans-serif;color:#00ffaa;">
+      ⚖️ Análisis de Riesgo Coherente
+    </h2>
+    <p style="color:#ccc;font-size:14px;">
+      Este módulo evalúa el riesgo financiero bajo condiciones adversas mediante VaR (Value at Risk), CVaR (Conditional Value at Risk), y Max Drawdown.
+    </p>
+    <table style="width:60%;border-collapse:collapse;margin-top:10px;">
+      <tr><th style="border:1px solid #444;padding:8px;color:#00ffaa;">Métrica</th>
+          <th style="border:1px solid #444;padding:8px;color:#00ffaa;">Valor</th></tr>
+      <tr><td style="border:1px solid #444;padding:8px;">VaR (95%)</td>
+          <td style="border:1px solid #444;padding:8px;">4812,58</td></tr>
+      <tr><td style="border:1px solid #444;padding:8px;">CVaR (95%)</td>
+          <td style="border:1px solid #444;padding:8px;">4755,856</td></tr>
+      <tr><td style="border:1px solid #444;padding:8px;">Max Drawdown</td>
+          <td style="border:1px solid #444;padding:8px;">54.47%</td></tr>
+      <tr><td style="border:1px solid #444;padding:8px;">Tail Ratio</td>
+          <td style="border:1px solid #444;padding:8px;">1.4973</td></tr>
+    </table>
+    <p style="margin-top:15px;color:#ccc;">
+      📊 Ver gráfico interactivo de distribución: 
+      <a href="./risk/risk_distribution.html" style="color:#00ffaa;text-decoration:none;">Abrir gráfico</a>
+    </p>
+  </section>
+  
+
+  <section id="risk-embedded" style="margin-top:40px;padding:20px;border-top:2px solid #444;">
+    <h2 style="font-family:Arial,Helvetica,sans-serif;color:#00ffaa;">
+      🧮 Visualización de Riesgo Coherente (v1.6)
+    </h2>
+    <p style="color:#ccc;font-size:14px;">
+      Este módulo combina las métricas cuantitativas con una visualización embebida del histograma de distribución de riesgo.
+    </p>
+
+    <table style="width:60%;border-collapse:collapse;margin-top:10px;">
+      <tr><th style="border:1px solid #444;padding:8px;color:#00ffaa;">Métrica</th>
+          <th style="border:1px solid #444;padding:8px;color:#00ffaa;">Valor</th></tr>
+      <tr><td style="border:1px solid #444;padding:8px;">VaR (95%)</td>
+          <td style="border:1px solid #444;padding:8px;">4812,58</td></tr>
+      <tr><td style="border:1px solid #444;padding:8px;">CVaR (95%)</td>
+          <td style="border:1px solid #444;padding:8px;">4755,856</td></tr>
+      <tr><td style="border:1px solid #444;padding:8px;">Max Drawdown</td>
+          <td style="border:1px solid #444;padding:8px;">54.47%</td></tr>
+      <tr><td style="border:1px solid #444;padding:8px;">Tail Ratio</td>
+          <td style="border:1px solid #444;padding:8px;">1.4973</td></tr>
+    </table>
+
+    <div style="margin-top:25px;">
+      <iframe src="./risk/risk_distribution.html" 
+              width="90%" height="500" 
+              style="border:2px solid #333;border-radius:10px;background:#111;">
+      </iframe>
+    </div>
+  </section>
+  
+
+  <section id="risk-correlation" style="margin-top:40px;padding:20px;border-top:2px solid #444;">
+    <h2 style="font-family:Arial,Helvetica,sans-serif;color:#00ffaa;">
+      🔗 Matriz de Correlación Riesgo–Rendimiento
+    </h2>
+    <p style="color:#ccc;font-size:14px;">
+      Este módulo explora la relación entre rendimiento (Equity, Sharpe) y riesgo (VaR, CVaR, TailRatio).
+    </p>
+    <div style="margin-top:20px;">
+      <iframe src="./charts/equity_vs_var.html" width="90%" height="400" style="border:none;background:#111;"></iframe>
+      <iframe src="./charts/equity_vs_cvar.html" width="90%" height="400" style="border:none;background:#111;margin-top:15px;"></iframe>
+      <iframe src="./charts/sharpe_vs_tail.html" width="90%" height="400" style="border:none;background:#111;margin-top:15px;"></iframe>
+    </div>
+  </section>
+  
+</body>
+</html>

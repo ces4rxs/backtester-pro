@@ -1,0 +1,15 @@
+{
+  "strategy": "UnnamedStrategy",
+  "timestamp": "2025-10-22T08-01-28-001Z",
+  "runId": "omega-1761120087991",
+  "params": {},
+  "metrics": {
+    "equityFinal": 10449.0953,
+    "returnTotal": 0.044909530000000086,
+    "cagr": 0.047409342092728624,
+    "sharpe": 1.0393821449568479,
+    "mdd": 0.021671638760570416,
+    "tradesCount": 1
+  },
+  "notes": "Archivo generado automáticamente por OMEGA Quantum Engine"
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "short": 5,
+    "long": 100,
+    "equityFinal": 10546.83695,
+    "sharpe": 1.2299026650737503,
+    "mdd": 0.021671636587271705,
+    "robustScore": 12.299026650737503,
+    "passProb": 33.46,
+    "riskLabel": "Alto"
+  },
+  {
+    "short": 10,
+    "long": 30,
+    "equityFinal": 10944.67005,
+    "sharpe": 1.071480824548232,
+    "mdd": 0.09721247982040877,
+    "robustScore": 10.714808245482319,
+    "passProb": 33.46,
+    "riskLabel": "Alto"
+  },
+  {
+    "short": 10,
+    "long": 100,
+    "equityFinal": 10449.0953,
+    "sharpe": 1.0393821449568479,
+    "mdd": 0.021671638760570416,
+    "robustScore": 10.39382144956848,
+    "passProb": 33.46,
+    "riskLabel": "Alto"
+  },
+  {
+    "short": 5,
+    "long": 50,
+    "equityFinal": 10600.57994,
+    "sharpe": 0.8118437050799113,
+    "mdd": 0.055614238112194285,
+    "robustScore": 8.118437050799113,
+    "passProb": 33.46,
+    "riskLabel": "Alto"
+  },
+  {
+    "short": 10,
+    "long": 50,
+    "equityFinal": 10329.531,
+    "sharpe": 0.49847038725573267,
+    "mdd": 0.05984884168432108,
+    "robustScore": 4.9847038725573265,
+    "passProb": 33.46,
+    "riskLabel": "Alto"
+  },
+  {
+    "short": 5,
+    "long": 30,
+    "equityFinal": 10239.78162,
+    "sharpe": 0.3234546366753997,
+    "mdd": 0.10719190716962088,
+    "robustScore": 3.234546366753997,
+    "passProb": 33.46,
+    "riskLabel": "Alto"
+  }
+]

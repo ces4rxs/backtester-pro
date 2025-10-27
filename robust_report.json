@@ -1,0 +1,148 @@
+{
+  "meta": {
+    "asset": "BTC/USD",
+    "timeframe": "1D",
+    "bars": 5
+  },
+  "base": {
+    "equityFinal": 10000,
+    "returnTotal": 0,
+    "sharpe": 0,
+    "sortino": 0,
+    "mdd": 0,
+    "cagr": 0,
+    "trades": [],
+    "equityCurve": [
+      10000,
+      10000,
+      10000,
+      10000,
+      10000
+    ]
+  },
+  "walkForward": {
+    "folds": [
+      {
+        "fold": 1,
+        "trainRange": [
+          0,
+          1
+        ],
+        "testRange": [
+          0,
+          1
+        ],
+        "params": {
+          "shortWin": 27,
+          "longWin": 21
+        },
+        "metrics": {
+          "cagr": 0,
+          "sharpe": 0,
+          "sortino": 0,
+          "mdd": 0,
+          "returnTotal": 0
+        }
+      },
+      {
+        "fold": 2,
+        "trainRange": [
+          0,
+          1
+        ],
+        "testRange": [
+          1,
+          2
+        ],
+        "params": {
+          "shortWin": 30,
+          "longWin": 79
+        },
+        "metrics": {
+          "cagr": 0,
+          "sharpe": 0,
+          "sortino": 0,
+          "mdd": 0,
+          "returnTotal": 0
+        }
+      },
+      {
+        "fold": 3,
+        "trainRange": [
+          0,
+          2
+        ],
+        "testRange": [
+          2,
+          3
+        ],
+        "params": {
+          "shortWin": 30,
+          "longWin": 117
+        },
+        "metrics": {
+          "cagr": 0,
+          "sharpe": 0,
+          "sortino": 0,
+          "mdd": 0,
+          "returnTotal": 0
+        }
+      },
+      {
+        "fold": 4,
+        "trainRange": [
+          0,
+          3
+        ],
+        "testRange": [
+          3,
+          5
+        ],
+        "params": {
+          "shortWin": 6,
+          "longWin": 61
+        },
+        "metrics": {
+          "cagr": 0,
+          "sharpe": 0,
+          "sortino": 0,
+          "mdd": 0,
+          "returnTotal": 0
+        }
+      }
+    ],
+    "stability": {
+      "sharpeMean": 0,
+      "sharpeStd": 0,
+      "cagrMean": 0,
+      "cagrStd": 0,
+      "mddMean": 0,
+      "mddStd": 0
+    },
+    "avgScore": 0
+  },
+  "monteCarlo": {
+    "cagr": {
+      "mean": 0,
+      "sd": 0,
+      "p05": 0,
+      "p50": 0,
+      "p95": 0
+    },
+    "mdd": {
+      "mean": 0,
+      "sd": 0,
+      "p05": 0,
+      "p50": 0,
+      "p95": 0
+    },
+    "sharpe": {
+      "mean": 0,
+      "sd": 0,
+      "p05": 0,
+      "p50": 0,
+      "p95": 0
+    }
+  },
+  "explanation": "Backtest en BTC/USD (1D), 5 barras. Base: CAGR 0.00% | Sharpe 0.00 | MDD 0.0%. Estabilidad (WF): Sharpe μ=0.00 σ=0.00, CAGR μ=0.00% σ=0.00%, MDD μ=0.0% σ=0.0%. Monte Carlo: Sharpe ~ P05=0.00 | P50=0.00 | P95=0.00; CAGR ~ P05=0.0% | P50=0.0% | P95=0.0%; MDD ~ P05=0.0% | P50=0.0% | P95=0.0%. Sugerencia: si la inestabilidad (σ) es alta, usar filtro de tendencia, stop ATR y limitar riesgo por trade. Nota educativa: resultados pasados no garantizan rendimientos futuros."
+}

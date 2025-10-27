@@ -1,0 +1,14 @@
+{
+  "short": 5,
+  "long": 100,
+  "source": "optimizer",
+  "timestamp": "2025-10-22T08:01:28.054Z",
+  "metrics": {
+    "equityFinal": 10546.83695,
+    "sharpe": 1.2299026650737503,
+    "mdd": 0.021671636587271705,
+    "robustScore": 12.299026650737503,
+    "passProb": 33.46,
+    "riskLabel": "Alto"
+  }
+}

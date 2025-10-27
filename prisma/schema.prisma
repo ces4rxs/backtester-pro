@@ -1,0 +1,84 @@
+// prisma/schema.prisma
+
+datasource db {
+  provider = "postgresql"
+  url      = env("WAREHOUSE_DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/warehouse"
+}
+
+model MarketData {
+  id          BigInt   @id @default(autoincrement())
+  symbol      String
+  granularity String  // "1m" | "5m" | "1h" | "1d"
+  ts          DateTime
+  open        Decimal?
+  high        Decimal?
+  low         Decimal?
+  close       Decimal?
+  volume      Decimal?
+
+  @@index([symbol, granularity, ts])
+  @@unique([symbol, granularity, ts])
+  @@map("market_data")
+}
+
+model UserReport {
+  id         BigInt   @id @default(autoincrement())
+  userId     String?
+  reportId   String?
+  content    Json?
+  createdAt  DateTime @default(now())
+
+  @@index([userId, createdAt])
+  @@map("user_reports")
+}
+
+model Brainprint {
+  id           BigInt   @id @default(autoincrement())
+  userId       String?
+  modelVersion String?
+  data         Json?
+  createdAt    DateTime @default(now())
+
+  @@index([userId, createdAt])
+  @@map("brainprints")
+}
+
+model AuditLog {
+  id         BigInt   @id @default(autoincrement())
+  userId     String?
+  action     String
+  details    Json?
+  createdAt  DateTime @default(now())
+
+  @@index([userId, createdAt])
+  @@map("audit_logs")
+}
+// ======================================================
+// 🔒 Autenticación OMEGA (Usuarios + Tokens Rotativos)
+// ======================================================
+
+model User {
+  id          Int             @id @default(autoincrement())
+  email       String          @unique
+  password    String
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  tokens      RefreshToken[]
+}
+
+model RefreshToken {
+  id          Int        @id @default(autoincrement())
+  token       String     @unique
+  user        User       @relation(fields: [userId], references: [id])
+  userId      Int
+  expiresAt   DateTime
+  createdAt   DateTime   @default(now())
+  revoked     Boolean    @default(false)
+
+  @@index([userId, expiresAt])
+}

@@ -1,0 +1,43 @@
+{
+  "runId": "omega-1761033616387",
+  "trades": [
+    {
+      "runId": "omega-1761033616387",
+      "time": 1,
+      "side": "buy",
+      "price": 100.1,
+      "size": 99.9000999,
+      "notional": 10000,
+      "fee": 1,
+      "cashBefore": 10000,
+      "cashAfter": -1,
+      "posBefore": "0",
+      "posAfter": "99.9000999",
+      "avgPriceBefore": 0,
+      "avgPriceAfter": 100.1,
+      "equityBefore": 10000,
+      "equityAfter": 9999,
+      "seq": 1,
+      "tradeId": "8629ec84fe3d426f40cce7177be0fb2809435a8237e0d409b7b6621e65554594"
+    },
+    {
+      "runId": "omega-1761033616387",
+      "time": 2,
+      "side": "sell",
+      "price": 100.2,
+      "size": 99.9000999,
+      "notional": 10009.99001,
+      "fee": 1.001,
+      "cashBefore": -1,
+      "cashAfter": 10007.98901,
+      "posBefore": "99.9000999",
+      "posAfter": "0",
+      "avgPriceBefore": 100.1,
+      "avgPriceAfter": 0,
+      "equityBefore": 10008.99001,
+      "equityAfter": 10007.98901,
+      "seq": 2,
+      "tradeId": "7c726428fd7546e08988fcf486491f2bab7afcde69dd3042e2d6a8b5c96810ff"
+    }
+  ]
+}

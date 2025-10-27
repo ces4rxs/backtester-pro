@@ -1,0 +1,23 @@
+{
+  "version": "OMEGA Symbiont Tutor v10",
+  "objective": "SHARPE (max)",
+  "baseStrategy": "SMA(5,30)",
+  "variants": 20,
+  "generatedAt": "2025-10-25T16:55:56.417Z",
+  "leader": {
+    "name": "SMA(5,30)-v5-0",
+    "params": {
+      "fast": 5.451238673376779,
+      "slow": 32.076905784275496
+    },
+    "predictedSharpe": 1.186,
+    "predictedMDD": -0.005,
+    "confidence": "76.30%"
+  },
+  "cognitiveSummary": {
+    "performance": "rendimiento sólido y consistente",
+    "risk": "riesgo extremadamente bajo (ideal para capital estable)",
+    "confidence": "76.30%",
+    "conclusion": "OMEGA considera esta mutación óptima"
+  }
+}

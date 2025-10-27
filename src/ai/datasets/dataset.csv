@@ -1,0 +1,2 @@
+_source,_ts,strategy,params,Sharpe,CAGR,MaxDD,Trades,WinRate,AvgTrade,FeeBps,EquityFinal,RobustScore,Pass
+2025-10-22T07-32-43-730Z_UnnamedStrategy\auditoria.csv,2025-10-22T07-32-43-730Z,UnnamedStrategy,{},0.49847038725573267,0.034776349106625304,0.05984884168432108,,,,,10329.531,,

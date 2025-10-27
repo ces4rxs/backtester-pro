@@ -1,0 +1,9 @@
+{
+  "reportId": "demo-unnamed",
+  "quantumRating": 7.45,
+  "overfitRisk": "MEDIO",
+  "robustness": "83.2%",
+  "integrity": true,
+  "date": "2025-10-26T08:10:57.896Z",
+  "url": "http://192.168.1.90:4000/reports/demo-unnamed.json"
+}

@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    /* 🔧 Configuración base moderna */
+    "target": "ES2022",
+    "module": "ES2022",
+    "moduleResolution": "bundler",
+    "outDir": "dist",
+
+    /* 💡 Compatibilidad */
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+
+    /* ✅ Asegura imports tipo "import fs from 'fs'" */
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["src"]
+}

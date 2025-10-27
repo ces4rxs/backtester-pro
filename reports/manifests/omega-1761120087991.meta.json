@@ -1,0 +1,12 @@
+{
+  "runId": "omega-1761120087991",
+  "engineVersion": "v3.18",
+  "strategy": "UnnamedStrategy",
+  "timestamp": "2025-10-22T08:01:27.997Z",
+  "equityFinal": 10449.0953,
+  "cagr": 0.047409342092728624,
+  "sharpe": 1.0393821449568479,
+  "mdd": 0.021671638760570416,
+  "trades": 1,
+  "integrityHash": "45cea2988ad194e069c09d1660ed910b075543e7d4520f3cb92299cad81bc371"
+}

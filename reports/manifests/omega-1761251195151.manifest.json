@@ -1,0 +1,37 @@
+{
+  "runId": "omega-1761251195151",
+  "timestamp": "2025-10-23T20:26:35.155Z",
+  "engineVersion": "v3.18",
+  "strategy": "Example Strategy (Baseline)",
+  "seed": "1761251195151",
+  "options": {
+    "initialCash": 10000,
+    "feeBps": 10.71750102237187,
+    "slippage": {
+      "mode": "dynamic",
+      "spreadBps": 15,
+      "liquidityFactor": 0.7,
+      "volatilityLookback": 10,
+      "sizeImpactBps": 0.1,
+      "minBps": 2,
+      "maxBps": 60
+    },
+    "slippageBps": null
+  },
+  "data": {
+    "bars": 240,
+    "start": 1740010219424,
+    "end": 1760659819424,
+    "checksum": "none"
+  },
+  "metrics": {
+    "equityFinal": 4955.90515,
+    "returnTotal": -0.504409485,
+    "cagr": -0.5229765628342088,
+    "sharpe": -4.78549415474135,
+    "mdd": 0.5350345085516702,
+    "tradesCount": 120
+  },
+  "integrityHash": "e8dca36ad285d75b7cf69681af9c4372625354b694ce6588d181b0087ded9e41",
+  "digitalSeal": "abdf8402e09c07f2143c74dd2e4d523f9692bc4a6a4163314c188eb24c61105b"
+}

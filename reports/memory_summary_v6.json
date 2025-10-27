@@ -1,0 +1,382 @@
+{
+  "version": "v6",
+  "samples": [
+    {
+      "strategyId": "demo-unnamed",
+      "sharpe": 1.23,
+      "mdd": -0.08,
+      "quantumRating": 7.45,
+      "overfitRisk": "MEDIO",
+      "robustnessProb": 83.2,
+      "timestamp": "2025-10-23T21:42:48.988Z"
+    },
+    {
+      "strategyId": "demo-unnamed",
+      "sharpe": 1.22926692667375,
+      "mdd": 0,
+      "quantumRating": 7.45,
+      "overfitRisk": "MEDIO",
+      "robustnessProb": 83.2,
+      "timestamp": "2025-10-23T22:14:42.972Z"
+    },
+    {
+      "strategyId": "demo-unnamed",
+      "sharpe": 1.22926692667375,
+      "mdd": 0,
+      "quantumRating": 7.45,
+      "overfitRisk": "MEDIO",
+      "robustnessProb": 83.2,
+      "timestamp": "2025-10-23T22:50:40.820Z"
+    },
+    {
+      "strategyId": "demo-unnamed",
+      "sharpe": 1.22926692667375,
+      "mdd": 0,
+      "quantumRating": 7.45,
+      "overfitRisk": "MEDIO",
+      "robustnessProb": 83.2,
+      "timestamp": "2025-10-24T05:43:18.778Z"
+    },
+    {
+      "strategyId": "demo-unnamed",
+      "sharpe": 1.22926692667375,
+      "mdd": 0,
+      "quantumRating": 7.45,
+      "overfitRisk": "MEDIO",
+      "robustnessProb": 83.2,
+      "timestamp": "2025-10-24T19:07:10.017Z"
+    },
+    {
+      "strategyId": "demo-unnamed",
+      "sharpe": 1.22926692667375,
+      "mdd": 0,
+      "quantumRating": 7.45,
+      "overfitRisk": "MEDIO",
+      "robustnessProb": 83.2,
+      "timestamp": "2025-10-25T05:07:36.144Z"
+    },
+    {
+      "strategyId": "demo-unnamed",
+      "sharpe": 1.22926692667375,
+      "mdd": 0,
+      "quantumRating": 7.45,
+      "overfitRisk": "MEDIO",
+      "robustnessProb": 83.2,
+      "timestamp": "2025-10-25T05:19:14.429Z"
+    },
+    {
+      "strategyId": "demo-unnamed",
+      "sharpe": 1.22926692667375,
+      "mdd": 0,
+      "quantumRating": 7.45,
+      "overfitRisk": "MEDIO",
+      "robustnessProb": 83.2,
+      "timestamp": "2025-10-25T05:53:53.821Z"
+    },
+    {
+      "strategyId": "demo-unnamed",
+      "sharpe": 1.22926692667375,
+      "mdd": 0,
+      "quantumRating": 7.45,
+      "overfitRisk": "MEDIO",
+      "robustnessProb": 83.2,
+      "timestamp": "2025-10-25T07:11:22.772Z"
+    },
+    {
+      "strategyId": "demo-unnamed",
+      "sharpe": 1.22926692667375,
+      "mdd": 0,
+      "quantumRating": 7.45,
+      "overfitRisk": "MEDIO",
+      "robustnessProb": 83.2,
+      "timestamp": "2025-10-25T08:12:36.291Z"
+    },
+    {
+      "strategyId": "montecarlo_report_1761071381369",
+      "sharpe": {
+        "mean": 0,
+        "sd": 0,
+        "p05": 0,
+        "p50": 0,
+        "p95": 0
+      },
+      "mdd": {
+        "mean": 0,
+        "sd": 0,
+        "p05": 0,
+        "p50": 0,
+        "p95": 0
+      },
+      "overfitRisk": "MEDIO",
+      "labels": [
+        "SHARPE",
+        "UNKNOWN"
+      ],
+      "timestamp": "2025-10-25T22:35:09.123Z"
+    },
+    {
+      "strategyId": "montecarlo_report_1761073161818",
+      "sharpe": {
+        "mean": 0,
+        "sd": 0,
+        "p05": 0,
+        "p50": 0,
+        "p95": 0
+      },
+      "mdd": {
+        "mean": 0,
+        "sd": 0,
+        "p05": 0,
+        "p50": 0,
+        "p95": 0
+      },
+      "overfitRisk": "MEDIO",
+      "labels": [
+        "SHARPE",
+        "UNKNOWN"
+      ],
+      "timestamp": "2025-10-25T22:35:09.123Z"
+    },
+    {
+      "strategyId": "montecarlo_report_1761081653734",
+      "sharpe": {
+        "mean": -4.580564947073917,
+        "sd": 0.24115410567582146,
+        "p05": -4.960240381695946,
+        "p50": -4.609920621432705,
+        "p95": -4.1954188346960235
+      },
+      "mdd": {
+        "mean": 0.5229347875808829,
+        "sd": 0.014904443781331966,
+        "p05": 0.4956291877682085,
+        "p50": 0.5233884733502158,
+        "p95": 0.5496829566004067
+      },
+      "overfitRisk": "MEDIO",
+      "labels": [
+        "SHARPE",
+        "UNKNOWN"
+      ],
+      "timestamp": "2025-10-25T22:35:09.123Z"
+    },
+    {
+      "strategyId": "montecarlo_report_1761081986940",
+      "sharpe": {
+        "mean": -4.580564947073917,
+        "sd": 0.24115410567582146,
+        "p05": -4.960240381695946,
+        "p50": -4.609920621432705,
+        "p95": -4.1954188346960235
+      },
+      "mdd": {
+        "mean": 0.5229347875808829,
+        "sd": 0.014904443781331966,
+        "p05": 0.4956291877682085,
+        "p50": 0.5233884733502158,
+        "p95": 0.5496829566004067
+      },
+      "overfitRisk": "MEDIO",
+      "labels": [
+        "SHARPE",
+        "UNKNOWN"
+      ],
+      "timestamp": "2025-10-25T22:35:09.123Z"
+    },
+    {
+      "strategyId": "montecarlo_report_1761082301367",
+      "sharpe": {
+        "mean": -4.580564947073917,
+        "sd": 0.24115410567582146,
+        "p05": -4.960240381695946,
+        "p50": -4.609920621432705,
+        "p95": -4.1954188346960235
+      },
+      "mdd": {
+        "mean": 0.5229347875808829,
+        "sd": 0.014904443781331966,
+        "p05": 0.4956291877682085,
+        "p50": 0.5233884733502158,
+        "p95": 0.5496829566004067
+      },
+      "overfitRisk": "MEDIO",
+      "labels": [
+        "SHARPE",
+        "UNKNOWN"
+      ],
+      "timestamp": "2025-10-25T22:35:09.123Z"
+    },
+    {
+      "strategyId": "montecarlo_report_1761083108605",
+      "sharpe": {
+        "mean": -4.580564947073917,
+        "sd": 0.24115410567582146,
+        "p05": -4.960240381695946,
+        "p50": -4.609920621432705,
+        "p95": -4.1954188346960235
+      },
+      "mdd": {
+        "mean": 0.5229347875808829,
+        "sd": 0.014904443781331966,
+        "p05": 0.4956291877682085,
+        "p50": 0.5233884733502158,
+        "p95": 0.5496829566004067
+      },
+      "overfitRisk": "MEDIO",
+      "labels": [
+        "SHARPE",
+        "UNKNOWN"
+      ],
+      "timestamp": "2025-10-25T22:35:09.123Z"
+    },
+    {
+      "strategyId": "montecarlo_report_1761083161559",
+      "sharpe": {
+        "mean": -4.580564947073917,
+        "sd": 0.24115410567582146,
+        "p05": -4.960240381695946,
+        "p50": -4.609920621432705,
+        "p95": -4.1954188346960235
+      },
+      "mdd": {
+        "mean": 0.5229347875808829,
+        "sd": 0.014904443781331966,
+        "p05": 0.4956291877682085,
+        "p50": 0.5233884733502158,
+        "p95": 0.5496829566004067
+      },
+      "overfitRisk": "MEDIO",
+      "labels": [
+        "SHARPE",
+        "UNKNOWN"
+      ],
+      "timestamp": "2025-10-25T22:35:09.123Z"
+    },
+    {
+      "strategyId": "montecarlo_report_1761088572513",
+      "sharpe": {
+        "mean": -4.580564947073917,
+        "sd": 0.24115410567582146,
+        "p05": -4.960240381695946,
+        "p50": -4.609920621432705,
+        "p95": -4.1954188346960235
+      },
+      "mdd": {
+        "mean": 0.5229347875808829,
+        "sd": 0.014904443781331966,
+        "p05": 0.4956291877682085,
+        "p50": 0.5233884733502158,
+        "p95": 0.5496829566004067
+      },
+      "overfitRisk": "MEDIO",
+      "labels": [
+        "SHARPE",
+        "UNKNOWN"
+      ],
+      "timestamp": "2025-10-25T22:35:09.123Z"
+    },
+    {
+      "strategyId": "montecarlo_report_1761089425074",
+      "sharpe": {
+        "mean": -4.580564947073917,
+        "sd": 0.24115410567582146,
+        "p05": -4.960240381695946,
+        "p50": -4.609920621432705,
+        "p95": -4.1954188346960235
+      },
+      "mdd": {
+        "mean": 0.5229347875808829,
+        "sd": 0.014904443781331966,
+        "p05": 0.4956291877682085,
+        "p50": 0.5233884733502158,
+        "p95": 0.5496829566004067
+      },
+      "overfitRisk": "MEDIO",
+      "labels": [
+        "SHARPE",
+        "UNKNOWN"
+      ],
+      "timestamp": "2025-10-25T22:35:09.123Z"
+    },
+    {
+      "strategyId": "montecarlo_report_1761251195615",
+      "sharpe": {
+        "mean": -4.580564947073917,
+        "sd": 0.24115410567582146,
+        "p05": -4.960240381695946,
+        "p50": -4.609920621432705,
+        "p95": -4.1954188346960235
+      },
+      "mdd": {
+        "mean": 0.5229347875808829,
+        "sd": 0.014904443781331966,
+        "p05": 0.4956291877682085,
+        "p50": 0.5233884733502158,
+        "p95": 0.5496829566004067
+      },
+      "overfitRisk": "MEDIO",
+      "labels": [
+        "SHARPE",
+        "UNKNOWN"
+      ],
+      "timestamp": "2025-10-25T22:35:09.123Z"
+    },
+    {
+      "strategyId": "optimization_1761371578708",
+      "overfitRisk": "MEDIO",
+      "labels": [
+        "SHARPE",
+        "UNKNOWN"
+      ],
+      "timestamp": "2025-10-25T05:52:58.708Z"
+    },
+    {
+      "strategyId": "optimization_1761371598042",
+      "overfitRisk": "MEDIO",
+      "labels": [
+        "SHARPE",
+        "UNKNOWN"
+      ],
+      "timestamp": "2025-10-25T05:53:18.042Z"
+    },
+    {
+      "strategyId": "opt_v5_test",
+      "overfitRisk": "MEDIO",
+      "labels": [
+        "sharpe",
+        "UNKNOWN"
+      ],
+      "timestamp": "2025-10-25T16:55:56.417Z"
+    },
+    {
+      "strategyId": "SMA(5,30)-v5-0",
+      "sharpe": 1.186,
+      "mdd": -0.005,
+      "overfitRisk": "MEDIO",
+      "labels": [
+        "SHARPE",
+        "SMA(5,30)"
+      ],
+      "timestamp": "2025-10-25T16:55:56.417Z"
+    },
+    {
+      "strategyId": "auto_optimized_v10_2_1761437844389",
+      "overfitRisk": "MEDIO",
+      "labels": [
+        "SHARPE",
+        "UNKNOWN"
+      ],
+      "timestamp": "2025-10-26T00:17:24.387Z"
+    }
+  ],
+  "stats": {
+    "count": 25,
+    "sharpeAvg": null,
+    "mddAvg": null,
+    "ratingAvg": 7.450000000000001,
+    "robustnessAvg": 83.20000000000002,
+    "overfitRiskDist": {
+      "MEDIO": 25
+    }
+  }
+}

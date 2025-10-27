@@ -1,0 +1,15 @@
+{
+  "strategyId": "demo-unnamed",
+  "stats": {
+    "sharpe": 1.22926692667375,
+    "quantum": 7.45,
+    "robustness": 83.2
+  },
+  "labels": [
+    "web",
+    "dashboard",
+    "v10"
+  ],
+  "notes": "Brainprint guardado desde Dashboard web.",
+  "timestamp": "2025-10-26T18:40:00.880Z"
+}

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>OMEGA Tutor v10.1 – Symbiont Advisor</title>
+<style>
+  :root { --fg:#e5e7eb; --bg:#0b1020; --muted:#9ca3af; --card:#121a2e; --acc:#dc2626; }
+  *{box-sizing:border-box} body{margin:0;background:radial-gradient(1200px 600px at 70% -10%, #0f172a 0%, var(--bg) 35%, #050816 100%);color:var(--fg);font:14px/1.4 ui-sans-serif,system-ui,Segoe UI,Roboto,Ubuntu}
+  .wrap{max-width:980px;margin:48px auto;padding:0 16px}
+  .title{font-weight:700;letter-spacing:.2px;margin:0 0 8px}
+  .muted{color:var(--muted)}
+  .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0 24px}
+  .card{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:14px}
+  .metric{font-size:12px;color:var(--muted);margin:0 0 6px}
+  .value{font-size:22px;font-weight:700;margin:0}
+  .pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);padding:6px 10px;border-radius:999px}
+  .pill .dot{width:8px;height:8px;border-radius:999px;background:var(--acc)}
+  .panel{display:grid;grid-template-columns:1fr;gap:12px}
+  pre{white-space:pre-wrap;background:var(--card);border-radius:12px;padding:14px;border:1px solid rgba(255,255,255,.06)}
+  footer{margin-top:28px;font-size:12px;color:var(--muted)}
+  @media(min-width:860px){ .panel{grid-template-columns:1fr 1fr} }
+  </style>
+<body>
+  <div class="wrap">
+    <h1 class="title">OMEGA Tutor v10.1 <span class="muted">· Symbiont Advisor (Explainable)</span></h1>
+    <div class="pill"><span class="dot"></span><span>Balance general: <b>NEGATIVO</b></span></div>
+
+    <div class="grid">
+      <div class="card"><div class="metric">Sharpe</div><p class="value">-1.1031</p></div>
+      <div class="card"><div class="metric">MDD</div><p class="value">-0.2033</p></div>
+      <div class="card"><div class="metric">Robustez</div><p class="value">83.20%</p></div>
+      <div class="card"><div class="metric">Versión</div><p class="value">v10</p></div>
+    </div>
+
+    <div class="panel">
+      <div class="card">
+        <div class="metric">Insight</div>
+        <p class="value" style="font-size:16px">Desviación cognitiva leve detectada.</p>
+      </div>
+      <div class="card">
+        <div class="metric">Sugerencia</div>
+        <p class="value" style="font-size:16px">Ejecuta un nuevo ciclo de optimización Monte Carlo y reduce la sensibilidad de los hiperparámetros.</p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:12px">
+      <div class="metric">Explicación</div>
+      <p class="value" style="font-size:16px;line-height:1.55">La memoria simbiótica detecta un rendimiento negativo sostenido con una robustez estable. Indica posible sobreajuste en estrategias recientes.</p>
+    </div>
+
+    <div class="card" style="margin-top:12px">
+      <div class="metric">Salida del Tutor</div>
+      <pre>🧠 Versión del Tutor: v10.1 (Symbiont Advisor)
+--------------------------------------------
+🔹 Sharpe: -1.1031
+🔹 MDD: -0.2033
+🔹 Robustez: 83.20%
+🔹 Balance general: NEGATIVO
+🔹 Insight: Desviación cognitiva leve detectada.
+
+🧩 Explicación:
+La memoria simbiótica detecta un rendimiento negativo sostenido con una robustez estable. Indica posible sobreajuste en estrategias recientes.
+
+💡 Sugerencia:
+Ejecuta un nuevo ciclo de optimización Monte Carlo y reduce la sensibilidad de los hiperparámetros.
+
+--------------------------------------------
+📘 Generado por OMEGA Learn v10.1 (Capa de Tutoría Cognitiva Adaptativa)</pre>
+    </div>
+
+    <footer>Generado automáticamente por OMEGA Learn v10.1 – Capa de Tutoría Cognitiva Adaptativa.</footer>
+  </div>
+</body>
+</html>

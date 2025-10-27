@@ -1,0 +1,24 @@
+{
+  "version": "v10",
+  "base": [
+    "v9",
+    "v8.1"
+  ],
+  "generated": "2025-10-25T23:34:04.494Z",
+  "summary": {
+    "sharpe": -1.1031,
+    "mdd": -0.2033,
+    "robustness": 83.2,
+    "balance": "NEGATIVO"
+  },
+  "insight": {
+    "insight": "Desviación cognitiva leve detectada.",
+    "explanation": "La memoria simbiótica detecta un rendimiento negativo sostenido con una robustez estable. Indica posible sobreajuste en estrategias recientes.",
+    "advice": "Ejecuta un nuevo ciclo de optimización Monte Carlo y reduce la sensibilidad de los hiperparámetros.",
+    "tone": "NEGATIVO"
+  },
+  "meta": {
+    "source": "OMEGA Cognitive Core",
+    "compatibleWithTutor": true
+  }
+}

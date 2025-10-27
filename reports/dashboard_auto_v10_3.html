@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>OMEGA Cognitive Dashboard v10.3-B</title>
+  <style>
+    body { font-family: "Segoe UI", sans-serif; background: #0b0c10; color: #eee; padding: 30px; }
+    h1, h2 { color: #00e0ff; }
+    .card { background: #14161a; padding: 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 0 12px #00e0ff33; }
+    .metric { font-size: 1.1em; margin: 4px 0; }
+    .chart { width: 100%; height: 260px; margin-top: 10px; }
+    .insight { color: #ffc107; font-style: italic; }
+    .positive { color: #00ff99; }
+    .negative { color: #ff6666; }
+    footer { margin-top: 40px; color: #888; font-size: 0.9em; }
+    .reflection { background: #1c1f25; padding: 20px; border-left: 5px solid #00e0ff; border-radius: 10px; font-size: 1.05em; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <h1>🧠 OMEGA Cognitive Dashboard v10.3-B</h1>
+  <p>Visualización integral de la evolución cognitiva y reflexión automática del sistema.</p>
+
+  <div class="card">
+    <h2>Resumen de Métricas</h2>
+    <div class="metric">📘 Symbiont v10 → Sharpe: -1.1031, MDD: -0.2033, Robustez: 83.2%</div>
+    <div class="metric">🎓 Tutor v10.1 → Sharpe: -1.1031, MDD: -0.2033, Robustez: 83.2%</div>
+    <div class="metric">🔁 AutoLearn v10.2 → Sharpe: 0, MDD: 0, Robustez: 0%</div>
+  </div>
+
+  <div class="card">
+    <h2>Insights Cognitivos</h2>
+    <p class="insight">💡 Desviación cognitiva leve detectada.</p>
+    <p>Ejecuta un nuevo ciclo de optimización Monte Carlo y reduce la sensibilidad de los hiperparámetros.</p>
+    <p>Tono general: <strong class="negative">NEGATIVO</strong></p>
+  </div>
+
+  <div class="card">
+    <h2>Evolución Visual</h2>
+    <canvas id="chart" class="chart"></canvas>
+  </div>
+
+  <div class="card reflection">
+    <h2>Reflexión del Sistema</h2>
+    <p>⚖️ Estado Cognitivo: Equilibrio estable. Sin anomalías destacables.</p>
+  </div>
+
+  <footer>Generado automáticamente por Omega Learn v10.3-B — © 2025 Cognitive Systems.</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const ctx = document.getElementById("chart").getContext("2d");
+    const data = {
+      labels: ["Symbiont v10", "Tutor v10.1", "AutoLearn v10.2"],
+      datasets: [
+        {
+          label: "Sharpe",
+          data: [-1.1031, -1.1031, 0],
+          borderColor: "#00e0ff",
+          fill: false,
+          tension: 0.3
+        },
+        {
+          label: "MDD",
+          data: [-0.2033, -0.2033, 0],
+          borderColor: "#ff6666",
+          fill: false,
+          tension: 0.3
+        },
+        {
+          label: "Robustez %",
+          data: [83.2, 83.2, 0],
+          borderColor: "#00ff99",
+          fill: false,
+          tension: 0.3
+        }
+      ]
+    };
+    new Chart(ctx, {
+      type: "line",
+      data,
+      options: {
+        scales: { y: { beginAtZero: true } },
+        plugins: { legend: { labels: { color: "#eee" } } }
+      }
+    });
+  </script>
+</body>
+</html>

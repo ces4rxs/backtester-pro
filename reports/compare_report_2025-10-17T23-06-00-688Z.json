@@ -1,0 +1,33 @@
+{
+  "timestamp": "17/10/2025, 18:06:00",
+  "winner": "SMA Crossover",
+  "winnerStats": {
+    "name": "SMA Crossover",
+    "cagr": 0,
+    "sharpe": 0,
+    "mdd": 0,
+    "trades": 0,
+    "score": 0,
+    "equityFinal": 10000
+  },
+  "results": [
+    {
+      "name": "SMA Crossover",
+      "cagr": 0,
+      "sharpe": 0,
+      "mdd": 0,
+      "trades": 0,
+      "score": 0,
+      "equityFinal": 10000
+    },
+    {
+      "name": "RSI Mean Revert",
+      "cagr": -0.4867634799073507,
+      "sharpe": -0.4117039428453054,
+      "mdd": 0.6066937694998582,
+      "trades": 3,
+      "score": -0.8507797416072655,
+      "equityFinal": 5298
+    }
+  ]
+}

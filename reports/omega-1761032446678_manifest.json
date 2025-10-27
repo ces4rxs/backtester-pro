@@ -1,0 +1,30 @@
+{
+  "runId": "omega-1761032446678",
+  "timestamp": "2025-10-21T07:40:46.679Z",
+  "engineVersion": "v3.16",
+  "strategy": "OmegaDecimalTest",
+  "seed": 1761027337991,
+  "options": {
+    "initialCash": 10000,
+    "feeBps": 1,
+    "slippageBps": 0,
+    "seed": 1761027337991,
+    "validateData": true
+  },
+  "data": {
+    "bars": 4,
+    "start": 0,
+    "end": 3,
+    "checksum": "190f54e4c512d7f82769fd19d28dfeaadde87c2e1a387c13076ad0f7961f6645"
+  },
+  "metrics": {
+    "equityFinal": 10007.98901,
+    "returnTotal": 0.0007989009999999325,
+    "cagr": 0.06938197919840783,
+    "sharpe": 7.684551563818295,
+    "sortino": 42.278624375912486,
+    "mdd": 0.0001,
+    "tradesCount": 2
+  },
+  "digitalSeal": "e1727c38ddff5950f7e3df15c568ab61f15d0f2a4927554dcd889bc3d5d5360c"
+}

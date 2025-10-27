@@ -1,0 +1,24 @@
+{
+  "params": {
+    "shortWin": 20,
+    "longWin": 45
+  },
+  "res": {
+    "equityFinal": 10000,
+    "returnTotal": 0,
+    "sharpe": 0,
+    "sortino": 0,
+    "mdd": 0,
+    "cagr": 0,
+    "trades": [],
+    "equityCurve": [
+      10000,
+      10000,
+      10000,
+      10000,
+      10000
+    ]
+  },
+  "score": -0.2,
+  "trades": 0
+}

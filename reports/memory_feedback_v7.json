@@ -1,0 +1,18 @@
+{
+  "version": "v7",
+  "baseVersion": "v6",
+  "samples": 24,
+  "stats": {
+    "sharpeMean": -1.2192166966593465,
+    "sharpeStd": 2.866583100351338,
+    "mddMean": 0.21570938424458225,
+    "mddStd": 0.26258142656143674,
+    "robustMean": 83.20000000000002,
+    "robustStd": 1.4210854715202004e-14,
+    "corrSharpeMDD": -1.0532359984023612,
+    "corrSharpeRobust": null,
+    "corrMDDRobust": null
+  },
+  "inference": "Tendencia Equilibrada (Sharpe y MDD inversos)",
+  "timestamp": "2025-10-25T22:46:37.889Z"
+}

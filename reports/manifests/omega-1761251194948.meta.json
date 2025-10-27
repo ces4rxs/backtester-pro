@@ -1,0 +1,12 @@
+{
+  "runId": "omega-1761251194948",
+  "engineVersion": "v3.18",
+  "strategy": "Example Strategy (Baseline)",
+  "timestamp": "2025-10-23T20:26:34.952Z",
+  "equityFinal": 5145.19512,
+  "cagr": -0.5037459756438571,
+  "sharpe": -4.660606233860228,
+  "mdd": 0.5101187583667596,
+  "trades": 120,
+  "integrityHash": "d93e0b56097390d73bfbaf969d174c21f2cf9e064f2479c083367e0fb380dce4"
+}

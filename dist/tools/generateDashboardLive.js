@@ -1,0 +1,192 @@
+// src/tools/generateDashboardLive.ts
+// ⚡ Quantum Dashboard v1.9 – Live Data Analyzer
+// No rompe compatibilidad. Lectura local de auditoria.csv con tabla y gráficos dinámicos.
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+async function main() {
+    const reportsDir = "./reports";
+    const csvPath = path.join(reportsDir, "auditoria.csv");
+    const outputPath = path.join(reportsDir, "dashboard_quantum_v1.9.html");
+    if (!fs.existsSync(csvPath)) {
+        console.error("❌ No se encontró auditoria.csv. Ejecuta primero:");
+        console.error("   npm run manifests:list -- --summary --export=auditoria.csv");
+        return;
+    }
+    const html = `
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Quantum Dashboard Live Analyzer v1.9</title>
+    <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+    <style>
+      body {
+        background: #0b0b0b;
+        color: #00ffaa;
+        font-family: 'Segoe UI', sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      header {
+        background: #101010;
+        border-bottom: 1px solid #00ffaa33;
+        padding: 15px;
+        text-align: center;
+        font-size: 22px;
+      }
+      #controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        padding: 10px;
+      }
+      #dataTable {
+        width: 95%;
+        margin: 20px auto;
+        border-collapse: collapse;
+        color: #fff;
+      }
+      th, td {
+        border: 1px solid #00ffaa33;
+        padding: 8px 10px;
+        text-align: left;
+      }
+      th {
+        background: #111;
+        cursor: pointer;
+      }
+      tr:hover {
+        background: #00ffaa11;
+      }
+      #chart {
+        width: 95%;
+        margin: 30px auto;
+      }
+      input[type="text"] {
+        background: #111;
+        color: #00ffaa;
+        border: 1px solid #00ffaa55;
+        border-radius: 6px;
+        padding: 6px;
+        width: 240px;
+      }
+      .footer {
+        color: #777;
+        text-align: center;
+        padding: 20px;
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>🧠 Quantum Dashboard Live Analyzer v1.9</header>
+    <div id="controls">
+      <input type="text" id="searchBox" placeholder="Buscar estrategia..." />
+      <button onclick="renderChart()">📈 Ver Gráfico Equity vs Sharpe</button>
+      <button onclick="renderHistogram()">📊 Distribución de Equity</button>
+    </div>
+
+    <table id="dataTable">
+      <thead id="tableHead"></thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+
+    <div id="chart"></div>
+
+    <div class="footer">
+      <p>Quantum Engine v1.9 | Desarrollado por Julio César © 2025</p>
+    </div>
+
+    <script>
+      async function loadCSV() {
+        const response = await fetch("auditoria.csv");
+        const text = await response.text();
+        const rows = text.trim().split("\\n").map(r => r.split(","));
+        const headers = rows[0];
+        const data = rows.slice(1);
+
+        // Render tabla
+        const head = document.getElementById("tableHead");
+        head.innerHTML = "<tr>" + headers.map(h => "<th onclick='sortTable(\"" + h + "\")'>" + h + "</th>").join("") + "</tr>";
+
+        const body = document.getElementById("tableBody");
+        body.innerHTML = data.map(row => "<tr>" + row.map(c => "<td>" + c + "</td>").join("") + "</tr>").join("");
+
+        window.globalData = { headers, data };
+      }
+
+      function filterTable() {
+        const q = document.getElementById("searchBox").value.toLowerCase();
+        const rows = document.querySelectorAll("#dataTable tbody tr");
+        rows.forEach(r => {
+          const visible = r.textContent.toLowerCase().includes(q);
+          r.style.display = visible ? "" : "none";
+        });
+      }
+
+      document.getElementById("searchBox").addEventListener("input", filterTable);
+
+      function sortTable(header) {
+        const idx = window.globalData.headers.indexOf(header);
+        const tbody = document.getElementById("tableBody");
+        const sorted = [...window.globalData.data].sort((a, b) => parseFloat(b[idx]) - parseFloat(a[idx]));
+        tbody.innerHTML = sorted.map(row => "<tr>" + row.map(c => "<td>" + c + "</td>").join("") + "</tr>").join("");
+      }
+
+      function renderChart() {
+        const headers = window.globalData.headers;
+        const data = window.globalData.data;
+        const eqIdx = headers.indexOf("equityFinal");
+        const shIdx = headers.indexOf("sharpe");
+        const stratIdx = headers.indexOf("strategy");
+
+        const trace = {
+          x: data.map(r => parseFloat(r[shIdx])),
+          y: data.map(r => parseFloat(r[eqIdx])),
+          text: data.map(r => r[stratIdx]),
+          mode: "markers",
+          type: "scatter",
+          marker: { color: "#00ffaa" },
+        };
+
+        Plotly.newPlot("chart", [trace], {
+          paper_bgcolor: "#0b0b0b",
+          plot_bgcolor: "#0b0b0b",
+          font: { color: "#fff" },
+          xaxis: { title: "Sharpe Ratio" },
+          yaxis: { title: "Equity Final" },
+        });
+      }
+
+      function renderHistogram() {
+        const headers = window.globalData.headers;
+        const data = window.globalData.data;
+        const eqIdx = headers.indexOf("equityFinal");
+
+        const trace = {
+          x: data.map(r => parseFloat(r[eqIdx])),
+          type: "histogram",
+          marker: { color: "#00ffaa" },
+        };
+
+        Plotly.newPlot("chart", [trace], {
+          paper_bgcolor: "#0b0b0b",
+          plot_bgcolor: "#0b0b0b",
+          font: { color: "#fff" },
+          xaxis: { title: "Equity Final" },
+          yaxis: { title: "Frecuencia" },
+        });
+      }
+
+      loadCSV();
+    </script>
+  </body>
+</html>`;
+    fs.writeFileSync(outputPath, html, "utf8");
+    console.log("✅ Dashboard Quantum Live Analyzer v1.9 generado:", outputPath);
+}
+main().catch((err) => console.error("❌ Error generando Live Analyzer:", err));

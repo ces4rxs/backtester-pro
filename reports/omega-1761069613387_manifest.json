@@ -1,0 +1,24 @@
+{
+  "runId": "omega-1761069613387",
+  "timestamp": "2025-10-21T18:00:13.393Z",
+  "engineVersion": "v3.16",
+  "strategy": "UnnamedStrategy",
+  "seed": "1761069613387",
+  "options": {},
+  "data": {
+    "bars": 240,
+    "start": 1740010219424,
+    "end": 1760659819424,
+    "checksum": "none"
+  },
+  "metrics": {
+    "equityFinal": 10329.531,
+    "returnTotal": 0.03295310000000009,
+    "cagr": 0.034776349106625304,
+    "sharpe": 0.49847038725573267,
+    "sortino": 0.2610564085475113,
+    "mdd": 0.05984884168432108,
+    "tradesCount": 5
+  },
+  "digitalSeal": "5504c7876564a345139878a55893dfb21b674eefa4075fd21a4cb38a4f10ff75"
+}
