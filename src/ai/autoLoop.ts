@@ -34,7 +34,7 @@ export async function runAutoLoopV10() {
 
   console.log("🎯 Objetivo cognitivo:", goal);
 
-  // 3️⃣ Crear un manifest base (dummy o último conocido)
+  // 3️⃣ Crear un manifest base
   const baseManifest = {
     id: "auto_tuned_v10_2",
     name: "AutoTunedStrategy",
@@ -46,13 +46,25 @@ export async function runAutoLoopV10() {
     params: { seed: Date.now() },
   };
 
-  // 4️⃣ Adaptador al predictor v4.4
+  // 4️⃣ Adaptador al predictor v4.4 — compatibilidad universal
   const prophetPredict = async (variant: any) => {
-    const pred = predictForCurrent(variant);
+    let pred: any;
+
+    try {
+      if (predictForCurrent.length >= 1) {
+        pred = await Promise.resolve(predictForCurrent(variant));
+      } else {
+        pred = await Promise.resolve(predictForCurrent());
+      }
+    } catch (err) {
+      console.warn("⚠️ Predictor v4 fallback activado:", err);
+      pred = {};
+    }
+
     return {
-      predictedSharpe: pred?.predictedSharpe ?? 0,
-      predictedMDD: pred?.predictedMDD ?? 0,
-      antiOverfit: pred?.antiOverfit ?? 0,
+      predictedSharpe: Number(pred?.predictedSharpe ?? 0),
+      predictedMDD: Number(pred?.predictedMDD ?? 0),
+      antiOverfit: Number(pred?.antiOverfit ?? 0),
     };
   };
 

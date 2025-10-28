@@ -1,0 +1,8 @@
+{
+  "asset": "SP500",
+  "price": 6875.1201171875,
+  "source": "Yahoo Finance",
+  "latency_ms": 323,
+  "timestamp": "2025-10-27T20:01:03.003Z",
+  "humanTime": "27/10/2025, 3:01:03 p. m."
+}

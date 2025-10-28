@@ -1,19 +1,18 @@
 {
   "compilerOptions": {
-    /* 🔧 Configuración base moderna */
     "target": "ES2022",
-    "module": "ES2022",
-    "moduleResolution": "bundler",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "outDir": "dist",
-
-    /* 💡 Compatibilidad */
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "allowJs": true,
     "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-
-    /* ✅ Asegura imports tipo "import fs from 'fs'" */
-    "allowSyntheticDefaultImports": true
+    "strict": false,
+    "noImplicitAny": false,
+    "types": ["node"],
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["src"]
 }

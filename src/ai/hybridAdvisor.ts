@@ -253,8 +253,20 @@ export async function generateUnifiedAdviceHybridV10(strategyId: string) {
       const manifest: StrategyManifest = { name: strategyId, params: { shortPeriod: 10, longPeriod: 50 } };
       const goal = { kind: "max_predictedSharpe" } as const;
 
+      // ✅ FIX: Adaptador compatible con versiones que no aceptan argumentos
       const prophetPredict = async (variant: any) => {
-        const pred: any = await Promise.resolve(predictForCurrent(variant));
+        let pred: any;
+        try {
+          if (predictForCurrent.length > 0) {
+            pred = await Promise.resolve(predictForCurrent(variant));
+          } else {
+            pred = await Promise.resolve(predictForCurrent());
+          }
+        } catch (err) {
+          console.warn("⚠️ Predictor v4 fallback activado:", err);
+          pred = {};
+        }
+
         return {
           predictedSharpe: pred?.predictedSharpe ?? pred?.sharpe ?? 0,
           predictedMDD: pred?.predictedMDD ?? pred?.mdd ?? 0,

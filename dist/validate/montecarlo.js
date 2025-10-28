@@ -1,78 +1,46 @@
-// src/validate/montecarlo.ts
-// 🧠 Mandamiento #5 - Anti-Overfit (Monte Carlo / Bootstrap Robustness)
-// Compatible con el motor OMEGA CORE (v3.x) sin romper Ledger, Engine ni Journal.
-import { runBacktest } from "../core/engine.js";
-import { createRNG } from "../core/rng.js";
-import fs from "fs"; // ✅ Import ESM (reemplaza require)
-// -------------------------
-// Utilidades internas
-// -------------------------
-function clamp01(x) {
-    return Math.max(0, Math.min(1, x));
-}
-function perturbBars(bars, jitterPct, rng) {
-    if (!jitterPct)
-        return bars;
-    return bars.map(b => {
-        const j = (rng() * 2 - 1) * jitterPct; // ruido +/- jitter%
-        const k = 1 + j;
-        return { ...b, o: b.o * k, h: b.h * k, l: b.l * k, c: b.c * k };
-    });
-}
-function stats(xs) {
-    const sorted = [...xs].sort((a, b) => a - b);
-    const mean = sorted.reduce((a, b) => a + b, 0) / sorted.length;
-    const var_ = sorted.reduce((a, b) => a + (b - mean) * (b - mean), 0) /
-        Math.max(1, sorted.length - 1);
-    const sd = Math.sqrt(var_);
-    const p = (q) => sorted[Math.min(sorted.length - 1, Math.max(0, Math.floor(q * (sorted.length - 1))))];
-    return { mean, sd, p05: p(0.05), p50: p(0.5), p95: p(0.95) };
-}
-// -------------------------
-// 🧠 Núcleo del Mandamiento #5
-// -------------------------
-export function monteCarlo(bars, strategy, baseOpts = { initialCash: 10000, feeBps: 10, slippageBps: 5 }, opts = {}) {
-    const runs = opts.runs ?? 100;
-    const feeVar = clamp01(opts.feeVarPct ?? 0.25); // ±25% por defecto
-    const slipVar = clamp01(opts.slipVarPct ?? 0.25);
-    const jitter = Math.max(0, opts.priceJitterPct ?? 0.005); // 0.5%
-    // 🎲 Generador determinístico
-    const { rng, seedUsed } = createRNG(opts.seed ?? Date.now());
-    // Resultados
-    const cagrArr = [], mddArr = [], sharpeArr = [], returnArr = [];
-    console.log(`🚀 Iniciando prueba Mandamiento #5 (Monte Carlo / Anti-Overfit)...`);
-    for (let i = 0; i < runs; i++) {
-        // Variaciones controladas
-        const feeBps = baseOpts.feeBps * (1 + (rng() * 2 - 1) * feeVar);
-        const slippageBps = baseOpts.slippageBps * (1 + (rng() * 2 - 1) * slipVar);
-        const simBars = perturbBars(bars, jitter, rng);
-        // Ejecución del backtest
-        const res = runBacktest(simBars, strategy, {
-            ...baseOpts,
-            feeBps,
-            slippageBps,
-        });
-        // Captura resultados
-        cagrArr.push(res.cagr);
-        mddArr.push(res.mdd);
-        sharpeArr.push(res.sharpe);
-        returnArr.push(res.returnTotal);
+// src/ai/montecarlo.ts
+// 🎲 OMEGA Monte Carlo (v4 Educativo)
+// Conecta el Mandamiento #5 (Anti-Overfit) al panel web v10.3-B
+// Usa el motor validate/montecarlo sin alterar el core.
+// 🔒 Seguridad: lectura controlada de datasets sin exponer disco completo
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import { monteCarlo } from "../validate/montecarlo.js";
+import { smaCrossover } from "../strategies/smaCrossover.js";
+// DEBUG helpers
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+// 🧠 Función pública usada por /ai/montecarlo
+export function runMonteCarlo(runs = 300) {
+    try {
+        const dataPath = path.join(process.cwd(), "src", "data", "sample_btc_usd_1d.json");
+        if (!fs.existsSync(dataPath)) {
+            throw new Error("Dataset de ejemplo no encontrado en /src/data/");
+        }
+        // 🧩 Carga de datos y estrategia simple
+        const bars = JSON.parse(fs.readFileSync(dataPath, "utf8"));
+        const strategy = smaCrossover(10, 50);
+        // 🔮 Ejecuta la validación Monte Carlo real
+        const report = monteCarlo(bars, strategy, { initialCash: 10000 }, { runs, priceJitterPct: 0.005 });
+        // 📊 Resumen educativo (ligero para el panel web)
+        const summary = {
+            runs: report.runs,
+            meanSharpe: Number(report.sharpe.mean.toFixed(3)),
+            stdSharpe: Number(report.sharpe.sd.toFixed(3)),
+            meanMDD: Number(report.mdd.mean.toFixed(3)),
+            meanCAGR: Number(report.cagr.mean.toFixed(3)),
+            antiOverfit: Math.round((1 - Math.abs(report.mdd.mean)) * 100),
+            confidence95: [report.returnTotal.p05.toFixed(2), report.returnTotal.p95.toFixed(2)],
+        };
+        return {
+            ok: true,
+            note: "Simulación Montecarlo v4 (educativo)",
+            result: summary,
+        };
     }
-    // 📊 Estadísticas agregadas
-    const report = {
-        runs,
-        seed: seedUsed,
-        cagr: stats(cagrArr),
-        mdd: stats(mddArr),
-        sharpe: stats(sharpeArr),
-        returnTotal: stats(returnArr),
-    };
-    // Guardar reporte opcional
-    if (opts.saveReport) {
-        const path = `./reports/montecarlo_report_${Date.now()}.json`;
-        fs.writeFileSync(path, JSON.stringify(report, null, 2));
-        console.log(`📦 Reporte Monte Carlo guardado en: ${path}`);
+    catch (err) {
+        console.error("❌ Error en runMonteCarlo:", err.message);
+        return { ok: false, error: err.message };
     }
-    console.log("✅ VALIDATE Monte Carlo (Anti-Overfit / Quantum Ready) CARGADO!! ---");
-    return report;
 }

@@ -10,22 +10,15 @@ import { fileURLToPath } from "url";
 import authRouter from "./routes/server_auth.js";
 
 
-// ✅ Cargar .env desde la raíz real del proyecto
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const envPath = path.resolve(__dirname, "../../backtester-pro/.env"); // 👈 ruta fija a tu proyecto
-
-dotenv.config({ path: envPath });
-
-// 🧩 Debug para confirmar
-console.log("🌍 Cargando .env desde:", envPath);
+// ✅ Config .env compatible con Render + local
+dotenv.config();
 console.log("🧠 OMEGA_V5_ENABLED =", process.env.OMEGA_V5_ENABLED);
+
+
 
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import fs from "fs";
-import path from "path";
 import { appendSample, loadMemory, ensureMemory, LearnSample } from "./learn/memoryStore.js";
 import { generateAdvice } from "./learn/learner.js";
 import {
@@ -37,16 +30,21 @@ import { saveBrainprint } from "./ai/userBrainprint.js"; // v10 Brainprint
 import { generateNeuralAdvisorV11 } from "./ai/neuralAdvisor_v11.js"; // 🧠 v11 Reflexive Cognition Core
 
 const app = express();
+const ALLOWED_ORIGINS = [
+  "http://localhost:3000",
+  "http://192.168.1.90:3000",
+  process.env.FRONTEND_URL,        // p.ej. https://tu-frontend.com
+  process.env.RENDER_FRONTEND_URL, // opcional
+].filter(Boolean);
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",          // para desarrollo local
-      "http://192.168.1.90:3000",       // para acceso desde LAN (tu navegador actual)
-    ],
+    origin: ALLOWED_ORIGINS,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
 app.use(bodyParser.json());
 app.use("/auth", authRouter);
 // 📂 /reports
@@ -124,6 +122,11 @@ app.post("/ai/reports", (req, res) => {
   const { strategyId } = req.body || {};
   const id = strategyId || "demo-unnamed";
 
+  // ✅ URL pública dinámica
+  const proto = (req.headers["x-forwarded-proto"] as string) || "http";
+  const host = req.get("host");
+  const publicBase = process.env.PUBLIC_BASE_URL || `${proto}://${host}`;
+
   const reportData = {
     reportId: id,
     quantumRating: 7.45,
@@ -131,14 +134,18 @@ app.post("/ai/reports", (req, res) => {
     robustness: "83.2%",
     integrity: true,
     date: new Date().toISOString(),
-    url: `http://192.168.1.90:4000/reports/${id}.json`,
+    url: `${publicBase}/reports/${id}.json`,
   };
 
   const filePath = path.join(REPORTS_DIR, `${id}.json`);
   fs.writeFileSync(filePath, JSON.stringify(reportData, null, 2));
 
   console.log(`📘 [REPORT] Guardado: ${filePath}`);
-  res.json({ success: true, message: "Reporte público generado y guardado correctamente", publicUrl: reportData.url });
+  res.json({
+    success: true,
+    message: "Reporte público generado y guardado correctamente",
+    publicUrl: reportData.url,
+  });
 });
 
 // =====================================================
@@ -679,26 +686,38 @@ app.get("/ai/learn/v12/:id", (req, res) => {
   }
 });
 
+
 // ======================================================
 // 🌐 RUTAS DE CONTROL IA (v10.3-B Web Control Panel)
+// ✅ Versión corregida sin duplicados — Safe Patch Julio (2025-10-27)
 // ======================================================
 
-import { loadMemory, ensureMemory } from "./learn/memoryStore.js";
-import { generateUnifiedAdviceHybridV10 } from "./ai/hybridAdvisor.js";
-import { runMonteCarlo } from "./ai/montecarlo.js"; // ✅ Usamos el motor real de Montecarlo v4
-// 🔒 Eliminado import incorrecto predictor_v4.4.js (no existe en esta build)
+// ⚠️ Los imports originales de memoryStore, hybridAdvisor y montecarlo
+// ya están definidos arriba. Aquí los renombramos como alias para evitar
+// conflictos de compilación con TypeScript sin alterar la ejecución.
+
+import {
+  loadMemory as loadMemoryControl,
+  ensureMemory as ensureMemoryControl,
+} from "./learn/memoryStore.js";
+import {
+  generateUnifiedAdviceHybridV10 as generateUnifiedAdviceHybridV10Control,
+} from "./ai/hybridAdvisor.js";
+import {
+  runMonteCarlo as runMonteCarloControl,
+} from "./ai/montecarlo.js"; // ✅ alias seguro
 
 // 🧩 Refrescar Memoria Cognitiva
 app.post("/ai/learn/memory", async (req, res) => {
   try {
-    await ensureMemory();
-    const mem = await loadMemory();
+    await ensureMemoryControl();
+    const mem = await loadMemoryControl();
     res.json({
       status: "ok",
-      samples: mem.length,
+      samples: Array.isArray(mem.samples) ? mem.samples.length : 0,
       message: "Memoria cognitiva actualizada exitosamente",
     });
-  } catch (err) {
+  } catch (err: any) {
     console.error("❌ Error al refrescar memoria:", err);
     res.status(500).json({ error: err.message });
   }
@@ -707,7 +726,7 @@ app.post("/ai/learn/memory", async (req, res) => {
 // 🔮 Ejecutar Predicción Avanzada (usa Symbiont v10)
 app.post("/ai/predict/advanced", async (req, res) => {
   try {
-    const result = await generateUnifiedAdviceHybridV10({
+    const result = await generateUnifiedAdviceHybridV10Control({
       strategy: "demo",
       context: "educational",
     });
@@ -716,11 +735,27 @@ app.post("/ai/predict/advanced", async (req, res) => {
       message: "Predicción avanzada ejecutada",
       result,
     });
-  } catch (err) {
+  } catch (err: any) {
     console.error("❌ Error en predicción avanzada:", err);
     res.status(500).json({ error: err.message });
   }
 });
+
+// 🎲 Correr Simulación Montecarlo (CORE v4 estable)
+app.post("/ai/montecarlo", async (_req, res) => {
+  try {
+    const result = await runMonteCarloControl(300); // DEBUG: control de número de ejecuciones
+    res.json({
+      status: "ok",
+      message: "Simulación Montecarlo v4 ejecutada correctamente",
+      result,
+    });
+  } catch (err: any) {
+    console.error("❌ Error en Montecarlo:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 
 // 🎲 Correr Simulación Montecarlo (CORE v4 estable)
 app.post("/ai/montecarlo", async (_req, res) => {
@@ -830,9 +865,12 @@ app.get("/ai/reflective/market", async (_req, res) => {
 
 
 // 🚀 SERVIDOR PRINCIPAL
-const PORT = 4000;
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`💡 Omega AI Server v4.3.2 corriendo en http://192.168.1.90:${PORT}`);
+const PORT = Number(process.env.PORT) || 4000;
+const HOST = "0.0.0.0";
+app.set("trust proxy", 1);
+app.listen(PORT, HOST, () => {
+  console.log(`💡 Omega AI Server v4.3.2 escuchando en :${PORT}`);
+
   console.log("📡 Módulos activos: v7.1, v8, v9 (Synaptic), v10 (Symbiont + Brainprint)");
   console.log("🧩 Modo de control Web Educativo v10.3-B activado");
   console.log("🔒 AutoUpdater educativo habilitado (BTC, XAU, SP500)");

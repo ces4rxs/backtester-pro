@@ -63,13 +63,15 @@ function runOptimizer() {
   const best = sorted[0];
 
   console.log("\n✅ OPTIMIZACIÓN FINALIZADA");
-  console.table(sorted.map((r) => ({
-    short: r.short,
-    long: r.long,
-    robustScore: r.robustScore.toFixed(2),
-    passProb: r.passProb,
-    riskLabel: r.riskLabel,
-  })));
+  console.table(
+    sorted.map((r) => ({
+      short: r.short,
+      long: r.long,
+      robustScore: r.robustScore.toFixed(2),
+      passProb: r.passProb,
+      riskLabel: r.riskLabel,
+    }))
+  );
 
   console.log(`🏆 Mejor configuración encontrada: SMA(${best.short}, ${best.long})`);
   console.log(
@@ -100,4 +102,11 @@ function runOptimizer() {
   console.log(`\n🧠 Nueva mejor configuración guardada en ${bestPath}`);
 }
 
-runOptimizer();
+// ✅ Exporta la función para poder ejecutarla desde otros módulos (como runAiOptimizer.ts)
+export { runOptimizer };
+
+// 🧩 Si se ejecuta directamente este archivo (ej: node --import tsx src/ai/optimizer.ts),
+// también correrá automáticamente.
+if (import.meta.url === `file://${process.argv[1]}`) {
+  runOptimizer();
+}

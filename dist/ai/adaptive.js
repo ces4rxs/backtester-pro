@@ -9,9 +9,8 @@ import readline from "readline";
 const __dirname_ = path.dirname(new URL(import.meta.url).pathname);
 // === 🧩 1. Detectar automáticamente carpeta base de resultados (Windows Safe) ===
 function detectResultsDir() {
-    // Usamos path.resolve + toString() para asegurar rutas completas limpias
     const candidates = [
-        path.resolve(process.cwd(), "results"), // raíz del proyecto
+        path.resolve(process.cwd(), "results"),
         path.resolve(__dirname_, "../../results"),
         path.resolve(__dirname_, "../data"),
         path.resolve(__dirname_, "../../data"),
@@ -25,7 +24,6 @@ function detectResultsDir() {
         }
         catch { }
     }
-    // ✅ Versión 100 % compatible con Windows (usa process.cwd)
     const defaultDir = path.join(process.cwd(), "results");
     try {
         fs.mkdirSync(defaultDir, { recursive: true, mode: 0o755 });
@@ -37,7 +35,6 @@ function detectResultsDir() {
     return defaultDir;
 }
 const RESULTS_DIR = process.env.AI_RESULTS_DIR || detectResultsDir();
-// Carpeta de datasets y modelos en rutas absolutas basadas en el cwd (Windows-safe)
 const DATASETS_DIR = path.join(process.cwd(), "src", "ai", "datasets");
 const MODELS_DIR = path.join(process.cwd(), "src", "ai", "models");
 // === 🧩 2. Utilidades de archivos ===
@@ -147,13 +144,14 @@ function pickFeatures(row) {
 }
 // === 🧩 5. Escribir CSV ===
 function writeCsv(file, rows) {
-    const headers = Array.from(rows.reduce((set, r) => {
-        Object.keys(r).forEach((k) => set.add(k));
+    const arr = Array.isArray(rows) ? rows : [rows];
+    const headers = Array.from(arr.reduce((set, r) => {
+        Object.keys(r ?? {}).forEach((k) => set.add(k));
         return set;
     }, new Set()));
     const lines = [
         headers.join(","),
-        ...rows.map((r) => headers
+        ...arr.map((r) => headers
             .map((h) => {
             const val = r[h];
             if (val === null || val === undefined)
@@ -211,7 +209,6 @@ export async function buildDataset() {
     const csvPath = path.join(DATASETS_DIR, "dataset.csv");
     fs.writeFileSync(jsonPath, JSON.stringify(dataset, null, 2), "utf8");
     writeCsv(csvPath, dataset);
-    // Metadatos modelo
     const meta = {
         version: "1.0",
         generatedAt: new Date().toISOString(),

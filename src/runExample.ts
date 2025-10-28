@@ -8,7 +8,7 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// 🧠 Leer mejor configuración guardada
+// === 🧠 Leer mejor configuración guardada ===
 const bestPath = path.join(__dirname, "ai", "models", "best_strategy.json");
 let bestShort = 10;
 let bestLong = 50;
@@ -20,25 +20,37 @@ try {
     bestLong = best.long ?? 50;
     console.log(`🧠 Usando mejor configuración guardada: SMA(${bestShort}, ${bestLong})`);
   }
-} catch {
-  console.warn("⚠️ No se pudo leer best_strategy.json, usando valores por defecto");
+} catch (err) {
+  console.warn("⚠️ No se pudo leer best_strategy.json, usando valores por defecto", err);
 }
 
-// 🧩 Prioridad: variables del entorno (si existen)
+// === 🧩 Prioridad: variables del entorno (si existen) ===
 const short = Number(process.env.SMA_SHORT ?? bestShort);
 const long = Number(process.env.SMA_LONG ?? bestLong);
 
-const dataPath = path.join(__dirname, "data", "sample_btc_usd_1d.json");
-const bars = JSON.parse(fs.readFileSync(dataPath, "utf8"));
+console.log(`\n⚙️ Preparando backtest SMA(${short}, ${long})...`);
 
-// 🧠 Estrategia (cruce de medias)
+// === 🧮 Cargar datos ===
+const dataPath = path.join(__dirname, "data", "sample_btc_usd_1d.json");
+if (!fs.existsSync(dataPath)) {
+  console.error(`❌ No se encontró el archivo de datos en: ${dataPath}`);
+  process.exit(1);
+}
+
+const bars = JSON.parse(fs.readFileSync(dataPath, "utf8"));
+if (!Array.isArray(bars) || bars.length < 50) {
+  console.error(`⚠️ Dataset inválido o muy corto (${bars.length} barras)`);
+  process.exit(1);
+}
+
+// === 🧠 Estrategia (Cruce de Medias) ===
 const strat = smaCrossover(short, long);
 
-// ⚙️ Ejecutar backtest
-console.log(`\n⚙️ Ejecutando estrategia SMA(${short}, ${long})`);
+// === ⚙️ Ejecutar Backtest ===
+console.log(`🚀 Ejecutando estrategia SMA(${short}, ${long}) con ${bars.length} velas...\n`);
 const res = runBacktest(bars, strat, { validateData: true });
 
-// 🧮 Métricas seguras
+// === 🧮 Métricas seguras ===
 const equityFinal = res.equityFinal?.toFixed?.(2) ?? "N/A";
 const returnTotal = res.returnTotal ? (res.returnTotal * 100).toFixed(2) + "%" : "N/A";
 const sharpe = res.sharpe?.toFixed?.(2) ?? "N/A";
@@ -46,7 +58,8 @@ const sortino = res.sortino ? res.sortino.toFixed(2) : "N/A";
 const mdd = res.mdd ? (res.mdd * 100).toFixed(1) + "%" : "N/A";
 const cagr = res.cagr ? (res.cagr * 100).toFixed(2) + "%" : "N/A";
 
-console.log("\n📈 === RESULTADO BACKTEST ===");
+// === 📊 Salida visible ===
+console.log("📈 === RESULTADO BACKTEST ===");
 console.table({
   EquityFinal: equityFinal,
   ReturnTotal: returnTotal,
@@ -56,5 +69,13 @@ console.table({
   CAGR: cagr,
 });
 
-fs.writeFileSync("backtest_report.json", JSON.stringify(res, null, 2));
-console.log("\n💾 Guardado: backtest_report.json ✅");
+// === 💾 Guardado ===
+try {
+  fs.writeFileSync("backtest_report.json", JSON.stringify(res, null, 2));
+  console.log("\n💾 Reporte guardado correctamente: backtest_report.json ✅");
+} catch (err) {
+  console.error("❌ Error guardando backtest_report.json:", err);
+}
+
+// === 🧩 Final ===
+console.log("\n✅ Backtest SMA completado con éxito.\n");

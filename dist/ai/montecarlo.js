@@ -1,5 +1,5 @@
 // src/ai/montecarlo.ts — OMEGA CORE v4.4 (Monte Carlo)
-import { predictForCurrent } from "./predictor.js";
+import { predictForCurrent } from "./predictor_v4.js";
 export function runMonteCarlo(simulations = 300) {
     const pred = predictForCurrent();
     const muSharpe = pred.predictedSharpe;

@@ -1,4 +1,4 @@
-// src/core/engine.ts (v3.18 - Quantum Realism Audit+ + Exporter)
+// src/core/engine.ts — 🧠 OMEGA Quantum Engine v3.18 (FINAL - Realism + Audit Trade + Stability + Decimal Fix)
 console.log("--- ¡¡VERSIÓN OMEGA v3.18 (REALISM + AUDIT TRADE SLIPPAGE + STABILITY) CARGADA!! ---");
 
 import type { Bar, Strategy, Position, EngineOptions } from "./types.js";
@@ -12,41 +12,38 @@ import { computeSlippageBps } from "./execution.js";
 import fs from "fs";
 import path from "path";
 
-// === 🔒 Función auxiliar: reviveLedgerState ===
+// === 🔒 reviveLedgerState (sin instanceof, seguro para decimal.js-light) ===
 function reviveLedgerState(s: LedgerState): LedgerState {
-  return {
-    cash: s.cash instanceof Decimal ? s.cash : D(s.cash),
-    pos: s.pos instanceof Decimal ? s.pos : D(s.pos),
-    avgPrice: s.avgPrice instanceof Decimal ? s.avgPrice : D(s.avgPrice),
-  };
+  const toDec = (x: any) =>
+    x && typeof x.toDecimalPlaces === "function" && typeof x.plus === "function" ? x : D(x);
+  return { cash: toDec(s.cash), pos: toDec(s.pos), avgPrice: toDec(s.avgPrice) };
 }
 
-// === 🧠 Función principal: runBacktest ===
+// === 🧠 runBacktest principal ===
 export function runBacktest(bars: Bar[], strategy: Strategy, options: EngineOptions = {}) {
   if (!bars || bars.length < 2) throw new Error("Dataset insuficiente");
 
   const { rng, seedUsed } = createRNG(options.seed);
   const runId = `omega-${Date.now()}`;
 
-  // 🧩 DataGuard opcional
+  // 🧩 DataGuard
   let checksum = "none";
   if (options.validateData) {
     console.log("🧩 [DataGuard] Verificando integridad de dataset...");
     const guard = validateBars(bars, { strict: true, expectSorted: true, allowEqualTimestamps: false });
-    if (!guard.ok) {
-      console.warn("⚠️ DataGuard encontró problemas:", guard.errors);
-    } else {
+    if (!guard.ok) console.warn("⚠️ DataGuard encontró problemas:", guard.errors);
+    else {
       console.log("✅ [DataGuard] OK - Checksum:", guard.checksum);
       checksum = guard.checksum;
     }
   }
 
-  // 📒 Journal opcional
+  // 📒 Journal
   const journaling = !!options.enableJournal;
   const journal = journaling ? startJournal({ runId, dir: options.journalDir }) : null;
-  let journalChecksum: string | undefined = undefined;
+  let journalChecksum: string | undefined;
 
-  // 💰 Ledger
+  // 💰 Ledger inicial
   const originalState = initLedger(options.initialCash ?? 10000);
   let state: LedgerState = reviveLedgerState(originalState);
 
@@ -65,17 +62,13 @@ export function runBacktest(bars: Bar[], strategy: Strategy, options: EngineOpti
 
     const barClose_D = D((bar as any).c ?? (bar as any).close);
     const pos = D(state.pos);
-
-    const currentPosition: Position | null = pos.gt(0)
-      ? { size: pos, entryPrice: state.avgPrice }
-      : null;
-
+    const currentPosition: Position | null = pos.gt(0) ? { size: pos, entryPrice: state.avgPrice } : null;
     const signal = strategy.onBar(bar, i, currentPosition);
 
     // === BUY ===
     if (signal === "buy" && !currentPosition) {
       const sizeToBuy = state.cash.div(barClose_D);
-      if (!sizeToBuy.isFinite() || sizeToBuy.lte(0)) continue;
+      if (!(sizeToBuy instanceof Decimal) || !sizeToBuy.isFinite?.() || !isFinite(sizeToBuy.toNumber()) || sizeToBuy.lte(0)) continue;
 
       const tradeSlippageBps =
         options.slippage?.mode
@@ -96,28 +89,30 @@ export function runBacktest(bars: Bar[], strategy: Strategy, options: EngineOpti
       trades.push({
         type: "buy",
         time: bar.t,
-        price: barClose_D.toDP(DP.price).toNumber(),
+        price: D(barClose_D).toDP(DP.price).toNumber(),
         size: sizeToBuy.toDP(DP.size).toNumber(),
         fee: fill.fee.toNumber(),
         slippageBps: Number(tradeSlippageBps),
       });
 
-      if (journal)
-        appendTrade(journal, {
+      if (journal) {
+        const payload: any = {
           runId,
           time: bar.t,
           side: "buy",
-          price: barClose_D.toDP(DP.price).toNumber(),
+          price: D(barClose_D).toDP(DP.price).toNumber(),
           size: sizeToBuy.toDP(DP.size).toNumber(),
           fee: fill.fee.toNumber(),
           slippageBps: Number(tradeSlippageBps),
-        });
+        };
+        appendTrade(journal, payload);
+      }
     }
 
     // === SELL ===
     else if (signal === "sell" && currentPosition) {
       const sizeToSell = currentPosition.size;
-      if (!sizeToSell.isFinite() || sizeToSell.lte(0)) continue;
+      if (!(sizeToSell instanceof Decimal) || !sizeToSell.isFinite?.() || !isFinite(sizeToSell.toNumber()) || sizeToSell.lte(0)) continue;
 
       const tradeSlippageBps =
         options.slippage?.mode
@@ -138,28 +133,30 @@ export function runBacktest(bars: Bar[], strategy: Strategy, options: EngineOpti
       trades.push({
         type: "sell",
         time: bar.t,
-        price: barClose_D.toDP(DP.price).toNumber(),
+        price: D(barClose_D).toDP(DP.price).toNumber(),
         size: sizeToSell.toDP(DP.size).toNumber(),
         fee: fill.fee.toNumber(),
         slippageBps: Number(tradeSlippageBps),
       });
 
-      if (journal)
-        appendTrade(journal, {
+      if (journal) {
+        const payload: any = {
           runId,
           time: bar.t,
           side: "sell",
-          price: barClose_D.toDP(DP.price).toNumber(),
+          price: D(barClose_D).toDP(DP.price).toNumber(),
           size: sizeToSell.toDP(DP.size).toNumber(),
           fee: fill.fee.toNumber(),
           slippageBps: Number(tradeSlippageBps),
-        });
+        };
+        appendTrade(journal, payload);
+      }
     }
 
     equitySeries_D.push(equity(state, barClose_D));
   }
 
-  // === Métricas finales ===
+  // === Métricas ===
   const equitySeries = equitySeries_D.map((eq) => eq.toNumber());
   const initialCash_N = D(options.initialCash ?? 10000).toNumber();
   const finalBalance = equitySeries[equitySeries.length - 1];
@@ -195,7 +192,7 @@ export function runBacktest(bars: Bar[], strategy: Strategy, options: EngineOpti
     journalChecksum = fin.checksum;
   }
 
-  // === Crear manifest estándar del motor ===
+  // === Manifest ===
   createManifest({
     runId,
     engineVersion: "v3.18",
@@ -229,9 +226,7 @@ export function runBacktest(bars: Bar[], strategy: Strategy, options: EngineOpti
     journalChecksum,
   };
 
-  // ============================================================
-  // 🧠 OMEGA Exporter — Guardado automático de auditoría + manifest
-  // ============================================================
+  // === 🧠 OMEGA Exporter ===
   try {
     const baseDir = path.join(process.cwd(), "results");
     if (!fs.existsSync(baseDir)) fs.mkdirSync(baseDir, { recursive: true });
@@ -240,7 +235,6 @@ export function runBacktest(bars: Bar[], strategy: Strategy, options: EngineOpti
     const folder = path.join(baseDir, `${timestamp}_${strategy.name ?? "UnnamedStrategy"}`);
     fs.mkdirSync(folder, { recursive: true });
 
-    // auditoria.csv
     const csvPath = path.join(folder, "auditoria.csv");
     const metrics = {
       equityFinal: res.equityFinal,
@@ -250,12 +244,9 @@ export function runBacktest(bars: Bar[], strategy: Strategy, options: EngineOpti
       mdd: res.mdd,
       tradesCount: res.trades.length,
     };
-    const csvHeaders = Object.keys(metrics);
-    const csvValues = Object.values(metrics);
-    const csvContent = [csvHeaders.join(","), csvValues.join(",")].join("\n");
+    const csvContent = [Object.keys(metrics).join(","), Object.values(metrics).join(",")].join("\n");
     fs.writeFileSync(csvPath, csvContent, "utf8");
 
-    // manifest.json
     const manifest = {
       strategy: strategy.name ?? "UnnamedStrategy",
       timestamp,
@@ -264,11 +255,7 @@ export function runBacktest(bars: Bar[], strategy: Strategy, options: EngineOpti
       metrics,
       notes: "Archivo generado automáticamente por OMEGA Quantum Engine",
     };
-    fs.writeFileSync(
-      path.join(folder, "manifest.json"),
-      JSON.stringify(manifest, null, 2),
-      "utf8"
-    );
+    fs.writeFileSync(path.join(folder, "manifest.json"), JSON.stringify(manifest, null, 2), "utf8");
 
     console.log(`🧾 Auditoría guardada en: ${folder}`);
   } catch (err) {

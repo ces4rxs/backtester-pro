@@ -1,48 +1,40 @@
 // src/runAiOptimizer.ts
+// 🧠 OMEGA – AI Optimizer Launcher (Nivel 4: Bucle de Estrategias)
+
 import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
-import { loadBars } from "./utils/dataLoader.js";
-import { smaCrossover } from "./strategies/smaCrossover.js";
-import { bayesSearch } from "./ai/optimizer.js"; // ✅ Ruta corregida
-import type { Space } from "./ai/tuner.js";
+import { runOptimizer } from "./ai/optimizer.js"; // ✅ función real exportada
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
 try {
-  const DATA_PATH = path.join(__dirname, "data", "sample_btc_usd_1d.json");
-  const bars = loadBars(DATA_PATH);
-  const space: Space = {
-    shortWin: { kind: "int", min: 5, max: 30, step: 1 },
-    longWin: { kind: "int", min: 20, max: 120, step: 1 },
-  };
-  const strategyBuilder = (p: any) => smaCrossover(p.shortWin, p.longWin);
-  const { best } = bayesSearch(
-    strategyBuilder, bars, space,
-    { iters: 50, warmup: 10, mddPenalty: 0.6, minTrades: 3 }
-  );
-  if (!best) throw new Error("La búsqueda no encontró resultados.");
+  console.log("🚀 Iniciando OMEGA AI Optimizer (Nivel 4 – Bucle de Estrategias)");
+  console.log("⚙️ Cargando módulo de optimización avanzada...");
 
-  console.log("\n✨ Mejor configuración encontrada por IA:");
-  console.log(best.params);
-  console.log("📈 Puntuación IA:", best.score.toFixed(4));
-  
-  // ✅ ¡COMPATIBLE! Lee la estructura PLANA (best.metrics.cagr)
-  // ¡No más .metrics.metrics!
-  console.log("\n📊 Métricas del mejor set:");
-  console.table({
-    ...best.params,
-    equityFinal: best.metrics.equityFinal.toFixed(2),
-    returnTotal: (best.metrics.returnTotal * 100).toFixed(2) + "%",
-    cagr: (best.metrics.cagr * 100).toFixed(2) + "%",
-    sharpe: best.metrics.sharpe.toFixed(2),
-    sortino: best.metrics.sortino.toFixed(2),
-    mdd: (best.metrics.mdd * 100).toFixed(2) + "%",
-    trades: best.metrics.trades.length,
-  });
+  // Ejecuta el optimizador (ya controla internamente las combinaciones SMA)
+  runOptimizer();
 
-  fs.writeFileSync("ai_report.json", JSON.stringify(best, null, 2));
-  console.log("💾 Guardado: ai_report.json ✅");
+  // Esperamos un poco a que se genere el archivo de salida
+  const RESULT_FILE = path.join(__dirname, "optimizer_results.json");
+  const BEST_FILE = path.join(__dirname, "ai", "models", "best_strategy.json");
+
+  // Espera unos segundos para leer los resultados (opcional)
+  setTimeout(() => {
+    if (fs.existsSync(RESULT_FILE)) {
+      const data = JSON.parse(fs.readFileSync(RESULT_FILE, "utf8"));
+      console.log(`\n✅ Se detectaron ${data.length} combinaciones optimizadas.`);
+      console.log("🏆 Mejor resultado:");
+      console.table(data[0]);
+    }
+
+    if (fs.existsSync(BEST_FILE)) {
+      console.log(`\n🧠 Configuración óptima almacenada en: ${BEST_FILE}`);
+    }
+
+    console.log("💾 Optimización completada y resultados guardados ✅");
+  }, 3000);
 } catch (err) {
-  console.error("\n❌ Error en el optimizador IA:", err);
+  console.error("\n❌ Error en el módulo OMEGA Optimizer:", err);
 }

@@ -11,11 +11,11 @@ import readline from "readline";
 type AnyObj = Record<string, any>;
 
 const __dirname_ = path.dirname(new URL(import.meta.url).pathname);
+
 // === 🧩 1. Detectar automáticamente carpeta base de resultados (Windows Safe) ===
 function detectResultsDir(): string {
-  // Usamos path.resolve + toString() para asegurar rutas completas limpias
   const candidates = [
-    path.resolve(process.cwd(), "results"), // raíz del proyecto
+    path.resolve(process.cwd(), "results"),
     path.resolve(__dirname_, "../../results"),
     path.resolve(__dirname_, "../data"),
     path.resolve(__dirname_, "../../data"),
@@ -30,7 +30,6 @@ function detectResultsDir(): string {
     } catch {}
   }
 
-  // ✅ Versión 100 % compatible con Windows (usa process.cwd)
   const defaultDir = path.join(process.cwd(), "results");
   try {
     fs.mkdirSync(defaultDir, { recursive: true, mode: 0o755 });
@@ -41,12 +40,9 @@ function detectResultsDir(): string {
   return defaultDir;
 }
 
-const RESULTS_DIR =
-  process.env.AI_RESULTS_DIR || detectResultsDir();
-// Carpeta de datasets y modelos en rutas absolutas basadas en el cwd (Windows-safe)
+const RESULTS_DIR = process.env.AI_RESULTS_DIR || detectResultsDir();
 const DATASETS_DIR = path.join(process.cwd(), "src", "ai", "datasets");
 const MODELS_DIR = path.join(process.cwd(), "src", "ai", "models");
-
 
 // === 🧩 2. Utilidades de archivos ===
 function ensureDir(dir: string) {
@@ -161,16 +157,18 @@ function pickFeatures(row: AnyObj) {
 
 // === 🧩 5. Escribir CSV ===
 function writeCsv(file: string, rows: AnyObj[]) {
+  const arr: AnyObj[] = Array.isArray(rows) ? rows : [rows];
+
   const headers = Array.from(
-    rows.reduce((set, r) => {
-      Object.keys(r).forEach((k) => set.add(k));
+    arr.reduce((set: Set<string>, r: AnyObj) => {
+      Object.keys(r ?? {}).forEach((k) => set.add(k));
       return set;
     }, new Set<string>())
   );
 
   const lines = [
     headers.join(","),
-    ...rows.map((r) =>
+    ...arr.map((r) =>
       headers
         .map((h) => {
           const val = r[h];
@@ -187,6 +185,7 @@ function writeCsv(file: string, rows: AnyObj[]) {
 
   fs.writeFileSync(file, lines.join("\n"), "utf8");
 }
+
 
 // === 🧩 6. Cargar manifest.json asociado ===
 function loadSiblingManifest(auditoriaPath: string): AnyObj | null {
@@ -205,9 +204,7 @@ export async function buildDataset() {
   ensureDir(MODELS_DIR);
 
   console.log("🔍 Escaneando auditorías en:", RESULTS_DIR);
-  const files = listFilesRecursive(RESULTS_DIR).filter((f) =>
-    /auditoria\.csv$/i.test(f)
-  );
+  const files = listFilesRecursive(RESULTS_DIR).filter((f) => /auditoria\.csv$/i.test(f));
   console.log("🧾 Archivos encontrados:", files.length);
 
   if (files.length === 0) {
@@ -239,7 +236,6 @@ export async function buildDataset() {
   fs.writeFileSync(jsonPath, JSON.stringify(dataset, null, 2), "utf8");
   writeCsv(csvPath, dataset);
 
-  // Metadatos modelo
   const meta = {
     version: "1.0",
     generatedAt: new Date().toISOString(),
@@ -261,11 +257,7 @@ export async function buildDataset() {
     notes:
       "Archivo meta generado automáticamente por OMEGA AI Learner. Entrenamiento ONNX se hará en el Nivel 3.",
   };
-  fs.writeFileSync(
-    path.join(MODELS_DIR, "model.meta.json"),
-    JSON.stringify(meta, null, 2),
-    "utf8"
-  );
+  fs.writeFileSync(path.join(MODELS_DIR, "model.meta.json"), JSON.stringify(meta, null, 2), "utf8");
 
   console.log(`✅ Dataset construido (${dataset.length} filas)`);
   console.log(`📄 JSON: ${jsonPath}`);

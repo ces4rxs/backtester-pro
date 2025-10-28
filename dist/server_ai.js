@@ -1,10 +1,18 @@
 // src/server_ai.ts — 🧠 Omega AI Server v4.3.2 FINAL
 // Stable + Tutor Unificado v7.1 (Hybrid) + Neural v8/v9 (Synaptic) + v10 (Symbiont) + Predict + Memory Learn
+// src/server_ai.ts
+// src/server_ai.ts — 🧠 Omega AI Server v4.3.2 FINAL
+// src/server_ai.ts — 🧠 Omega AI Server v4.3.2 FINAL
+import { startMarketAutoUpdater } from "./data/marketAutoUpdater.js";
+import dotenv from "dotenv";
+import path from "path";
+import authRouter from "./routes/server_auth.js";
+// ✅ Config .env compatible con Render + local
+dotenv.config();
+console.log("🧠 OMEGA_V5_ENABLED =", process.env.OMEGA_V5_ENABLED);
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import fs from "fs";
-import path from "path";
 import { appendSample, loadMemory, ensureMemory } from "./learn/memoryStore.js";
 import { generateAdvice } from "./learn/learner.js";
 import { generateUnifiedAdviceHybrid, // v7.1 Hybrid Advisor Premium
@@ -12,9 +20,21 @@ generateUnifiedAdviceHybridV9, // v9 Synaptic Intelligence Core
 generateUnifiedAdviceHybridV10, // v10 Symbiont (Personal Neural Twin)
  } from "./ai/hybridAdvisor.js";
 import { saveBrainprint } from "./ai/userBrainprint.js"; // v10 Brainprint
+import { generateNeuralAdvisorV11 } from "./ai/neuralAdvisor_v11.js"; // 🧠 v11 Reflexive Cognition Core
 const app = express();
-app.use(cors());
+const ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://192.168.1.90:3000",
+    process.env.FRONTEND_URL, // p.ej. https://tu-frontend.com
+    process.env.RENDER_FRONTEND_URL, // opcional
+].filter(Boolean);
+app.use(cors({
+    origin: ALLOWED_ORIGINS,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+}));
 app.use(bodyParser.json());
+app.use("/auth", authRouter);
 // 📂 /reports
 const REPORTS_DIR = path.join(process.cwd(), "reports");
 if (!fs.existsSync(REPORTS_DIR)) {
@@ -81,6 +101,10 @@ app.get("/ai/manifest", (_req, res) => {
 app.post("/ai/reports", (req, res) => {
     const { strategyId } = req.body || {};
     const id = strategyId || "demo-unnamed";
+    // ✅ URL pública dinámica
+    const proto = req.headers["x-forwarded-proto"] || "http";
+    const host = req.get("host");
+    const publicBase = process.env.PUBLIC_BASE_URL || `${proto}://${host}`;
     const reportData = {
         reportId: id,
         quantumRating: 7.45,
@@ -88,12 +112,16 @@ app.post("/ai/reports", (req, res) => {
         robustness: "83.2%",
         integrity: true,
         date: new Date().toISOString(),
-        url: `http://192.168.1.90:4000/reports/${id}.json`,
+        url: `${publicBase}/reports/${id}.json`,
     };
     const filePath = path.join(REPORTS_DIR, `${id}.json`);
     fs.writeFileSync(filePath, JSON.stringify(reportData, null, 2));
     console.log(`📘 [REPORT] Guardado: ${filePath}`);
-    res.json({ success: true, message: "Reporte público generado y guardado correctamente", publicUrl: reportData.url });
+    res.json({
+        success: true,
+        message: "Reporte público generado y guardado correctamente",
+        publicUrl: reportData.url,
+    });
 });
 // =====================================================
 // 3) Obtener reporte
@@ -348,11 +376,11 @@ app.post("/ai/brainprint", (req, res) => {
 // =====================================================
 // 12) Symbiont Advisor (v10 – Personal Neural Twin)
 // =====================================================
-app.get("/ai/learn/symbiont/:id", (req, res) => {
+app.get("/ai/learn/symbiont/:id", async (req, res) => {
     const { id } = req.params;
     try {
         console.log(`🫂 [SYM-BRAIN] Analizando estrategia: ${id}`);
-        const result = generateUnifiedAdviceHybridV10(id);
+        const result = await generateUnifiedAdviceHybridV10(id); // ✅ FIX: ahora usa await
         console.log("✅ [SYM-BRAIN] v10 completado correctamente.");
         res.json({ ok: true, strategyId: id, mode: "symbiont", result });
     }
@@ -361,11 +389,10 @@ app.get("/ai/learn/symbiont/:id", (req, res) => {
         res.status(500).json({ ok: false, error: err?.message || "unknown" });
     }
 });
-// Alias opcional para v10
-app.get("/ai/learn/neuralv10/:id", (req, res) => {
+app.get("/ai/learn/neuralv10/:id", async (req, res) => {
     const { id } = req.params;
     try {
-        const result = generateUnifiedAdviceHybridV10(id);
+        const result = await generateUnifiedAdviceHybridV10(id); // ✅ FIX: await agregado
         res.json({ ok: true, strategyId: id, mode: "symbiont", result });
     }
     catch (err) {
@@ -375,9 +402,9 @@ app.get("/ai/learn/neuralv10/:id", (req, res) => {
 // =====================================================
 // 13) Predictor Avanzado (v4.4 ML + features)
 // =====================================================
-import { predictForCurrent } from "./ai/predictor.js";
+import { predictForCurrent } from "./ai/predictor_v4.js";
 import { runMonteCarlo } from "./ai/montecarlo.js";
-app.get("/ai/predict/advanced/:strategyId?", (_req, res) => {
+app.get(["/ai/predict/advanced", "/ai/predict/advanced/:strategyId"], (_req, res) => {
     try {
         const pred = predictForCurrent(); // usa el último manifest como estado base
         return res.json({
@@ -394,7 +421,7 @@ app.get("/ai/predict/advanced/:strategyId?", (_req, res) => {
 // =====================================================
 // 14) Monte Carlo (v4.4) — distribución esperada
 // =====================================================
-app.get("/ai/montecarlo/:strategyId?", (req, res) => {
+app.get(["/ai/montecarlo", "/ai/montecarlo/:strategyId"], (req, res) => {
     try {
         const runs = Math.max(100, Math.min(1000, Number(req.query.runs) || 300));
         const mc = runMonteCarlo(runs);
@@ -405,9 +432,358 @@ app.get("/ai/montecarlo/:strategyId?", (req, res) => {
         res.status(500).json({ ok: false, error: e?.message || "unknown" });
     }
 });
-// 🚀 SERVIDOR
-const PORT = 4000;
-app.listen(PORT, "0.0.0.0", () => {
-    console.log(`💡 Omega AI Server v4.3.2 corriendo en http://192.168.1.90:${PORT}`);
+// =====================================================
+// 15) Optimizador Adaptativo (CORE v5.0 – "El Estratega")
+// =====================================================
+import { runAdaptiveOptimizer } from "./core_v5/optimizer_v5.js";
+// 👇 usamos alias para no chocar con el predictor anterior
+import { predictForCurrent as predictForCurrentV5 } from "./ai/predictor_v4.js";
+app.post("/ai/optimize", async (req, res) => {
+    try {
+        // 🔒 Feature-flag de seguridad (solo se activa si OMEGA_V5_ENABLED=true)
+        if (process.env.OMEGA_V5_ENABLED !== "true") {
+            return res.status(403).json({ ok: false, message: "CORE v5.0 está desactivado (flag OMEGA_V5_ENABLED=false)" });
+        }
+        const { manifest, goal } = req.body || {};
+        if (!manifest || !goal) {
+            return res.status(400).json({ ok: false, error: "Se requiere manifest y goal" });
+        }
+        console.log(`🧠 [OPTIMIZER v5] Recibido objetivo: ${JSON.stringify(goal)}`);
+        // 🔗 Adaptador al Profeta v4.4
+        const prophetPredict = async (variant) => {
+            const pred = predictForCurrentV5(variant); // ✅ usa el alias correcto
+            return {
+                predictedSharpe: pred?.predictedSharpe ?? 0,
+                predictedMDD: pred?.predictedMDD ?? 0,
+                antiOverfit: pred?.antiOverfit ?? 0,
+            };
+        };
+        const report = await runAdaptiveOptimizer(manifest, goal, { prophetPredict });
+        const filePath = path.join(REPORTS_DIR, `optimization_${Date.now()}.json`);
+        fs.writeFileSync(filePath, JSON.stringify(report, null, 2));
+        console.log(`🧩 [OPTIMIZER v5] Reporte generado y guardado: ${filePath}`);
+        res.json({ ok: true, report });
+    }
+    catch (err) {
+        console.error("❌ [OPTIMIZER v5] Error:", err);
+        res.status(500).json({ ok: false, error: err?.message || "unknown" });
+    }
+});
+// =====================================================
+// 16) Symbiont Advisor v10 (POST para API externa)
+// =====================================================
+app.post("/ai/symbiont", async (req, res) => {
+    try {
+        const { strategyId } = req.body;
+        if (!strategyId) {
+            return res.status(400).json({ ok: false, error: "Falta strategyId" });
+        }
+        console.log(`🫂 [SYM-REQ] Analizando estrategia: ${strategyId}`);
+        // Ejecuta el módulo del Symbiont
+        const result = await generateUnifiedAdviceHybridV10(strategyId);
+        console.log("✅ [SYM-REQ] v10 completado correctamente.");
+        // Devuelve estructura JSON compatible con frontend
+        return res.json({
+            ok: true,
+            summary: result.summary,
+            mode: result.mode,
+            stats: result.stats,
+            brainprint: result.brainprint,
+            optimizer: result.optimizer || null,
+            insights: result.insights,
+            recommendations: result.recommendations,
+        });
+    }
+    catch (err) {
+        console.error("❌ [SYM-REQ] Error en /ai/symbiont:", err.message);
+        res.status(500).json({ ok: false, error: err.message });
+    }
+});
+// =====================================================
+// 17) Tutor Cognitivo (v10.1 – Omega Learn Integration)
+// =====================================================
+app.post("/ai/tutor/report", async (req, res) => {
+    try {
+        const { report } = req.body || {};
+        if (!report) {
+            return res.status(400).json({ ok: false, error: "Falta el campo 'report' con los datos del tutor" });
+        }
+        // ✅ Asegurar carpeta /reports
+        const tutorDir = path.join(REPORTS_DIR, "tutor");
+        if (!fs.existsSync(tutorDir)) {
+            fs.mkdirSync(tutorDir, { recursive: true });
+        }
+        const fileName = `tutor_report_${Date.now()}.json`;
+        const filePath = path.join(tutorDir, fileName);
+        fs.writeFileSync(filePath, JSON.stringify(report, null, 2));
+        console.log(`📘 [TUTOR-REPORT] Guardado correctamente -> ${filePath}`);
+        res.json({
+            ok: true,
+            message: "Reporte del Tutor Cognitivo v10.1 guardado correctamente",
+            path: filePath,
+        });
+    }
+    catch (err) {
+        console.error("❌ [TUTOR-REPORT] Error al guardar el reporte:", err.message);
+        res.status(500).json({ ok: false, error: err.message });
+    }
+});
+// =====================================================
+// 17) Auto-Optimizer Loop v10.2 (Cierre del Bucle Cognitivo)
+// =====================================================
+import { runAutoLoopV10 } from "./ai/autoLoop.js";
+app.post("/ai/autolearn", async (_req, res) => {
+    try {
+        console.log("🧠 [AUTO-LEARN] Ejecutando bucle cognitivo v10.2...");
+        const result = await runAutoLoopV10();
+        res.json({ ok: true, result });
+    }
+    catch (err) {
+        console.error("❌ [AUTO-LEARN] Error:", err?.message);
+        res.status(500).json({ ok: false, error: err?.message });
+    }
+});
+// =====================================================
+// 18) Datos de mercado en tiempo real (gratuito y educativo)
+// =====================================================
+import fs from "fs";
+app.get("/market/latest", async (_req, res) => {
+    try {
+        const marketDir = path.join(process.cwd(), "src", "data", "market");
+        if (!fs.existsSync(marketDir)) {
+            return res.status(404).json({ ok: false, error: "No existe carpeta de mercado" });
+        }
+        const assets = ["BTCUSD", "XAUUSD", "SP500"];
+        const result = {};
+        for (const asset of assets) {
+            const files = fs
+                .readdirSync(marketDir)
+                .filter((f) => f.startsWith(asset))
+                .sort((a, b) => fs.statSync(path.join(marketDir, b)).mtimeMs -
+                fs.statSync(path.join(marketDir, a)).mtimeMs);
+            if (files.length > 0) {
+                const latestFile = path.join(marketDir, files[0]);
+                const data = JSON.parse(fs.readFileSync(latestFile, "utf8"));
+                result[asset] = {
+                    asset,
+                    lastPrice: data?.price ?? data?.close ?? data[data.length - 1]?.close ?? null,
+                    timestamp: data?.timestamp ?? new Date().toISOString(),
+                    source: asset === "BTCUSD"
+                        ? "CoinGecko"
+                        : asset === "XAUUSD"
+                            ? "Metals-API"
+                            : "Yahoo Finance",
+                };
+            }
+            else {
+                result[asset] = { asset, lastPrice: null, error: "No hay datos" };
+            }
+        }
+        res.json({ ok: true, updatedAt: new Date().toISOString(), data: result });
+    }
+    catch (err) {
+        console.error("❌ [MARKET] Error al leer datos:", err.message);
+        res.status(500).json({ ok: false, error: err.message });
+    }
+});
+// =====================================================
+// 19) Neural Advisor v11 — Reflexive Cognition Core
+// =====================================================
+app.get("/ai/learn/v11/:id", (req, res) => {
+    try {
+        const { id } = req.params;
+        console.log(`🧠 [V11] Analizando estrategia: ${id}`);
+        const result = generateNeuralAdvisorV11(id);
+        console.log("✅ [V11] Evaluación reflexiva completada.");
+        res.json({ ok: true, strategyId: id, result });
+    }
+    catch (e) {
+        console.error("❌ [V11] Error:", e?.message || e);
+        res.status(500).json({ ok: false, error: e?.message || "unknown" });
+    }
+});
+// =====================================================
+// 20) Strategic Advisor v12 — Decision Engine
+// =====================================================
+import { generateStrategicAdvisorV12 } from "./ai/strategicAdvisor_v12.js";
+app.get("/ai/learn/v12/:id", (req, res) => {
+    try {
+        const { id } = req.params;
+        console.log(`🧩 [V12] Ejecutando Strategic Advisor para: ${id}`);
+        const result = generateStrategicAdvisorV12(id);
+        console.log("✅ [V12] Evaluación estratégica completada.");
+        res.json({ ok: true, strategyId: id, result });
+    }
+    catch (e) {
+        console.error("❌ [V12] Error:", e?.message || e);
+        res.status(500).json({ ok: false, error: e?.message || "unknown" });
+    }
+});
+// ======================================================
+// 🌐 RUTAS DE CONTROL IA (v10.3-B Web Control Panel)
+// ✅ Versión corregida sin duplicados — Safe Patch Julio (2025-10-27)
+// ======================================================
+// ⚠️ Los imports originales de memoryStore, hybridAdvisor y montecarlo
+// ya están definidos arriba. Aquí los renombramos como alias para evitar
+// conflictos de compilación con TypeScript sin alterar la ejecución.
+import { loadMemory as loadMemoryControl, ensureMemory as ensureMemoryControl, } from "./learn/memoryStore.js";
+import { generateUnifiedAdviceHybridV10 as generateUnifiedAdviceHybridV10Control, } from "./ai/hybridAdvisor.js";
+import { runMonteCarlo as runMonteCarloControl, } from "./ai/montecarlo.js"; // ✅ alias seguro
+// 🧩 Refrescar Memoria Cognitiva
+app.post("/ai/learn/memory", async (req, res) => {
+    try {
+        await ensureMemoryControl();
+        const mem = await loadMemoryControl();
+        res.json({
+            status: "ok",
+            samples: Array.isArray(mem.samples) ? mem.samples.length : 0,
+            message: "Memoria cognitiva actualizada exitosamente",
+        });
+    }
+    catch (err) {
+        console.error("❌ Error al refrescar memoria:", err);
+        res.status(500).json({ error: err.message });
+    }
+});
+// 🔮 Ejecutar Predicción Avanzada (usa Symbiont v10)
+app.post("/ai/predict/advanced", async (req, res) => {
+    try {
+        const result = await generateUnifiedAdviceHybridV10Control({
+            strategy: "demo",
+            context: "educational",
+        });
+        res.json({
+            status: "ok",
+            message: "Predicción avanzada ejecutada",
+            result,
+        });
+    }
+    catch (err) {
+        console.error("❌ Error en predicción avanzada:", err);
+        res.status(500).json({ error: err.message });
+    }
+});
+// 🎲 Correr Simulación Montecarlo (CORE v4 estable)
+app.post("/ai/montecarlo", async (_req, res) => {
+    try {
+        const result = await runMonteCarloControl(300); // DEBUG: control de número de ejecuciones
+        res.json({
+            status: "ok",
+            message: "Simulación Montecarlo v4 ejecutada correctamente",
+            result,
+        });
+    }
+    catch (err) {
+        console.error("❌ Error en Montecarlo:", err);
+        res.status(500).json({ error: err.message });
+    }
+});
+// 🎲 Correr Simulación Montecarlo (CORE v4 estable)
+app.post("/ai/montecarlo", async (_req, res) => {
+    try {
+        const result = await runMonteCarlo(300); // DEBUG: control de número de ejecuciones
+        res.json({
+            status: "ok",
+            message: "Simulación Montecarlo v4 ejecutada correctamente",
+            result,
+        });
+    }
+    catch (err) {
+        console.error("❌ Error en Montecarlo:", err);
+        res.status(500).json({ error: err.message });
+    }
+});
+// =====================================================
+// 🌍 Reflective Market Endpoint — v10.3-B Production Ready
+// =====================================================
+import fetch from "node-fetch";
+// 🧠 Endpoint de correlaciones y precios reales (listo para prod)
+app.get("/ai/reflective/market", async (_req, res) => {
+    try {
+        console.log("📡 [REFLECTIVE] Solicitando datos de mercado en tiempo real...");
+        // --- Fuentes públicas ---
+        const [btcRes, ethRes, goldRes, spRes, usdCopRes] = await Promise.all([
+            fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"),
+            fetch("https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"),
+            fetch("https://api.metals.live/v1/spot"),
+            fetch("https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC?range=1d&interval=1d"),
+            fetch("https://api.exchangerate.host/latest?base=USD&symbols=COP"),
+        ]);
+        const btc = await btcRes.json();
+        const eth = await ethRes.json();
+        const goldRaw = await goldRes.json();
+        const sp = await spRes.json();
+        const usdCop = await usdCopRes.json();
+        // --- Normalización de datos ---
+        const gold = Array.isArray(goldRaw) ? goldRaw.find((m) => m.gold)?.gold : 2380;
+        const spPrice = sp?.chart?.result?.[0]?.meta?.regularMarketPrice ?? 5200;
+        const cop = usdCop?.rates?.COP ?? 4200;
+        const data = {
+            BTCUSD: btc.bitcoin?.usd ?? 68000,
+            ETHUSD: eth.ethereum?.usd ?? 3600,
+            XAUUSD: gold,
+            SP500: spPrice,
+            USDCOP: cop,
+            timestamp: new Date().toISOString(),
+        };
+        // --- Correlaciones IA (modo educativo simulado) ---
+        const correlations = {
+            "BTC-Oro": +0.67,
+            "BTC-S&P500": +0.41,
+            "Oro-S&P500": -0.12,
+            "BTC-ETH": +0.83,
+        };
+        // --- Insights IA simulados ---
+        const insights = [
+            "Correlación positiva BTC-ETH indica fase de riesgo moderado.",
+            "El Oro mantiene su papel de refugio ante volatilidad creciente.",
+            "El S&P500 refleja estabilidad relativa frente al dólar.",
+        ];
+        res.json({
+            ok: true,
+            version: "v10.3-B",
+            lastUpdated: data.timestamp,
+            data,
+            correlations,
+            insights,
+        });
+    }
+    catch (err) {
+        console.error("❌ [REFLECTIVE] Error obteniendo datos:", err.message);
+        // --- Fallback local ---
+        res.json({
+            ok: true,
+            version: "v10.3-B (Simulado)",
+            data: {
+                BTCUSD: 68000,
+                ETHUSD: 3600,
+                XAUUSD: 2380,
+                SP500: 5230,
+                USDCOP: 4200,
+                timestamp: new Date().toISOString(),
+            },
+            correlations: {
+                "BTC-Oro": +0.67,
+                "BTC-S&P500": +0.41,
+                "Oro-S&P500": -0.12,
+                "BTC-ETH": +0.83,
+            },
+            insights: [
+                "⚙️ Datos simulados: API real no disponible.",
+                "IA reflexiva activa modo seguro para visualización.",
+            ],
+        });
+    }
+});
+// 🚀 SERVIDOR PRINCIPAL
+const PORT = Number(process.env.PORT) || 4000;
+const HOST = "0.0.0.0";
+app.set("trust proxy", 1);
+app.listen(PORT, HOST, () => {
+    console.log(`💡 Omega AI Server v4.3.2 escuchando en :${PORT}`);
     console.log("📡 Módulos activos: v7.1, v8, v9 (Synaptic), v10 (Symbiont + Brainprint)");
+    console.log("🧩 Modo de control Web Educativo v10.3-B activado");
+    console.log("🔒 AutoUpdater educativo habilitado (BTC, XAU, SP500)");
+    // 🧩 Iniciar actualizador de datos de mercado (modo pasivo)
+    startMarketAutoUpdater();
 });

@@ -5,8 +5,8 @@
   "description": "Supermotor de backtesting con IA, TypeScript y Node ESM",
   "main": "dist/server_ai.js",
   "scripts": {
+"build": "tsc -p ./tsconfig.render.json",
     "dev": "tsx src/server_ai.ts",
-    "build": "tsc",
     "start": "node dist/server_ai.js",
     "ai:server": "tsx src/server_ai.ts",
     "dashboard:live": "tsx src/tools/generateDashboardLive.ts",
