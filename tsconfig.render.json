@@ -11,13 +11,19 @@
   },
   "include": [
     "src/server_ai.ts",
-    "src/server_render.ts",
     "src/routes/**/*"
   ],
   "exclude": [
+    "src/ai",
+    "src/core",
+    "src/data",
+    "src/learn",
+    "src/tools",
     "src/test",
     "src/validate",
     "src/warehouse",
+    "src/strategies",
+    "src/utils",
     "src/run*"
   ]
 }
