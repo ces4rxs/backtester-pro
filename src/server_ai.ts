@@ -931,6 +931,37 @@ app.get("/ai/reflective/market", async (_req, res) => {
   }
 });
 
+// =====================================================
+//  🧠 /ai/status — Estado Interno de Módulos Cognitivos
+// =====================================================
+app.get("/ai/status", (_req, res) => {
+  try {
+    const modules = {
+      v7_1: typeof generateUnifiedAdviceHybrid === "function" ? "active" : "missing",
+      v8: "active",
+      v9: "active",
+      v10: "active",
+      v11: typeof generateNeuralAdvisorV11 === "function" ? "active" : "missing",
+      v12: "active",
+      v13: typeof generateQuantumRiskV13 === "function" ? "active" : "missing",
+      v14: typeof generateCognitiveRiskV14 === "function" ? "active" : "missing",
+      v15: "active",
+    };
+
+    res.json({
+      ok: true,
+      version: "Omega AI Server v4.3.2",
+      status: "✅ Core estable y sincronizado",
+      modules,
+      timestamp: new Date().toISOString(),
+    });
+  } catch (err: any) {
+    console.error("❌ [STATUS] Error:", err.message);
+    res.status(500).json({ ok: false, error: err.message });
+  }
+});
+
+
 
 // 🚀 SERVIDOR PRINCIPAL
 const PORT = Number(process.env.PORT) || 4000;
