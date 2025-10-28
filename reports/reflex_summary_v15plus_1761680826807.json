@@ -1,0 +1,37 @@
+{
+  "version": "v15-Reflective",
+  "timestamp": "2025-10-28T19:47:06.900Z",
+  "metrics": {
+    "quantumRating": 0,
+    "robustness": 0,
+    "overfitRisk": "DESCONOCIDO",
+    "integrity": false,
+    "reflexIndex": 0
+  },
+  "market": {
+    "ok": true,
+    "version": "v10.3-B (Simulado)",
+    "data": {
+      "BTCUSD": 68000,
+      "ETHUSD": 3600,
+      "XAUUSD": 2380,
+      "SP500": 5230,
+      "USDCOP": 4200,
+      "timestamp": "2025-10-28T19:47:06.891Z"
+    },
+    "correlations": {
+      "BTC-Oro": 0.67,
+      "BTC-S&P500": 0.41,
+      "Oro-S&P500": -0.12,
+      "BTC-ETH": 0.83
+    },
+    "insights": [
+      "⚙️ Datos simulados: API real no disponible.",
+      "IA reflexiva activa modo seguro para visualización."
+    ]
+  },
+  "summary": {
+    "coherence": "BAJA",
+    "evaluation": "Posible deterioro de robustez cognitiva. Recomendada re-evaluación del patrón sináptico."
+  }
+}

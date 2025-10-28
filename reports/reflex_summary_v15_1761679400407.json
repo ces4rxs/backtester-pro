@@ -1,0 +1,22 @@
+{
+  "version": "v15-Passive",
+  "timestamp": "2025-10-28T19:23:20.407Z",
+  "source": "cognitive_report_ultima.json",
+  "metrics": {
+    "quantumRating": 0,
+    "robustness": 0,
+    "overfitRisk": "DESCONOCIDO",
+    "integrity": false,
+    "reflexIndex": 0
+  },
+  "summary": {
+    "coherence": "BAJA",
+    "selfConsistency": "Parcial",
+    "evaluation": "Posible deterioro de robustez cognitiva. Recomendada re-evaluación del patrón sináptico."
+  },
+  "recommendations": [
+    "Actualizar dataset de aprendizaje antes del próximo ciclo v16.",
+    "Ejecutar validación cruzada sobre 3 activos (BTC, XAU, SP500).",
+    "Re-entrenar Symbiont Advisor si el Reflex Index < 60."
+  ]
+}

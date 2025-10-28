@@ -8,6 +8,10 @@ import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 import authRouter from "./routes/server_auth.js";
+import { generateQuantumRiskV13 } from "./ai/quantumRisk_v13.js";
+import { generateMontecarloV11 } from "./ai/montecarlo_v11.js";   // v11 SAFE
+import { generateMontecarloV12 } from "./ai/montecarlo_v12.js";   // v12 SAFE
+import { generateCognitiveRiskV14 } from "./ai/cognitiveRisk_v14.js"; // v14 SAFE
 
 
 // ✅ Config .env compatible con Render + local
@@ -47,6 +51,12 @@ app.use(
 
 app.use(bodyParser.json());
 app.use("/auth", authRouter);
+
+// ✅ Hacer pública la carpeta /reports (solo lectura, segura)
+const reportsPath = path.join(process.cwd(), "reports");
+app.use("/reports", express.static(reportsPath));
+console.log("🌐 Carpeta /reports habilitada para acceso público (solo lectura)");
+
 // 📂 /reports
 const REPORTS_DIR = path.join(process.cwd(), "reports");
 if (!fs.existsSync(REPORTS_DIR)) {
@@ -685,6 +695,64 @@ app.get("/ai/learn/v12/:id", (req, res) => {
     res.status(500).json({ ok: false, error: e?.message || "unknown" });
   }
 });
+
+// =====================================================
+// 21) Quantum Risk Layer v13 — Unified Risk Index (0–100)
+// =====================================================
+app.get("/ai/learn/v13/:id", (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log(`🛡️ [V13] Calculando Quantum Risk para: ${id}`);
+    const result = generateQuantumRiskV13(id);
+    console.log(`✅ [V13] Riesgo unificado listo: ${result.risk.riskScore}`);
+    res.json({ ok: true, strategyId: id, result });
+  } catch (e: any) {
+    console.error("❌ [V13] Error:", e?.message || e);
+    res.status(500).json({ ok: false, error: e?.message || "unknown" });
+  }
+});
+
+// =====================================================
+// 🚀 Endpoints SAFE (no reemplazan nada existente)
+// =====================================================
+app.get("/ai/learn/v14/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    // Reutiliza v13 si está disponible por endpoint o como módulo importado
+    const quantum = generateQuantumRiskV13?.(id) ?? { riskScore: 62 };
+    const result = await generateCognitiveRiskV14({ id }, quantum);
+    res.json({ ok: true, strategyId: id, result });
+  } catch (e: any) {
+    res.status(500).json({ ok: false, error: e?.message || "unknown" });
+  }
+});
+
+app.get("/ai/learn/v11plus/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await generateMontecarloV11(id, { runs: 3000, entropyFactor: 1.0 });
+    res.json({ ok: true, strategyId: id, result });
+  } catch (e: any) {
+    res.status(500).json({ ok: false, error: e?.message || "unknown" });
+  }
+});
+
+app.get("/ai/learn/v12plus/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    // Llamamos v14 primero para darle “contexto cognitivo” al v12
+    const quantum = generateQuantumRiskV13?.(id) ?? { riskScore: 62 };
+    const v14 = await generateCognitiveRiskV14({ id }, quantum);
+    const result = await generateMontecarloV12(id, v14, { maxRuns: 2200 });
+    res.json({ ok: true, strategyId: id, result });
+  } catch (e: any) {
+    res.status(500).json({ ok: false, error: e?.message || "unknown" });
+  }
+});
+
+
+
+
 
 
 // ======================================================

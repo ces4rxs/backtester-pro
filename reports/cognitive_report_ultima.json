@@ -1,0 +1,36 @@
+{
+  "strategyId": "BTC_USD_Test_v14",
+  "timestamp": 1730149503293,
+  "composite": {
+    "cognitiveScore": 89.73
+  },
+  "modules": {
+    "v11": {
+      "entropy": 0.342,
+      "scenarios": 50,
+      "mode": "adaptive",
+      "summary": "Baja dispersión y alta coherencia interna."
+    },
+    "v12": {
+      "focusFactor": 0.881,
+      "scenarios": 45,
+      "mode": "focused",
+      "narrative": "Alta precisión en entornos volátiles."
+    },
+    "v14": {
+      "risk": {
+        "riskScore": 0.21,
+        "level": "Bajo"
+      },
+      "causes": [
+        "Baja correlación con activos de alta volatilidad",
+        "Buen ratio de cobertura en escenarios adversos"
+      ],
+      "recommendations": [
+        "Aumentar peso del módulo predictivo v9",
+        "Revisar sensibilidad del parámetro α en simulaciones futuras"
+      ],
+      "narrative": "La estrategia demuestra resiliencia y estabilidad bajo presión."
+    }
+  }
+}
