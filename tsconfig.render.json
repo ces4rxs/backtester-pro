@@ -14,16 +14,16 @@
     "src/routes/**/*"
   ],
   "exclude": [
-    "src/ai",
-    "src/core",
-    "src/data",
-    "src/learn",
-    "src/tools",
-    "src/test",
-    "src/validate",
-    "src/warehouse",
-    "src/strategies",
-    "src/utils",
+    "src/ai/**/*",
+    "src/core/**/*",
+    "src/data/**/*",
+    "src/learn/**/*",
+    "src/tools/**/*",
+    "src/test/**/*",
+    "src/validate/**/*",
+    "src/warehouse/**/*",
+    "src/strategies/**/*",
+    "src/utils/**/*",
     "src/run*"
   ]
 }
