@@ -6,15 +6,18 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "types": ["node"]
   },
   "include": [
     "src/server_ai.ts",
-    "src/routes/**/**"
+    "src/server_render.ts",
+    "src/routes/**/*"
   ],
   "exclude": [
     "src/test",
     "src/validate",
+    "src/warehouse",
     "src/run*"
   ]
 }
