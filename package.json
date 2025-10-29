@@ -5,6 +5,7 @@
   "description": "Supermotor de backtesting con IA, TypeScript y Node ESM",
   "main": "dist/server_ai.js",
   "scripts": {
+    "render": "tsc -p tsconfig.render.json && node dist/server_render.js",
     "reflex:v15plus": "tsx src/ai/reflex_v15_plus.ts",
     "reflex:v15": "tsx src/ai/reflex_v15.ts",
     "dashboard:pdf": "tsx src/tools/exportCognitiveReportPDF.ts",
@@ -68,6 +69,9 @@
   },
   "dependencies": {
     "@prisma/client": "^6.18.0",
+    "@types/node": "^20.11.30",
+    "tsx": "^4.7.1",
+    "typescript": "^5.4.5",
     "bcryptjs": "^3.0.2",
     "better-sqlite3": "^12.4.1",
     "body-parser": "^2.2.0",
