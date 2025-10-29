@@ -1,6 +1,6 @@
-// routes/server_strategies.ts — 🔒 SAFE PATCH OMEGA StrategyLabs v1-B
+// routes/server_strategies.ts — 🔒 SAFE PATCH OMEGA StrategyLabs v1-C
 import express from "express";
-import { prisma } from "../warehouse/client";
+import warehouse from "../warehouse/client.js"; // ✅ nota el .js aquí
 
 const router = express.Router();
 
@@ -68,7 +68,8 @@ router.delete("/:id", async (req, res) => {
     const strategy = await warehouse.strategy.findFirst({
       where: { id, userId },
     });
-    if (!strategy) return res.status(404).json({ ok: false, error: "Estrategia no encontrada" });
+    if (!strategy)
+      return res.status(404).json({ ok: false, error: "Estrategia no encontrada" });
 
     await warehouse.strategy.delete({ where: { id } });
     res.json({ ok: true, message: "Estrategia eliminada correctamente" });
