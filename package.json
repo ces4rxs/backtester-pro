@@ -4,7 +4,7 @@
   "type": "module",
   "description": "Supermotor de backtesting con IA, TypeScript y Node ESM",
   "main": "dist/server_ai.js",
-  "scripts": {
+   "scripts": {
     "render": "tsc -p tsconfig.render.json && node dist/server_render.js",
     "reflex:v15plus": "tsx src/ai/reflex_v15_plus.ts",
     "reflex:v15": "tsx src/ai/reflex_v15.ts",
@@ -33,8 +33,10 @@
     "test:decimal": "tsx runTestDecimal.ts",
     "audit": "tsx verifyAudit.ts",
     "manifests:list": "tsx src/tools/listManifests.ts",
-    "audit:charts": "tsx src/tools/generateCharts.ts auditoria.csv ./reports/charts"
+    "audit:charts": "tsx src/tools/generateCharts.ts auditoria.csv ./reports/charts",
+    "postinstall": "npx prisma generate"
   },
+
   "keywords": [
     "backtesting",
     "ai",
@@ -68,10 +70,8 @@
     "typescript": "^5.6.3"
   },
   "dependencies": {
-    "@prisma/client": "^6.18.0",
+    "@prisma/client": "^5.18.0",
     "@types/node": "^20.11.30",
-    "tsx": "^4.7.1",
-    "typescript": "^5.4.5",
     "bcryptjs": "^3.0.2",
     "better-sqlite3": "^12.4.1",
     "body-parser": "^2.2.0",
@@ -91,8 +91,9 @@
     "pdfmake-wrapper": "^2.1.3",
     "pg": "^8.16.3",
     "plotly.js-dist-min": "^3.1.2",
-    "prisma": "^6.18.0",
+    "prisma": "^5.18.0",
     "seedrandom": "^3.0.5",
+    "typescript": "^5.4.5",
     "uuid": "^13.0.0",
     "zod": "^4.1.12"
   }
