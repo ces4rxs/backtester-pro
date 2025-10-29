@@ -11,6 +11,6 @@
     "outDir": "./dist",
     "types": ["node"]
   },
-"include": ["src/server_render.ts", "routes/**/*.ts"],
+"include": ["src/server_render.ts", "src/routes/**/*.ts"],
   "exclude": ["src/ai", "src/learn", "src/core", "src/data", "src/tools"]
 }
