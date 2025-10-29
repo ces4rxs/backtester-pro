@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 import dotenv from "dotenv";
 
 // 🧩 Importa el router de estrategias
-import strategiesRouter from "../routes/server_strategies.js";
+import strategiesRouter from "../routes/server_strategies";
 
 dotenv.config();
 
