@@ -51,6 +51,9 @@ app.use(
 
 app.use(bodyParser.json());
 app.use("/auth", authRouter);
+import strategyRouter from "../routes/server_strategies.js";
+app.use("/api/strategies", strategyRouter);
+
 
 // ✅ Hacer pública la carpeta /reports (solo lectura, segura)
 const reportsPath = path.join(process.cwd(), "reports");
@@ -960,6 +963,57 @@ app.get("/ai/status", (_req, res) => {
     res.status(500).json({ ok: false, error: err.message });
   }
 });
+
+// =====================================================
+// 🌎 API LIVE MARKETS — Vista rápida para el frontend
+// =====================================================
+import fs from "fs";
+import path from "path";
+
+app.get("/ai/markets/live", async (_req, res) => {
+  try {
+    const marketDir = path.join(process.cwd(), "src", "data", "market");
+
+    // 🔍 Busca los archivos más recientes
+    const assets = ["BTCUSD", "XAUUSD", "XAGUSD", "WTIUSD", "SP500"];
+    const result: Record<string, any> = {};
+
+    for (const asset of assets) {
+      const files = fs
+        .readdirSync(marketDir)
+        .filter((f) => f.startsWith(asset))
+        .sort(
+          (a, b) =>
+            fs.statSync(path.join(marketDir, b)).mtimeMs -
+            fs.statSync(path.join(marketDir, a)).mtimeMs
+        );
+
+      if (files.length > 0) {
+        const latest = files[0];
+        const data = JSON.parse(fs.readFileSync(path.join(marketDir, latest), "utf8"));
+        result[asset] = {
+          asset,
+          price: data.price ?? null,
+          source: data.source ?? "Desconocido",
+          timestamp: data.timestamp ?? new Date().toISOString(),
+        };
+      } else {
+        result[asset] = { asset, price: null, source: "Sin datos" };
+      }
+    }
+
+    res.json({
+      ok: true,
+      updatedAt: new Date().toISOString(),
+      data: result,
+    });
+  } catch (err: any) {
+    console.error("❌ [LIVE-MARKETS] Error:", err.message);
+    res.status(500).json({ ok: false, error: err.message });
+  }
+});
+
+
 
 
 

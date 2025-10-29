@@ -4,6 +4,9 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 
+// 🧩 Importa el router de estrategias
+import strategiesRouter from "../routes/server_strategies.js"; // ✅ agregado
+
 dotenv.config();
 
 const app = express();
@@ -16,7 +19,13 @@ app.get("/ai/status", (req, res) => {
     ok: true,
     version: "Omega AI Server v4.3.2",
     status: "🧠 Core estable y sincronizado (Render Diagnostic Mode)",
-    activeModules: ["v11 Neural Advisor", "v12 MonteCarlo+", "v13 QuantumRisk", "v14 Reflex Intelligence", "v15+ Cognitive Unification"],
+    activeModules: [
+      "v11 Neural Advisor",
+      "v12 MonteCarlo+",
+      "v13 QuantumRisk",
+      "v14 Reflex Intelligence",
+      "v15+ Cognitive Unification",
+    ],
     timestamp: new Date().toISOString(),
   });
 });
@@ -39,8 +48,12 @@ app.get("/ai/reflex", (req, res) => {
   });
 });
 
+// ✅ NUEVO — StrategyLabs API (rutas seguras)
+app.use("/api/strategies", strategiesRouter);
+
 // 🚀 Iniciar servidor
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
   console.log(`🌍 OMEGA AI Server Render escuchando en puerto ${PORT}`);
+  console.log("🧩 StrategyLabs v1-B habilitado correctamente");
 });

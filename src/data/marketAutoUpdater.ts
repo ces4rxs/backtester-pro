@@ -1,4 +1,4 @@
-// ⚡ OMEGA MarketAutoUpdater v2.5 – Cognitive Cloud Sync Edition
+// ⚡ OMEGA MarketAutoUpdater v2.6 – Dual Fallback Metals Edition
 // Descarga y guarda datos públicos (BTC/USD, XAU/USD, XAG/USD, WTI/USD, S&P500)
 // con sincronización inteligente hacia TimescaleDB / SQLite / JSONL (fallback).
 // Compatible con OMEGA AI Server v4.3.2+
@@ -20,6 +20,7 @@ fs.mkdirSync(MARKET_PATH, { recursive: true });
 
 // 🌍 Endpoints de fuentes gratuitas y confiables
 const ENDPOINTS = {
+  // 🪙 Bitcoin (CoinGecko)
   BTCUSD: async () => {
     const r = await fetch(
       "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
@@ -27,38 +28,75 @@ const ENDPOINTS = {
     const j = await r.json();
     return { symbol: "BTC/USD", price: j.bitcoin.usd, source: "CoinGecko" };
   },
+
+  // 🟡 Oro – con fallback Metals.Live / MetalsAPI
   XAUUSD: async () => {
-    const key = process.env.METALS_API_KEY || "demo";
-    const url = `https://metals-api.com/api/latest?access_key=${key}&base=USD&symbols=XAU`;
     try {
+      const live = await fetch("https://api.metals.live/v1/spot/gold");
+      const lj = await live.json();
+      const price = Array.isArray(lj)
+        ? lj[0]?.gold ?? lj[0]?.price ?? null
+        : null;
+
+      if (price) return { symbol: "XAU/USD", price, source: "Metals.Live" };
+
+      // Fallback a MetalsAPI
+      const key = process.env.METALS_API_KEY || "demo";
+      const url = `https://metals-api.com/api/latest?access_key=${key}&base=USD&symbols=XAU`;
       const r = await fetch(url);
       const j = await r.json();
       const rate = j?.rates?.XAU ? 1 / j.rates.XAU : null;
-      return { symbol: "XAU/USD", price: rate, source: "Metals-API" };
+      return { symbol: "XAU/USD", price: rate, source: "MetalsAPI (fallback)" };
     } catch {
-      return { symbol: "XAU/USD", price: null, source: "Metals-API (error)" };
+      return { symbol: "XAU/USD", price: null, source: "Metals.Live (error)" };
     }
   },
+
+  // ⚪ Plata – con fallback dual
   XAGUSD: async () => {
     try {
       const r = await fetch("https://api.metals.live/v1/spot/silver");
       const j = await r.json();
-      const price = Array.isArray(j) ? j[0]?.silver ?? j[0]?.price : null;
-      return { symbol: "XAG/USD", price, source: "Metals.Live" };
+      const price = Array.isArray(j)
+        ? j[0]?.silver ?? j[0]?.price ?? null
+        : null;
+      if (price) return { symbol: "XAG/USD", price, source: "Metals.Live" };
+
+      // Fallback simple
+      const fallback = await fetch("https://api.metals.live/v1/spot/XAG");
+      const fjson = await fallback.json();
+      const fprice = Array.isArray(fjson)
+        ? fjson[0]?.price ?? null
+        : null;
+      return { symbol: "XAG/USD", price: fprice, source: "Metals.Live (fallback)" };
     } catch {
       return { symbol: "XAG/USD", price: null, source: "Metals.Live (error)" };
     }
   },
+
+  // 🛢️ Petróleo WTI – fallback automático
   WTIUSD: async () => {
     try {
       const r = await fetch("https://api.metals.live/v1/spot/oil");
       const j = await r.json();
-      const price = Array.isArray(j) ? j[0]?.price ?? j[0]?.oil : null;
-      return { symbol: "WTI/USD", price, source: "Metals.Live" };
+      const price = Array.isArray(j)
+        ? j[0]?.oil ?? j[0]?.price ?? null
+        : null;
+      if (price) return { symbol: "WTI/USD", price, source: "Metals.Live" };
+
+      // Fallback a crude oil API
+      const crude = await fetch("https://api.metals.live/v1/spot/crude");
+      const cj = await crude.json();
+      const fallbackPrice = Array.isArray(cj)
+        ? cj[0]?.price ?? null
+        : null;
+      return { symbol: "WTI/USD", price: fallbackPrice, source: "Metals.Live (fallback)" };
     } catch {
       return { symbol: "WTI/USD", price: null, source: "Metals.Live (error)" };
     }
   },
+
+  // 📈 S&P500 (Yahoo Finance)
   SP500: async () => {
     const r = await fetch(
       "https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC?interval=1d"
@@ -143,8 +181,6 @@ async function runCycle() {
   const total = (Date.now() - startTime) / 1000;
 
   console.log(
-    `\n✅ ${assets.length}/${
-      assets.length
-    } activos actualizados correctamente | Tiempo total: ${total.toFixed(2)}s`
+    `\n✅ ${assets.length}/${assets.length} activos actualizados correctamente | Tiempo total: ${total.toFixed(2)}s`
   );
 }
