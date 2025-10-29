@@ -1,40 +1,34 @@
-// src/warehouse/client.ts — 💾 Prisma dual mode (Render + Local)
+// src/warehouse/client.ts — 💾 Prisma Dual Compatible (Render + Local)
 import { PrismaClient } from "@prisma/client";
 
-let prisma: PrismaClient;
+declare global {
+  // Evita múltiples instancias en hot reload (dev)
+  var __prisma: PrismaClient | undefined;
+}
 
-// 🔒 Función segura de inicialización (sin top-level await)
-function createPrismaClient(): PrismaClient {
-  const client = new PrismaClient({
+// 🧠 Singleton para asegurar una sola conexión
+const prisma =
+  globalThis.__prisma ??
+  new PrismaClient({
     log:
       process.env.NODE_ENV === "development"
         ? ["query", "info", "warn", "error"]
         : ["error"],
   });
 
-  if (process.env.NODE_ENV === "development") {
-    client
-      .$connect()
-      .then(() => console.log("🟢 Prisma conectado correctamente (modo local)"))
-      .catch((err) =>
-        console.warn("⚠️ Prisma no se pudo conectar (Render no afectado):", err)
-      );
-  }
-
-  return client;
+// ✅ Conexión local (Render ignora esto)
+if (process.env.NODE_ENV === "development") {
+  prisma
+    .$connect()
+    .then(() => console.log("🟢 Prisma conectado correctamente (modo local)"))
+    .catch((err) => console.warn("⚠️ Prisma no se pudo conectar:", err));
 }
 
-try {
-  prisma = createPrismaClient();
-} catch (err) {
-  console.error("❌ Prisma no se pudo inicializar correctamente:", err);
-  prisma = {} as PrismaClient;
-}
+// Evita duplicar en desarrollo
+if (process.env.NODE_ENV === "development") globalThis.__prisma = prisma;
 
 // ======================================================
-// ✅ Exportaciones duales (Render + Local)
+// ✅ Exportaciones únicas y seguras
 // ======================================================
-export const warehouse: PrismaClient = prisma;
-export const prismaClient: PrismaClient = prisma;
-export const prisma = prisma; // <-- Render lo necesita así
+export const warehouse = prisma; // alias principal (usado en tus rutas)
 export default prisma;
