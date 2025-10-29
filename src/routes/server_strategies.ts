@@ -1,6 +1,6 @@
 // routes/server_strategies.ts — 🔒 SAFE PATCH OMEGA StrategyLabs v1-B
 import express from "express";
-import { warehouse } from "../src/warehouse/client.js"; // ✅ usa tu Prisma Client real
+import { prisma } from "../warehouse/client";
 
 const router = express.Router();
 
