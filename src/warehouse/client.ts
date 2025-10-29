@@ -24,4 +24,5 @@ try {
 }
 
 // 🔹 Exporta con nombre fijo
-export const warehouse = prisma;
+export const warehouse: PrismaClient = prisma;
+export default warehouse;
