@@ -12,7 +12,7 @@
     "dashboard:risk": "tsx src/tools/generateDashboardRisk.ts auditoria.csv ./reports/charts ./reports/risk",
     "build": "tsc -p ./tsconfig.render.json",
     "dev": "tsx src/server_ai.ts",
-    "start": "node dist/server_ai.js",
+    "start": "npm run render",
     "ai:server": "tsx src/server_ai.ts",
     "dashboard:live": "tsx src/tools/generateDashboardLive.ts",
     "dashboard:control": "tsx src/tools/generateControlCenter.ts",
