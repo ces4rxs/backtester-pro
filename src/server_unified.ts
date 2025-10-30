@@ -165,7 +165,7 @@ app.get("/ai/learn/v12/:id", (req, res) =>
   res.json(generateStrategicAdvisorV12(req.params.id))
 );
 app.get("/ai/learn/v13/:id", (req, res) =>
-D  res.json(generateQuantumRiskV13(req.params.id))
+  res.json(generateQuantumRiskV13(req.params.id))
 );
 app.get("/ai/learn/v14/:id", async (req, res) => {
   const quantum = generateQuantumRiskV13?.(req.params.id);
@@ -177,7 +177,7 @@ app.get("/ai/learn/v14/:id", async (req, res) => {
 // 📈 Predicción y Optimización
 // ======================================================
 app.get("/ai/predict/advanced", (_req, res) => {
-D  try {
+  try {
     const pred = predictForCurrent();
     res.json({ ok: true, ...pred, note: "CORE v4.4 ML predictor" });
   } catch (e) {
@@ -189,8 +189,7 @@ app.post("/ai/optimize", async (req, res) => {
   if (process.env.OMEGA_V5_ENABLED !== "true") {
     return res
       .status(403)
-      .json({ ok: false, message: "CORE v5.0 desactivado" });
-S  }
+      .json({ ok: false, message: "CORE v5.0 desactivado" }); }
 
   // ✅ Safe fallback: usa valores por defecto
   const report = await runAdaptiveOptimizer(
@@ -245,7 +244,7 @@ app.get("/ai/reflective/market", async (_req, res) => {
     res
       .status(500)
       .json({ ok: false, error: "Fuentes de mercado no disponibles" });
-S  }
+  }
 });
 
 // ======================================================
@@ -253,7 +252,7 @@ S  }
 // ======================================================
 const REPORTS_DIR = path.join(process.cwd(), "reports");
 if (!fs.existsSync(REPORTS_DIR))
-  fs.mkdirSync(REPORTS_DIR, { recursive: true });
+ fs.mkdirSync(REPORTS_DIR, { recursive: true });
 app.use("/reports", express.static(REPORTS_DIR));
 
 // ======================================================
