@@ -26,8 +26,7 @@ const ENDPOINTS = {
       "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
     );
     const j = await r.json();
-    return { symbol: "BTC/USD", price: j.bitcoin.usd, source: "CoinGecko" };
-  },
+return { symbol: "BTC/USD", price: (j as any).bitcoin.usd, source: "CoinGecko" };  },
 
   // 🟡 Oro – con fallback Metals.Live / MetalsAPI
   XAUUSD: async () => {
@@ -45,8 +44,8 @@ const ENDPOINTS = {
       const url = `https://metals-api.com/api/latest?access_key=${key}&base=USD&symbols=XAU`;
       const r = await fetch(url);
       const j = await r.json();
-      const rate = j?.rates?.XAU ? 1 / j.rates.XAU : null;
-      return { symbol: "XAU/USD", price: rate, source: "MetalsAPI (fallback)" };
+const rate = (j as any)?.rates?.XAU ? 1 / (j as any).rates.XAU : null;
+return { symbol: "XAU/USD", price: rate, source: "MetalsAPI (fallback)" };
     } catch {
       return { symbol: "XAU/USD", price: null, source: "Metals.Live (error)" };
     }
@@ -102,8 +101,8 @@ const ENDPOINTS = {
       "https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC?interval=1d"
     );
     const j = await r.json();
-    const quote = j.chart.result[0].meta;
-    const last = j.chart.result[0].indicators.quote[0].close.pop();
+const quote = (j as any).chart.result[0].meta;
+const last = (j as any).chart.result[0].indicators.quote[0].close.pop();
     return {
       symbol: "S&P500",
       price: last,

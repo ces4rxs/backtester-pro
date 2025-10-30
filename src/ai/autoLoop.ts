@@ -52,8 +52,7 @@ export async function runAutoLoopV10() {
 
     try {
       if (predictForCurrent.length >= 1) {
-        pred = await Promise.resolve(predictForCurrent(variant));
-      } else {
+pred = await Promise.resolve(predictForCurrent());      } else {
         pred = await Promise.resolve(predictForCurrent());
       }
     } catch (err) {

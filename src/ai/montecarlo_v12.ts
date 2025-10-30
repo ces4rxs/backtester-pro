@@ -50,9 +50,9 @@ export async function generateMontecarloV12(
       focusFactor,
       scenarios: MAX_RUNS,
       distribution: {
-        var99: mc?.var99 ?? 0,
-        cvar99: mc?.cvar99 ?? 0,
-        mddP95: mc?.mddP95 ?? 0,
+       var99: (mc as any)?.var99 ?? 0,
+cvar99: (mc as any)?.cvar99 ?? 0,
+mddP95: (mc as any)?.mddP95 ?? 0,
       },
       narrative,
       note: "v12 ejecutado con predicción de semillas (sin paralelismo).",

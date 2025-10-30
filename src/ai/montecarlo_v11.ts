@@ -26,10 +26,9 @@ export async function generateMontecarloV11(
 
     // 🧠 Micro-adaptación leve (no paraleliza ni sube CPU)
     const shockBias = Math.min(0.15 * entropy, 0.25); // 0–0.25
-    const var99 = Number(((base.var99 ?? 0) * (1 + shockBias)).toFixed(6));
-    const cvar99 = Number(((base.cvar99 ?? 0) * (1 + shockBias * 1.25)).toFixed(6));
-    const mddP95 = Number(((base.mddP95 ?? 0) * (1 + shockBias * 0.9)).toFixed(6));
-
+    const var99 = Number((((base as any).var99 ?? 0) * (1 + shockBias)).toFixed(6));
+const cvar99 = Number((((base as any).cvar99 ?? 0) * (1 + shockBias * 1.25)).toFixed(6));
+const mddP95 = Number((((base as any).mddP95 ?? 0) * (1 + shockBias * 0.9)).toFixed(6));
     const result = {
       mode: "safe" as const,
       strategyId,
