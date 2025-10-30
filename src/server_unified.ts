@@ -29,23 +29,23 @@ const app = express();
 
 // 🧩 CORS inteligente (Render + Local)
 app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (
-        !origin ||
-        origin.includes("localhost") ||
-        origin.includes("127.0.0.1") ||
-        origin.includes("onrender.com")
-      ) {
-        callback(null, true);
-      } else {
-        console.warn("❌ CORS bloqueado para:", origin);
-        callback(new Error("No permitido por CORS"));
-      }
-    },
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "x-user-id"],
-  })
+  cors({
+    origin: (origin, callback) => {
+      if (
+        !origin ||
+        origin.includes("localhost") ||
+        origin.includes("127.0.0.1") ||
+        origin.includes("onrender.com")
+      ) {
+        callback(null, true);
+      } else {
+        console.warn("❌ CORS bloqueado para:", origin);
+        callback(new Error("No permitido por CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "x-user-id"],
+  })
 );
 
 app.use(bodyParser.json());
@@ -67,9 +67,9 @@ app.use("/api/strategies", strategiesRouter);
 // 🧠 Núcleo Cognitivo OMEGA (v7.1 → v15+)
 // ======================================================
 import {
-  generateUnifiedAdviceHybrid,
-  generateUnifiedAdviceHybridV9,
-  generateUnifiedAdviceHybridV10,
+  generateUnifiedAdviceHybrid,
+  generateUnifiedAdviceHybridV9,
+  generateUnifiedAdviceHybridV10,
 } from "./ai/hybridAdvisor.js";
 import { generateNeuralAdvisorV11 } from "./ai/neuralAdvisor_v11.js";
 import { generateStrategicAdvisorV12 } from "./ai/strategicAdvisor_v12.js";
@@ -90,36 +90,36 @@ import { generateAdvice } from "./learn/learner.js";
 // 🧩 Rutas de diagnóstico / Render Mode
 // ======================================================
 app.get("/ai/status", (_req, res) => {
-  res.json({
-    ok: true,
-    version: "Omega AI Unified Server v4.3.2",
-    status: "🧠 Núcleo estable y sincronizado (Render Mode)",
-    activeModules: [
-      "v11 Neural Advisor",
-      "v12 MonteCarlo+",
-      "v13 QuantumRisk",
-      "v14 Reflex Intelligence",
-      "v15+",
-    ],
-    timestamp: new Date().toISOString(),
-  });
+  res.json({
+    ok: true,
+    version: "Omega AI Unified Server v4.3.2",
+    status: "🧠 Núcleo estable y sincronizado (Render Mode)",
+    activeModules: [
+      "v11 Neural Advisor",
+      "v12 MonteCarlo+",
+      "v13 QuantumRisk",
+      "v14 Reflex Intelligence",
+      "v15+",
+    ],
+    timestamp: new Date().toISOString(),
+  });
 });
 
 app.get("/ai/reflex", (_req, res) => {
-  res.json({
-    ok: true,
-    reflex_version: "v15+",
-    cognitive_state: "online",
-    message: "Reflex Intelligence cargado correctamente",
-    modules_loaded: {
-      v11: "Neural Advisor",
-      v12: "MonteCarlo+ Enhanced",
-      v13: "Quantum Risk Engine",
-      v14: "Reflex Intelligence",
-      v15: "Cognitive Unification",
-    },
-    timestamp: new Date().toISOString(),
-  });
+  res.json({
+    ok: true,
+    reflex_version: "v15+",
+    cognitive_state: "online",
+    message: "Reflex Intelligence cargado correctamente",
+    modules_loaded: {
+      v11: "Neural Advisor",
+      v12: "MonteCarlo+ Enhanced",
+      v13: "Quantum Risk Engine",
+      v14: "Reflex Intelligence",
+      v15: "Cognitive Unification",
+    },
+    timestamp: new Date().toISOString(),
+  });
 });
 
 // ======================================================
@@ -128,126 +128,124 @@ app.get("/ai/reflex", (_req, res) => {
 app.get("/ai/learn/memory", (_req, res) => res.json(loadMemory()));
 
 app.post("/ai/learn/update", (req, res) => {
-  const sample = {
-    ...req.body,
-    timestamp: new Date().toISOString(),
-  };
-  const mem = appendSample(sample);
-  res.json({ ok: true, stats: mem.stats });
+  const sample = {
+    ...req.body,
+    timestamp: new Date().toISOString(),
+  };
+  const mem = appendSample(sample);
+  res.json({ ok: true, stats: mem.stats });
 });
 
 app.get("/ai/learn/advice/:id", (req, res) => {
-  const id = req.params.id;
+  const id = req.params.id;
 
-  // ✅ Corrección final
-  const current = {
-    strategyId: id,
-    quantumRating: 7.4,
-    overfitRisk: "MED",
-    robustnessProb: 83.2,
-    timestamp: new Date().toISOString(),
-  };
+  // 🔽🔽🔽 (ESTA ES LA CORRECCIÓN FINAL) 🔽🔽🔽
+  const current = {
+    strategyId: id,
+    quantumRating: 7.4,
+    // El error TS2345 decía que esperaba "MED", no "MEDIO" [cite: imagen_2025-10-30_170712365.png]
+    overfitRisk: "MED", 
+    robustnessProb: 83.2,
+    timestamp: new Date().toISOString(), // Esto arregla el error TS2345 de timestamp
+  };
+  // 🔼🔼🔼 (FIN DE LA CORRECCIÓN) 🔼🔼🔼
 
-  const mem = loadMemory();
-  const advice = generateAdvice(current, mem);
-  res.json({ ok: true, id, advice });
+  const mem = loadMemory();
+  const advice = generateAdvice(current, mem);
+  res.json({ ok: true, id, advice });
 });
 
 // ======================================================
 // 🔬 Módulos de IA (v7–v15)
 // ======================================================
 app.get("/ai/learn/v11/:id", (req, res) =>
-  res.json(generateNeuralAdvisorV11(req.params.id))
+  res.json(generateNeuralAdvisorV11(req.params.id))
 );
 app.get("/ai/learn/v12/:id", (req, res) =>
-  res.json(generateStrategicAdvisorV12(req.params.id))
+  res.json(generateStrategicAdvisorV12(req.params.id))
 );
 app.get("/ai/learn/v13/:id", (req, res) =>
-  res.json(generateQuantumRiskV13(req.params.id))
+D  res.json(generateQuantumRiskV13(req.params.id))
 );
 app.get("/ai/learn/v14/:id", async (req, res) => {
-  const quantum = generateQuantumRiskV13?.(req.params.id);
-  const result = await generateCognitiveRiskV14({ id: req.params.id }, quantum);
-  res.json({ ok: true, result });
+  const quantum = generateQuantumRiskV13?.(req.params.id);
+  const result = await generateCognitiveRiskV14({ id: req.params.id }, quantum);
+  res.json({ ok: true, result });
 });
 
 // ======================================================
 // 📈 Predicción y Optimización
 // ======================================================
 app.get("/ai/predict/advanced", (_req, res) => {
-  try {
-    const pred = predictForCurrent();
-    res.json({ ok: true, ...pred, note: "CORE v4.4 ML predictor" });
-  } catch (e) {
-    res.status(500).json({ ok: false, error: (e as Error)?.message });
-  }
+D  try {
+    const pred = predictForCurrent();
+    res.json({ ok: true, ...pred, note: "CORE v4.4 ML predictor" });
+  } catch (e) {
+    res.status(500).json({ ok: false, error: (e as Error)?.message });
+  }
 });
 
 app.post("/ai/optimize", async (req, res) => {
-  try {
-    if (process.env.OMEGA_V5_ENABLED !== "true") {
-      return res
-        .status(403)
-        .json({ ok: false, message: "CORE v5.0 desactivado" });
-    }
+  if (process.env.OMEGA_V5_ENABLED !== "true") {
+    return res
+      .status(403)
+      .json({ ok: false, message: "CORE v5.0 desactivado" });
+S  }
 
-    const report = await runAdaptiveOptimizer(
-      req.body.manifest,
-      req.body.goal,
-      undefined // ✅ sin comas ni caracteres extras
-    );
+  // ✅ Safe fallback: usa valores por defecto
+  const report = await runAdaptiveOptimizer(
+    req.body.manifest,
+    req.body.goal,
+    undefined // <-- Arregla el error TS2554 de forma segura
+  );
 
-    res.json({ ok: true, report });
-  } catch (err) {
-    console.error("❌ Error en /ai/optimize:", err);
-    res.status(500).json({ ok: false, error: (err as Error)?.message });
-  }
+  res.json({ ok: true, report });
 });
 
 // ======================================================
 // 💾 Brainprint y Symbiont
 // ======================================================
 app.post("/ai/brainprint", (req, res) => {
-  const saved = saveBrainprint(req.body);
-  res.json({ ok: true, saved });
+  const saved = saveBrainprint(req.body);
+  res.json({ ok: true, saved });
 });
 
 app.post("/ai/symbiont", async (req, res) => {
-  const { strategyId } = req.body;
-  const result = await generateUnifiedAdviceHybridV10(strategyId);
-  res.json({ ok: true, result });
+  const { strategyId } = req.body;
+  const result = await generateUnifiedAdviceHybridV10(strategyId);
+  res.json({ ok: true, result });
 });
 
 // ======================================================
 // 🌎 Datos de mercado y Reflexive Market
 // ======================================================
 app.get("/ai/reflective/market", async (_req, res) => {
-  try {
-    const [btcRes, ethRes, goldRes] = await Promise.all([
-      fetch(
-        "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
-      ),
-      fetch(
-        "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"
-      ),
-      fetch("https://api.metals.live/v1/spot"),
-    ]);
-    const btc = await btcRes.json();
-    const eth = await ethRes.json();
-    const gold = await goldRes.json();
-    res.json({
-      ok: true,
-      version: "v10.3-B",
-      BTCUSD: (btc as any).bitcoin.usd,
-      ETHUSD: (eth as any).ethereum.usd,
-      XAUUSD: (gold as any)[0]?.gold,
-      timestamp: new Date().toISOString(),
-    });
-  } catch (err) {
-    res
-      .status(500)
-      .json({ ok: false, error: "Fuentes de mercado no disponibles" });
-  }
+  try {
+    const [btcRes, ethRes, goldRes] = await Promise.all([
+      fetch(
+        "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
+      ),
+      fetch(
+        "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"
+      ),
+      fetch("https://api.metals.live/v1/spot"),
+    ]);
+    const btc = await btcRes.json();
+    const eth = await ethRes.json();
+    const gold = await goldRes.json();
+    res.json({
+      ok: true,
+      version: "v10.3-B",
+      BTCUSD: (btc as any).bitcoin.usd,
+      ETHUSD: (eth as any).ethereum.usd,
+      XAUUSD: (gold as any)[0]?.gold,
+      timestamp: new Date().toISOString(),
+    });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ ok: false, error: "Fuentes de mercado no disponibles" });
+S  }
 });
 
 // ======================================================
@@ -255,7 +253,7 @@ app.get("/ai/reflective/market", async (_req, res) => {
 // ======================================================
 const REPORTS_DIR = path.join(process.cwd(), "reports");
 if (!fs.existsSync(REPORTS_DIR))
-  fs.mkdirSync(REPORTS_DIR, { recursive: true });
+  fs.mkdirSync(REPORTS_DIR, { recursive: true });
 app.use("/reports", express.static(REPORTS_DIR));
 
 // ======================================================
@@ -263,7 +261,8 @@ app.use("/reports", express.static(REPORTS_DIR));
 // ======================================================
 const PORT = Number(process.env.PORT) || 10000;
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`🌍 OMEGA Unified Server escuchando en puerto ${PORT}`);
-  console.log("🧩 Todos los módulos (v7–v15+) inicializados correctamente");
-  startMarketAutoUpdater();
+  console.log(`🌍 OMEGA Unified Server escuchando en puerto ${PORT}`);
+  console.log("🧩 Todos los módulos (v7–v15+) inicializados correctamente");
+  startMarketAutoUpdater();
 });
+
