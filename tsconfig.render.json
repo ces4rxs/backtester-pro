@@ -13,22 +13,20 @@
   },
   "include": [
     "src/server_unified.ts",
-    "src/routes/**/*.ts",
-    "src/warehouse/**/*.ts"
+    "src/routes/**/*",
+    "src/warehouse/**/*"
   ],
   "exclude": [
-    "src/ai",
-    "src/core",
-    "src/core_v5",
-    "src/learn",
-    "src/data",
-    "src/tools",
-    "src/test",
-    "src/reports",
-    "src/engine",
-    "src/validate",
-    "src/utils",
-    "src/strategies",
+    "**/src/ai/**/*",
+    "**/src/core/**/*",
+    "**/src/core_v5/**/*",
+    "**/src/data/**/*",
+    "**/src/tools/**/*",
+    "**/src/learn/**/*",
+    "**/src/validate/**/*",
+    "**/src/strategies/**/*",
+    "**/src/reports/**/*",
+    "**/src/test/**/*",
     "prisma",
     "node_modules"
   ]
