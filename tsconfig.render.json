@@ -17,17 +17,26 @@
     "src/warehouse/**/*"
   ],
   "exclude": [
-    "**/src/ai/**/*",
-    "**/src/core/**/*",
-    "**/src/core_v5/**/*",
-    "**/src/data/**/*",
-    "**/src/tools/**/*",
-    "**/src/learn/**/*",
-    "**/src/validate/**/*",
-    "**/src/strategies/**/*",
-    "**/src/reports/**/*",
-    "**/src/test/**/*",
+    // 🔒 Exclusiones críticas de producción
+    "node_modules",
     "prisma",
-    "node_modules"
+    "dist",
+
+    // 🧩 Módulos internos que no deben compilarse en render
+    "src/ai/**/*",
+    "src/core/**/*",
+    "src/core_v5/**/*",
+    "src/data/**/*",
+    "src/tools/**/*",
+    "src/learn/**/*",
+    "src/validate/**/*",
+    "src/strategies/**/*",
+    "src/reports/**/*",
+    "src/test/**/*",
+
+    // 🚫 Scripts locales de desarrollo y pruebas
+    "src/run*.ts",
+    "src/report*.ts",
+    "src/adaptive_report_summary.json"
   ]
 }
