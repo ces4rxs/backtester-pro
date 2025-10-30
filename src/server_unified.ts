@@ -136,8 +136,7 @@ app.get("/ai/learn/advice/:id", (req, res) => {
   const current = { 
     strategyId: id, 
     quantumRating: 7.4, 
-    overfitRisk: "MEDIO", 
-    robustnessProb: 83.2,
+overfitRisk: "MED", // <-- Arreglado (debe ser "MED", no "MEDIO")    robustnessProb: 83.2,
     timestamp: new Date().toISOString() // <-- Arregla el error TS2345
   };
   // 🔼🔼🔼 (FIN DE CORRECCIÓN 1) 🔼🔼🔼
