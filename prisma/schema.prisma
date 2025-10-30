@@ -1,12 +1,19 @@
+// ======================================================
+// 🌐 Configuración dual OMEGA — local (SQLite) / Render (PostgreSQL)
+// ======================================================
+
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = env("PRISMA_PROVIDER") == "postgresql" ? "postgresql" : "sqlite"
+  url      = env("PRISMA_PROVIDER") == "postgresql" ? env("DATABASE_URL") : "file:./dev.db"
 }
 
 generator client {
   provider = "prisma-client-js"
 }
 
+// ======================================================
+// 📊 Market Data y Reportes
+// ======================================================
 model MarketData {
   id          BigInt   @id @default(autoincrement())
   symbol      String

@@ -1,0 +1,106 @@
+// prisma/schema.prisma
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/warehouse"
+}
+
+model MarketData {
+  id          BigInt   @id @default(autoincrement())
+  symbol      String
+  granularity String // "1m" | "5m" | "1h" | "1d"
+  ts          DateTime
+  open        Decimal?
+  high        Decimal?
+  low         Decimal?
+  close       Decimal?
+  volume      Decimal?
+
+  @@unique([symbol, granularity, ts])
+  @@index([symbol, granularity, ts])
+  @@map("market_data")
+}
+
+model UserReport {
+  id        BigInt   @id @default(autoincrement())
+  userId    String?
+  reportId  String?
+  content   Json?
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
+  @@map("user_reports")
+}
+
+model Brainprint {
+  id           BigInt   @id @default(autoincrement())
+  userId       String?
+  modelVersion String?
+  data         Json?
+  createdAt    DateTime @default(now())
+
+  @@index([userId, createdAt])
+  @@map("brainprints")
+}
+
+model AuditLog {
+  id        BigInt   @id @default(autoincrement())
+  userId    String?
+  action    String
+  details   Json?
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
+  @@map("audit_logs")
+}
+
+// ======================================================
+// 🔒 Autenticación OMEGA (Usuarios + Tokens Rotativos)
+// ======================================================
+
+model User {
+  id         Int            @id @default(autoincrement())
+  email      String         @unique
+  password   String
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+  tokens     RefreshToken[]
+  strategies Strategy[]
+}
+
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  revoked   Boolean  @default(false)
+
+  @@index([userId, expiresAt])
+}
+
+// ======================================================
+// 💡 StrategyLabs v1-B — Módulo de Estrategias (Seguro)
+// ======================================================
+model Strategy {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  name        String
+  symbol      String
+  timeframe   String
+  parameters  Json
+  riskProfile String? // Ej: "Conservador", "Agresivo", "Neutro"
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@map("strategies")
+}

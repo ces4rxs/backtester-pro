@@ -10,7 +10,19 @@ import strategiesRouter from "./routes/server_strategies.js";
 dotenv.config();
 
 const app = express();
-app.use(cors());
+
+// ✅ CORS explícito para frontend local y producción
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "https://omega-ai-server-2.onrender.com",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "x-user-id"],
+  })
+);
+
 app.use(bodyParser.json());
 
 // ✅ Ruta de estado general

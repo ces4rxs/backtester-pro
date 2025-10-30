@@ -1,0 +1,278 @@
+{
+  "goal": {
+    "target": "mejorarSharpe",
+    "constraint": "reducirMDD",
+    "priority": "robustez"
+  },
+  "base": {
+    "id": "auto_tuned_v10_2",
+    "name": "AutoTunedStrategy",
+    "metrics": {
+      "sharpe": -1.1031,
+      "mdd": -0.2033,
+      "robustness": 83.2
+    },
+    "params": {
+      "seed": 1761717367672
+    }
+  },
+  "variants": 200,
+  "frontier": [
+    {
+      "id": "32f9f23e-58e7-47d9-89d5-0a8a87c62de4",
+      "name": "AutoTunedStrategy-v5-0",
+      "params": {
+        "seed": 1000000000
+      },
+      "judge": {
+        "predictedSharpe": 0.008,
+        "predictedMDD": -0.005,
+        "antiOverfit": 0,
+        "meta": {
+          "predictedSharpe": 0.008,
+          "predictedMDD": -0.005,
+          "antiOverfit": 0
+        }
+      }
+    },
+    {
+      "id": "79e8c84c-b2cf-411f-ba63-162f2fe54612",
+      "name": "AutoTunedStrategy-v5-1",
+      "params": {
+        "seed": 1000000000
+      },
+      "judge": {
+        "predictedSharpe": 0.008,
+        "predictedMDD": -0.005,
+        "antiOverfit": 0,
+        "meta": {
+          "predictedSharpe": 0.008,
+          "predictedMDD": -0.005,
+          "antiOverfit": 0
+        }
+      }
+    },
+    {
+      "id": "6e599a5e-f93c-435c-98dc-0841d26a7d6a",
+      "name": "AutoTunedStrategy-v5-2",
+      "params": {
+        "seed": 1000000000
+      },
+      "judge": {
+        "predictedSharpe": 0.008,
+        "predictedMDD": -0.005,
+        "antiOverfit": 0,
+        "meta": {
+          "predictedSharpe": 0.008,
+          "predictedMDD": -0.005,
+          "antiOverfit": 0
+        }
+      }
+    },
+    {
+      "id": "4a45cfc8-e61f-49cd-a4fe-7402da02ab22",
+      "name": "AutoTunedStrategy-v5-3",
+      "params": {
+        "seed": 1000000000
+      },
+      "judge": {
+        "predictedSharpe": 0.008,
+        "predictedMDD": -0.005,
+        "antiOverfit": 0,
+        "meta": {
+          "predictedSharpe": 0.008,
+          "predictedMDD": -0.005,
+          "antiOverfit": 0
+        }
+      }
+    },
+    {
+      "id": "40d01f7c-5305-42f2-ba5d-96579c2fd43e",
+      "name": "AutoTunedStrategy-v5-4",
+      "params": {
+        "seed": 1000000000
+      },
+      "judge": {
+        "predictedSharpe": 0.008,
+        "predictedMDD": -0.005,
+        "antiOverfit": 0,
+        "meta": {
+          "predictedSharpe": 0.008,
+          "predictedMDD": -0.005,
+          "antiOverfit": 0
+        }
+      }
+    },
+    {
+      "id": "03d35951-27ee-4214-812f-c5cd7964b48a",
+      "name": "AutoTunedStrategy-v5-5",
+      "params": {
+        "seed": 1000000000
+      },
+      "judge": {
+        "predictedSharpe": 0.008,
+        "predictedMDD": -0.005,
+        "antiOverfit": 0,
+        "meta": {
+          "predictedSharpe": 0.008,
+          "predictedMDD": -0.005,
+          "antiOverfit": 0
+        }
+      }
+    },
+    {
+      "id": "14150407-1b98-46f0-a57a-70a672410aeb",
+      "name": "AutoTunedStrategy-v5-6",
+      "params": {
+        "seed": 1000000000
+      },
+      "judge": {
+        "predictedSharpe": 0.008,
+        "predictedMDD": -0.005,
+        "antiOverfit": 0,
+        "meta": {
+          "predictedSharpe": 0.008,
+          "predictedMDD": -0.005,
+          "antiOverfit": 0
+        }
+      }
+    },
+    {
+      "id": "52fc66a4-95f2-4a59-9bfd-fddc222fcae4",
+      "name": "AutoTunedStrategy-v5-7",
+      "params": {
+        "seed": 1000000000
+      },
+      "judge": {
+        "predictedSharpe": 0.008,
+        "predictedMDD": -0.005,
+        "antiOverfit": 0,
+        "meta": {
+          "predictedSharpe": 0.008,
+          "predictedMDD": -0.005,
+          "antiOverfit": 0
+        }
+      }
+    },
+    {
+      "id": "38cbcd6a-91f1-4a17-a37f-f6d0c45aa717",
+      "name": "AutoTunedStrategy-v5-8",
+      "params": {
+        "seed": 1000000000
+      },
+      "judge": {
+        "predictedSharpe": 0.008,
+        "predictedMDD": -0.005,
+        "antiOverfit": 0,
+        "meta": {
+          "predictedSharpe": 0.008,
+          "predictedMDD": -0.005,
+          "antiOverfit": 0
+        }
+      }
+    },
+    {
+      "id": "751e4f4a-22f2-4fc1-abca-3922001e144c",
+      "name": "AutoTunedStrategy-v5-9",
+      "params": {
+        "seed": 1000000000
+      },
+      "judge": {
+        "predictedSharpe": 0.008,
+        "predictedMDD": -0.005,
+        "antiOverfit": 0,
+        "meta": {
+          "predictedSharpe": 0.008,
+          "predictedMDD": -0.005,
+          "antiOverfit": 0
+        }
+      }
+    },
+    {
+      "id": "9557c240-15d8-400d-afbd-2b1777927816",
+      "name": "AutoTunedStrategy-v5-10",
+      "params": {
+        "seed": 1000000000
+      },
+      "judge": {
+        "predictedSharpe": 0.008,
+        "predictedMDD": -0.005,
+        "antiOverfit": 0,
+        "meta": {
+          "predictedSharpe": 0.008,
+          "predictedMDD": -0.005,
+          "antiOverfit": 0
+        }
+      }
+    },
+    {
+      "id": "552867f0-358d-48c9-b557-c6685a1de580",
+      "name": "AutoTunedStrategy-v5-11",
+      "params": {
+        "seed": 1000000000
+      },
+      "judge": {
+        "predictedSharpe": 0.008,
+        "predictedMDD": -0.005,
+        "antiOverfit": 0,
+        "meta": {
+          "predictedSharpe": 0.008,
+          "predictedMDD": -0.005,
+          "antiOverfit": 0
+        }
+      }
+    },
+    {
+      "id": "4e7f0ea1-fbfe-42a8-a9bf-0a876e8ecd22",
+      "name": "AutoTunedStrategy-v5-12",
+      "params": {
+        "seed": 1000000000
+      },
+      "judge": {
+        "predictedSharpe": 0.008,
+        "predictedMDD": -0.005,
+        "antiOverfit": 0,
+        "meta": {
+          "predictedSharpe": 0.008,
+          "predictedMDD": -0.005,
+          "antiOverfit": 0
+        }
+      }
+    },
+    {
+      "id": "50da730f-87d3-44e1-ab41-2260040789ae",
+      "name": "AutoTunedStrategy-v5-13",
+      "params": {
+        "seed": 1000000000
+      },
+      "judge": {
+        "predictedSharpe": 0.008,
+        "predictedMDD": -0.005,
+        "antiOverfit": 0,
+        "meta": {
+          "predictedSharpe": 0.008,
+          "predictedMDD": -0.005,
+          "antiOverfit": 0
+        }
+      }
+    },
+    {
+      "id": "9d468017-9ca0-4ba2-b2eb-5a295b30afb1",
+      "name": "AutoTunedStrategy-v5-14",
+      "params": {
+        "seed": 1000000000
+      },
+      "judge": {
+        "predictedSharpe": 0.008,
+        "predictedMDD": -0.005,
+        "antiOverfit": 0,
+        "meta": {
+          "predictedSharpe": 0.008,
+          "predictedMDD": -0.005,
+          "antiOverfit": 0
+        }
+      }
+    }
+  ],
+  "generatedAt": "2025-10-29T05:56:23.583Z"
+}
