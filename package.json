@@ -6,15 +6,27 @@
   "main": "dist/server_unified.js",
 
  "scripts": {
+  
   "dev": "tsx src/server_unified.ts",
- "build": "tsc -p tsconfig.render.json",
-  "start": "node dist/server_unified.js",  
+
+  
+  "build": "tsc -p tsconfig.render.json",
+
+
+  "start": "node dist/server_unified.js",
+
+  
   "deploy": "npm run build && npm run start",
 
+  "render": "tsc -p tsconfig.render.json && node dist/server_unified.js",
+
   "ai:server": "tsx src/server_unified.ts",
+
+  
   "reflex:v15plus": "tsx src/ai/reflex_v15_plus.ts",
   "reflex:v15": "tsx src/ai/reflex_v15.ts",
 
+  
   "dashboard:pdf": "tsx src/tools/exportCognitiveReportPDF.ts",
   "dashboard:risk": "tsx src/tools/generateDashboardRisk.ts auditoria.csv ./reports/charts ./reports/risk",
   "dashboard:live": "tsx src/tools/generateDashboardLive.ts",
@@ -40,8 +52,10 @@
   "audit": "tsx verifyAudit.ts",
   "manifests:list": "tsx src/tools/listManifests.ts",
 
+  
   "postinstall": "echo 'Skip Prisma generate on Railway'"
 },
+
 
   "keywords": [
     "backtesting",
