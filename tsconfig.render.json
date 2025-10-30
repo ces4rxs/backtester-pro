@@ -11,13 +11,6 @@
     "types": ["node"],
     "esModuleInterop": true
   },
-  "include": [
-    "src/server_ai.ts",
-    "src/routes/**/*.ts",
-    "src/data/**/*.ts"
-  ],
-  "exclude": [
-    "src/tools",
-    "src/tests"
-  ]
+  "include": ["src/server_unified.ts"],
+  "exclude": ["src/tests", "src/tools", "src/ai"]
 }
