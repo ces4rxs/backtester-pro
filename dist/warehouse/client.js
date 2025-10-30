@@ -1,36 +1,27 @@
 // src/warehouse/client.ts — 💾 Prisma Dual Compatible (Render + Local)
 import { PrismaClient } from "@prisma/client";
-
-declare global {
-  // Evita múltiples instancias en hot reload (dev)
-  var __prisma: PrismaClient | undefined;
-}
-
 // 🧠 Singleton para asegurar una sola conexión
-const prisma =
-  globalThis.__prisma ??
-  new PrismaClient({
-    log:
-      process.env.NODE_ENV === "development"
-        ? ["query", "info", "warn", "error"]
-        : ["error"],
-  });
-
+const prisma = globalThis.__prisma ??
+    new PrismaClient({
+        log: process.env.NODE_ENV === "development"
+            ? ["query", "info", "warn", "error"]
+            : ["error"],
+    });
 // ======================================================
 // ⚙️ Evita intentar conectar si no existe DATABASE_URL
 // ======================================================
 if (process.env.DATABASE_URL) {
-  prisma
-    .$connect()
-    .then(() => console.log("🟢 Prisma conectado correctamente"))
-    .catch((err) => console.warn("⚠️ Prisma no se pudo conectar:", err));
-} else {
-  console.warn("⚠️ Prisma deshabilitado (sin DATABASE_URL en entorno local)");
+    prisma
+        .$connect()
+        .then(() => console.log("🟢 Prisma conectado correctamente"))
+        .catch((err) => console.warn("⚠️ Prisma no se pudo conectar:", err));
 }
-
+else {
+    console.warn("⚠️ Prisma deshabilitado (sin DATABASE_URL en entorno local)");
+}
 // Evita duplicar en desarrollo
-if (process.env.NODE_ENV === "development") globalThis.__prisma = prisma;
-
+if (process.env.NODE_ENV === "development")
+    globalThis.__prisma = prisma;
 // ======================================================
 // ✅ Exportaciones únicas y seguras
 // ======================================================

@@ -3,27 +3,30 @@
   "version": "1.0.0",
   "type": "module",
   "description": "Supermotor de backtesting con IA, TypeScript y Node ESM",
-  "main": "dist/server_ai.js",
-"scripts": {
-  "render:test": "tsc -p _buildtest/tsconfig.buildtest.json && node dist_buildtest/server_test.js",
-  "build:test": "tsc -p _buildtest/tsconfig.buildtest.json",
-"start:test": "node dist_buildtest/server_test.js",
+  "main": "dist/server_unified.js",
+
+ "scripts": {
   "dev": "tsx src/server_unified.ts",
-"build": "tsc -p tsconfig.render.json",
-"start": "node dist/server_unified.js",
-  "render": "tsc -p tsconfig.render.json && node dist/server_unified.js",
-  "ai:server": "npm run build && node dist/server_ai.js",
+  "build": "tsc -p tsconfig.json",
+  "start": "node dist/server_unified.js",
+  "deploy": "npm run build && npm run start",
+
+  "ai:server": "tsx src/server_unified.ts",
   "reflex:v15plus": "tsx src/ai/reflex_v15_plus.ts",
   "reflex:v15": "tsx src/ai/reflex_v15.ts",
+
   "dashboard:pdf": "tsx src/tools/exportCognitiveReportPDF.ts",
   "dashboard:risk": "tsx src/tools/generateDashboardRisk.ts auditoria.csv ./reports/charts ./reports/risk",
   "dashboard:live": "tsx src/tools/generateDashboardLive.ts",
   "dashboard:control": "tsx src/tools/generateControlCenter.ts",
   "dashboard:correlation": "tsx src/tools/generateDashboardCorrelation.ts auditoria.csv ./reports/charts ./reports/risk",
   "dashboard:risk:embed": "tsx src/tools/generateDashboardRiskEmbed.ts auditoria.csv ./reports/charts ./reports/risk",
+
   "risk:analyze": "tsx src/tools/riskAnalyzer.ts auditoria.csv ./reports/risk",
   "audit:dashboard:legal": "tsx src/tools/generateDashboard.ts auditoria.csv ./reports/charts",
   "audit:dashboard": "tsx src/tools/generateDashboard.ts auditoria.csv ./reports/charts",
+  "audit:charts": "tsx src/tools/generateCharts.ts auditoria.csv ./reports/charts",
+
   "opt": "tsx src/runOptimize.ts",
   "robust": "tsx src/runRobust.ts",
   "ai-opt": "tsx src/runAiOptimizer.ts",
@@ -36,8 +39,8 @@
   "test:decimal": "tsx runTestDecimal.ts",
   "audit": "tsx verifyAudit.ts",
   "manifests:list": "tsx src/tools/listManifests.ts",
-  "audit:charts": "tsx src/tools/generateCharts.ts auditoria.csv ./reports/charts",
-  "postinstall": "echo 'Skip Prisma generate on Render'"
+
+  "postinstall": "echo 'Skip Prisma generate on Railway'"
 },
 
   "keywords": [
@@ -52,8 +55,10 @@
     "optimization",
     "automated-trading"
   ],
+
   "author": "Julio Cesar",
   "license": "ISC",
+
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
     "@types/better-sqlite3": "^7.6.13",
@@ -72,6 +77,7 @@
     "tsx": "^4.20.6",
     "typescript": "^5.6.3"
   },
+
   "dependencies": {
     "@prisma/client": "^5.18.0",
     "@types/node": "^20.11.30",
@@ -96,7 +102,6 @@
     "plotly.js-dist-min": "^3.1.2",
     "prisma": "^5.18.0",
     "seedrandom": "^3.0.5",
-    "typescript": "^5.4.5",
     "uuid": "^13.0.0",
     "zod": "^4.1.12"
   }
