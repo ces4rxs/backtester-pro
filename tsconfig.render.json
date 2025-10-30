@@ -1,5 +1,4 @@
 {
-  "extends": "./tsconfig.json",
   "compilerOptions": {
     "target": "ES2020",
     "module": "ESNext",
@@ -17,12 +16,9 @@
     "src/warehouse/**/*"
   ],
   "exclude": [
-    // 🔒 Exclusiones críticas de producción
     "node_modules",
-    "prisma",
     "dist",
-
-    // 🧩 Módulos internos que no deben compilarse en render
+    "prisma",
     "src/ai/**/*",
     "src/core/**/*",
     "src/core_v5/**/*",
@@ -33,8 +29,6 @@
     "src/strategies/**/*",
     "src/reports/**/*",
     "src/test/**/*",
-
-    // 🚫 Scripts locales de desarrollo y pruebas
     "src/run*.ts",
     "src/report*.ts",
     "src/adaptive_report_summary.json"
