@@ -19,7 +19,8 @@ function pct(x: number) {
 export function generateQuantumRiskV13(strategyId: string) {
   // 1) Obtener proyecciones del v11 (reflexivo)
   const v11 = generateNeuralAdvisorV11(strategyId);
-  const st = v11?.result?.stats || {};
+  // ✅ FIX: compatibilidad universal (v11.result?.stats o v11.stats)
+  const st = v11?.stats ?? v11?.result?.stats ?? {};
 
   // Métricas base (con defaults seguros)
   const sharpe = Number(st.projectedSharpe ?? st.meanSharpe ?? 0);
