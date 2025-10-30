@@ -7,11 +7,9 @@
 "scripts": {
   "dev": "tsx src/server_ai.ts",
   "build": "tsc -p ./tsconfig.render.json",
-  "start": "npm run ai:server",
-
-  "ai:server": "tsx src/server_ai.ts", 
+ "start": "npm run build && node dist/server_ai.js",
+"ai:server": "npm run build && node dist/server_ai.js",
   "render": "tsc -p tsconfig.render.json && node dist/server_render.js",
-
   "reflex:v15plus": "tsx src/ai/reflex_v15_plus.ts",
   "reflex:v15": "tsx src/ai/reflex_v15.ts",
   "dashboard:pdf": "tsx src/tools/exportCognitiveReportPDF.ts",
