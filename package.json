@@ -9,7 +9,8 @@
   
   "dev": "tsx src/server_unified.ts",
 
-  
+  "debug:build": "node check_build_context.js",
+
   "build": "tsc -p tsconfig.render.json",
 
 
