@@ -11,21 +11,39 @@ dotenv.config();
 
 const app = express();
 
-// ✅ CORS explícito para frontend local y producción
+// ======================================================
+// 🌐 CORS Inteligente — Compatibilidad total Render + Local
+// ======================================================
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "https://omega-ai-server-2.onrender.com",
-    ],
+    origin: (origin, callback) => {
+      // Permitir si:
+      // - No hay origin (peticiones internas o Postman)
+      // - Es localhost (Next.js dev)
+      // - Es tu dominio Render (backend)
+      if (
+        !origin ||
+        origin.includes("localhost") ||
+        origin.includes("127.0.0.1") ||
+        origin.includes("onrender.com")
+      ) {
+        callback(null, true);
+      } else {
+        console.warn("❌ CORS bloqueado para:", origin);
+        callback(new Error("No permitido por CORS"));
+      }
+    },
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "x-user-id"],
   })
 );
 
+// 🧩 Middleware de parsing
 app.use(bodyParser.json());
 
-// ✅ Ruta de estado general
+// ======================================================
+// 🧠 Estado general del servidor
+// ======================================================
 app.get("/ai/status", (req, res) => {
   res.json({
     ok: true,
@@ -42,7 +60,9 @@ app.get("/ai/status", (req, res) => {
   });
 });
 
-// ✅ Ruta de diagnóstico Reflex Intelligence
+// ======================================================
+// 🔁 Diagnóstico Reflex Intelligence
+// ======================================================
 app.get("/ai/reflex", (req, res) => {
   res.json({
     ok: true,
@@ -60,10 +80,14 @@ app.get("/ai/reflex", (req, res) => {
   });
 });
 
-// ✅ NUEVO — StrategyLabs API (rutas seguras)
+// ======================================================
+// 🧩 StrategyLabs API (rutas seguras)
+// ======================================================
 app.use("/api/strategies", strategiesRouter);
 
-// 🚀 Iniciar servidor
+// ======================================================
+// 🚀 Inicialización del servidor
+// ======================================================
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
   console.log(`🌍 OMEGA AI Server Render escuchando en puerto ${PORT}`);
