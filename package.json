@@ -6,7 +6,8 @@
   "main": "dist/server_unified.js",
 
  "scripts": {
-  
+  "postbuild": "npx prisma generate",
+
   "dev": "tsx src/server_unified.ts",
 
   "debug:build": "node check_build_context.js",
