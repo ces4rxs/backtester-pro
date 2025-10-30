@@ -34,7 +34,7 @@
     "audit": "tsx verifyAudit.ts",
     "manifests:list": "tsx src/tools/listManifests.ts",
     "audit:charts": "tsx src/tools/generateCharts.ts auditoria.csv ./reports/charts",
-    "postinstall": "npx prisma generate"
+    "postinstall": "echo 'Skip Prisma generate on Render'"
   },
 
   "keywords": [
