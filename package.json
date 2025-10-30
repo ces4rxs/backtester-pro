@@ -7,8 +7,8 @@
 
  "scripts": {
   "dev": "tsx src/server_unified.ts",
-  "build": "tsc -p tsconfig.json",
-  "start": "node dist/server_unified.js",
+ "build": "tsc -p tsconfig.render.json",
+  "start": "node dist/server_unified.js",  
   "deploy": "npm run build && npm run start",
 
   "ai:server": "tsx src/server_unified.ts",
