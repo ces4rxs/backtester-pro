@@ -6,7 +6,7 @@
   "main": "dist/server_ai.js",
 "scripts": {
   "dev": "tsx src/server_unified.ts",
-  "build": "tsc -p tsconfig.render.json",
+"build": "tsc -p ./tsconfig.render.build.json",
   "start": "npm run build && node dist/server_unified.js",
   "render": "tsc -p tsconfig.render.json && node dist/server_unified.js",
   "ai:server": "npm run build && node dist/server_ai.js",
