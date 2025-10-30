@@ -14,5 +14,22 @@
     "types": ["node"],
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": [
+    "src/ai/**/*",
+    "src/core/**/*",
+    "src/core_v5/**/*",
+    "src/data/**/*",
+    "src/tools/**/*",
+    "src/learn/**/*",
+    "src/validate/**/*",
+    "src/strategies/**/*",
+    "src/reports/**/*",
+    "src/test/**/*",
+    "src/run*.ts",
+    "src/report*.ts",
+    "node_modules",
+    "dist",
+    "prisma"
+  ]
 }
