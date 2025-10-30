@@ -1,0 +1,35 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "outDir": "./dist",
+    "types": ["node"],
+    "esModuleInterop": true
+  },
+  "include": [
+    "src/server_unified.ts",
+    "src/routes/**/*.ts",
+    "src/warehouse/**/*.ts"
+  ],
+  "exclude": [
+    "src/ai",
+    "src/core",
+    "src/core_v5",
+    "src/learn",
+    "src/data",
+    "src/tools",
+    "src/test",
+    "src/reports",
+    "src/engine",
+    "src/validate",
+    "src/utils",
+    "src/strategies",
+    "prisma",
+    "node_modules"
+  ]
+}
