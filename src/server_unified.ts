@@ -261,7 +261,7 @@ app.use("/reports", express.static(REPORTS_DIR));
 const PORT = Number(process.env.PORT) || 10000;
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`🌍 OMEGA Unified Server escuchando en puerto ${PORT}`);
-  console.log("🧩 Todos los módulos (v7–v15+) inicializados correctamente");
+console.log("🧩 Todos los módulos (v7–v15+) inicializados correctamente!");
   startMarketAutoUpdater();
 });
 
