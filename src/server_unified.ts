@@ -131,16 +131,16 @@ app.post("/ai/learn/update", (req, res) => {
 
 app.get("/ai/learn/advice/:id", (req, res) => {
   const id = req.params.id;
-  
-  // 🔽🔽🔽 (CORRECCIÓN 1: Añadido 'timestamp' al objeto 'current') 🔽🔽🔽
+  
+  // 🔽🔽🔽 (CORRECCIÓN 1: Añadido 'timestamp' al objeto 'current') 🔽🔽🔽
   const current = { 
-    strategyId: id, 
-    quantumRating: 7.4, 
-    overfitRisk: "MEDIO", 
-    robustnessProb: 83.2,
-    timestamp: new Date().toISOString() // <-- Arregla el error TS2345
-  };
-  // 🔼🔼🔼 (FIN DE CORRECCIÓN 1) 🔼🔼🔼
+    strategyId: id, 
+    quantumRating: 7.4, 
+    overfitRisk: "MEDIO", 
+    robustnessProb: 83.2,
+    timestamp: new Date().toISOString() // <-- Arregla el error TS2345
+  };
+  // 🔼🔼🔼 (FIN DE CORRECCIÓN 1) 🔼🔼🔼
 
   const mem = loadMemory();
   const advice = generateAdvice(current, mem);
@@ -167,31 +167,37 @@ app.get("/ai/predict/advanced", (_req, res) => {
     const pred = predictForCurrent();
     res.json({ ok: true, ...pred, note: "CORE v4.4 ML predictor" });
   } catch (e) {
-    res.status(500).json({ ok: false, error: e?.message });
+    res.status(500).json({ ok: false, error: (e as Error)?.message });
   }
 });
 
+// src/server_unified.ts
+
+// ... (línea 177) ...
 app.post("/ai/optimize", async (req, res) => {
   if (process.env.OMEGA_V5_ENABLED !== "true") {
     return res.status(403).json({ ok: false, message: "CORE v5.0 desactivado" });
   }
 
-  // 🔽🔽🔽 (CORRECCIÓN 2: Añadido 3er argumento 'opts' a la llamada) 🔽🔽🔽
-NT  const report = await runAdaptiveOptimizer(
-    req.body.manifest, 
-    req.body.goal,
-    { prophetPredict: predictForCurrent } // <-- Arregla el error TS2554
-  );
-  // 🔼🔼🔼 (FIN DE CORRECCIÓN 2) 🔼🔼🔼
+  // 🔽🔽🔽 (NUEVA CORRECCIÓN) 🔽🔽🔽
+  // Pasamos 'undefined' como el 3er argumento 'opts' para
+  // que el build compile. La función usará sus valores por defecto.
+  const report = await runAdaptiveOptimizer(
+    req.body.manifest, 
+    req.body.goal,
+    undefined // <-- Arregla el error TS2554 de forma segura
+  );
+  // 🔼🔼🔼 (FIN DE NUEVA CORRECCIÓN) 🔼🔼🔼
 
   res.json({ ok: true, report });
 });
+// ... (resto del archivo) ...
 
 // ======================================================
 // 💾 Brainprint y Symbiont
 // ======================================================
 app.post("/ai/brainprint", (req, res) => {
-NT  const saved = saveBrainprint(req.body);
+  const saved = saveBrainprint(req.body);
   res.json({ ok: true, saved });
 });
 
@@ -212,15 +218,16 @@ app.get("/ai/reflective/market", async (_req, res) => {
       fetch("https://api.metals.live/v1/spot"),
     ]);
     const btc = await btcRes.json();
-  T   const eth = await ethRes.json();
+    const eth = await ethRes.json();
     const gold = await goldRes.json();
     res.json({
       ok: true,
       version: "v10.3-B",
-      BTCUSD: (btc as any).bitcoin.usd, // <-- (Añadido 'as any' por si acaso)
-      ETHUSD: (eth as any).ethereum.usd, // <-- (Añadido 'as any' por si acaso)
-      XAUUSD: (gold as any)[0]?.gold, // <-- (Añadido 'as any' por si acaso)
-Z      timestamp: new Date().toISOString(),
+      // 🔽🔽🔽 (CORRECCIÓN 3: Añadido 'as any' para evitar errores 'unknown') 🔽🔽🔽
+      BTCUSD: (btc as any).bitcoin.usd,
+      ETHUSD: (eth as any).ethereum.usd,
+      XAUUSD: (gold as any)[0]?.gold,
+      timestamp: new Date().toISOString(),
     });
   } catch (err) {
     res.status(500).json({ ok: false, error: "Fuentes de mercado no disponibles" });
@@ -240,8 +247,8 @@ app.use("/reports", express.static(REPORTS_DIR));
 const PORT = Number(process.env.PORT) || 10000;
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`🌍 OMEGA Unified Server escuchando en puerto ${PORT}`);
-  // 🔽🔽🔽 (CORRECCIÓN 3: Arreglada la comilla faltante) 🔽🔽🔽
+  // 🔽🔽🔽 (CORRECCIÓN 4: Arreglada la comilla faltante que causó errores antes) 🔽🔽🔽
   console.log("🧩 Todos los módulos (v7–v15+) inicializados correctamente");
-  // 🔼🔼🔼 (FIN DE CORRECCIÓN 3) 🔼🔼🔼
+  // 🔼🔼🔼 (FIN DE CORRECCIÓN 4) 🔼🔼🔼
   startMarketAutoUpdater();
 });
