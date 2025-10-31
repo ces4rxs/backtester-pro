@@ -16,7 +16,7 @@ import dotenv from "dotenv";
 import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
-import { PrismaClient } from "@prisma/client"; // ✅ agregado para inicialización segura de Prisma
+import { PrismaClient } from "@prisma/client"; // ✅ Prisma Client
 
 // 🔧 Configuración de entorno universal
 dotenv.config();
@@ -43,16 +43,30 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // ======================================================
-// 💾 Prisma Client (conexión segura y estable)
+// 💾 Prisma Client (con reintentos automáticos para Render)
 // ======================================================
 const prisma = new PrismaClient();
 
-try {
-  await prisma.$connect();
-  console.log("🟢 Prisma conectado correctamente a Render PostgreSQL");
-} catch (error) {
-  console.error("❌ Error conectando Prisma:", error);
+async function connectPrismaWithRetry(retries = 5) {
+  for (let i = 1; i <= retries; i++) {
+    try {
+      console.log(`🔌 Intentando conectar Prisma (intento ${i}/${retries})...`);
+      await prisma.$connect();
+      console.log("🟢 Prisma conectado correctamente a Render PostgreSQL");
+      return;
+    } catch (err) {
+      console.error(`❌ Error de conexión Prisma (intento ${i}):`, (err as Error).message);
+      if (i === retries) {
+        console.error("⛔ Prisma no pudo conectarse después de varios intentos.");
+        process.exit(1);
+      }
+      console.log("⏳ Esperando 5 segundos antes de reintentar...");
+      await delay(5000);
+    }
+  }
 }
+
+await connectPrismaWithRetry();
 
 // ======================================================
 // 🧩 CORS inteligente (Render + Local)
