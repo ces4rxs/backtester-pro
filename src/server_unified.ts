@@ -303,7 +303,6 @@ app.use("/reports", express.static(REPORTS_DIR));
 // 🚀 Inicialización del servidor (Local + Railway Ready)
 // ======================================================
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 4000;
-
 app.listen(PORT, () => {
   console.log(`🌍 OMEGA Unified Server escuchando correctamente en puerto ${PORT}`);
   console.log("🧩 Todos los módulos (v7–v15+) inicializados correctamente! v3");
