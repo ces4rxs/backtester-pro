@@ -10,9 +10,11 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
-================================================
+
+// ======================================================
 // 📊 Market Data y Reportes
 // ======================================================
+
 model MarketData {
   id          BigInt   @id @default(autoincrement())
   symbol      String
@@ -65,6 +67,7 @@ model AuditLog {
 // ======================================================
 // 🔒 Autenticación OMEGA (Usuarios + Tokens Rotativos)
 // ======================================================
+
 model User {
   id          Int             @id @default(autoincrement())
   email       String          @unique
