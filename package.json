@@ -6,7 +6,7 @@
   "main": "dist/server_unified.js",
   "scripts": {
     "dev": "tsx src/server_unified.ts",
-"build": "rm -rf dist && tsc -p tsconfig.render.json",
+"build": "rm -rf dist && tsc",
     "postbuild": "npx prisma generate",
     "start": "node dist/server_unified.js",
     "deploy": "npm run build && npm run start",
