@@ -31,14 +31,13 @@ const app = express();
 // ======================================================
 // ⏳ Delay de conexión seguro (Render/Prisma)
 // ======================================================
-// ⚡ Evita el error P1017 ("Server has closed the connection") en Render
 async function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 if (process.env.NODE_ENV === "production") {
   console.log("⏳ Esperando conexión estable con la base de datos Render...");
-  await delay(5000); // espera 5 segundos antes de inicializar Prisma
+  await delay(5000);
   console.log("✅ Continuando con la inicialización de Prisma...");
 }
 
@@ -76,9 +75,10 @@ app.use(
     origin: (origin, callback) => {
       const allowedOrigins = [
         "http://localhost:3000",                        // desarrollo local
-        "http://192.168.1.90:3000",                     // tu IP local
+        "http://192.168.1.90:3000",                     // IP local
         "https://omega-web-production.up.railway.app",  // web futura en Railway
-        "https://backtester-pro-production.up.railway.app", // backend en producción
+        "https://backtester-pro-production.up.railway.app", // backend prod
+        "http://backtester-pro-production.up.railway.app",  // fallback HTTP para dev
       ];
 
       if (!origin || allowedOrigins.some((url) => origin.startsWith(url))) {
@@ -93,6 +93,14 @@ app.use(
     credentials: true,
   })
 );
+
+// ✅ Forzar HTTPS en producción (evita errores de red Mixed Content)
+app.use((req, res, next) => {
+  if (process.env.NODE_ENV === "production" && req.headers["x-forwarded-proto"] !== "https") {
+    return res.redirect("https://" + req.headers.host + req.url);
+  }
+  next();
+});
 
 app.use(bodyParser.json());
 app.set("trust proxy", 1);
@@ -232,9 +240,7 @@ app.get("/ai/predict/advanced", (_req, res) => {
 
 app.post("/ai/optimize", async (req, res) => {
   if (process.env.OMEGA_V5_ENABLED !== "true") {
-    return res
-      .status(403)
-      .json({ ok: false, message: "CORE v5.0 desactivado" });
+    return res.status(403).json({ ok: false, message: "CORE v5.0 desactivado" });
   }
 
   const report = await runAdaptiveOptimizer(
