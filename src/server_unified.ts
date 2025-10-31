@@ -138,6 +138,8 @@ app.post("/ai/learn/update", (req, res) => {
 
 // ... tu código ...
 
+// ... tu código ...
+
 app.get("/ai/learn/advice/:id", (req, res) => {
   const id = req.params.id;
 
@@ -163,6 +165,7 @@ app.get("/ai/learn/advice/:id", (req, res) => {
   res.json({ ok: true, id, advice });
 });
 
+// ... resto del archivo ...
 // ... resto del archivo ...
 
 // ======================================================
