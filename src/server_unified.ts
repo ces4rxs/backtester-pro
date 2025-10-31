@@ -138,32 +138,27 @@ app.post("/ai/learn/update", (req, res) => {
 
 // ... tu código ...
 
-// ... tu código ...
-
 app.get("/ai/learn/advice/:id", (req, res) => {
-  const id = req.params.id;
+  const id = req.params.id;
 
-  // 🔽🔽🔽 (ESTA ES LA CORRECCIÓN FINAL Y DEFINITIVA) 🔽🔽🔽
+  // 🔽 Corrección final: usa el literal exacto que espera LearnSample
+  type OverfitRiskType = "BAJO" | "MEDIO" | "ALTO";
+  const risk: OverfitRiskType = "MEDIO"; // ✅ palabra esperada por el tipo
 
-  // 1. Definimos el tipo exacto que espera el log de error
-  type OverfitRiskType = "HIGH" | "MED" | "LOW";
+  const current = {
+    strategyId: id,
+    quantumRating: 7.4,
+    overfitRisk: risk,
+    robustnessProb: 83.2,
+    timestamp: new Date().toISOString(),
+  };
+  // 🔼 Fin de la corrección
 
-  // 2. Creamos la variable 'risk' con ese tipo explícito
-  const risk: OverfitRiskType = "MED"; 
-
-  const current = {
-    strategyId: id,
-    quantumRating: 7.4,
-    overfitRisk: risk, // <-- ¡Ahora SÍ es del tipo correcto!
-    robustnessProb: 83.2,
-    timestamp: new Date().toISOString(),
-  };
-  // 🔼🔼🔼 (FIN DE LA CORRECCIÓN) 🔼🔼🔼
-
-  const mem = loadMemory();
-  const advice = generateAdvice(current, mem);
-  res.json({ ok: true, id, advice });
+  const mem = loadMemory();
+  const advice = generateAdvice(current, mem);
+  res.json({ ok: true, id, advice });
 });
+
 
 // ... resto del archivo ...
 // ... resto del archivo ...
