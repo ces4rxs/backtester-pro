@@ -299,13 +299,13 @@ const REPORTS_DIR = path.join(process.cwd(), "reports");
 if (!fs.existsSync(REPORTS_DIR))
   fs.mkdirSync(REPORTS_DIR, { recursive: true });
 app.use("/reports", express.static(REPORTS_DIR));
+// ======================================================
+// 🚀 Inicialización del servidor (Local + Railway Ready)
+// ======================================================
+const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 4000;
 
-// ======================================================
-// 🚀 Inicialización del servidor
-// ======================================================
-const PORT = process.env.PORT ? Number(process.env.PORT) : 8080;
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`🌍 OMEGA Unified Server escuchando en puerto ${PORT}`);
+app.listen(PORT, () => {
+  console.log(`🌍 OMEGA Unified Server escuchando correctamente en puerto ${PORT}`);
   console.log("🧩 Todos los módulos (v7–v15+) inicializados correctamente! v3");
   startMarketAutoUpdater();
 });
