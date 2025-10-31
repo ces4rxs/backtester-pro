@@ -136,17 +136,25 @@ app.post("/ai/learn/update", (req, res) => {
   res.json({ ok: true, stats: mem.stats });
 });
 
+// ... tu código ...
+
 app.get("/ai/learn/advice/:id", (req, res) => {
   const id = req.params.id;
 
-  // 🔽🔽🔽 (ESTA ES LA CORRECCIÓN FINAL) 🔽🔽🔽
+  // 🔽🔽🔽 (ESTA ES LA CORRECCIÓN FINAL Y DEFINITIVA) 🔽🔽🔽
+
+  // 1. Definimos el tipo exacto que espera el log de error
+  type OverfitRiskType = "HIGH" | "MED" | "LOW";
+
+  // 2. Creamos la variable 'risk' con ese tipo explícito
+  const risk: OverfitRiskType = "MED"; 
+
   const current = {
     strategyId: id,
     quantumRating: 7.4,
-    // El error TS2345 decía que esperaba "MED", no "MEDIO" [cite: imagen_2025-10-30_170712365.png]
-    overfitRisk: "MED", 
+    overfitRisk: risk, // <-- ¡Ahora SÍ es del tipo correcto!
     robustnessProb: 83.2,
-    timestamp: new Date().toISOString(), // Esto arregla el error TS2345 de timestamp
+    timestamp: new Date().toISOString(),
   };
   // 🔼🔼🔼 (FIN DE LA CORRECCIÓN) 🔼🔼🔼
 
@@ -154,6 +162,8 @@ app.get("/ai/learn/advice/:id", (req, res) => {
   const advice = generateAdvice(current, mem);
   res.json({ ok: true, id, advice });
 });
+
+// ... resto del archivo ...
 
 // ======================================================
 // 🔬 Módulos de IA (v7–v15)
