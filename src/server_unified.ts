@@ -28,25 +28,32 @@ const __dirname = path.dirname(__filename);
 const app = express();
 
 // 🧩 CORS inteligente (Render + Local)
+// ======================================================
+// 🧩 CORS — Producción (Railway) + Local seguro
+// ======================================================
 app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (
-        !origin ||
-        origin.includes("localhost") ||
-        origin.includes("127.0.0.1") ||
-        origin.includes("onrender.com")
-      ) {
-        callback(null, true);
-      } else {
-        console.warn("❌ CORS bloqueado para:", origin);
-        callback(new Error("No permitido por CORS"));
-      }
-    },
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "x-user-id"],
-  })
+  cors({
+    origin: (origin, callback) => {
+      const allowedOrigins = [
+        "http://localhost:3000",                        // desarrollo local
+        "http://192.168.1.90:3000",                     // tu IP local
+        "https://omega-web-production.up.railway.app",  // web futura en Railway
+        "https://backtester-pro-production.up.railway.app", // backend en producción
+      ];
+
+      if (!origin || allowedOrigins.some((url) => origin.startsWith(url))) {
+        callback(null, true);
+      } else {
+        console.warn("❌ CORS bloqueado para:", origin);
+        callback(new Error("No permitido por CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "x-user-id"],
+    credentials: true,
+  })
 );
+
 
 app.use(bodyParser.json());
 app.set("trust proxy", 1);
