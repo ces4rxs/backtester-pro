@@ -6,12 +6,10 @@
   "main": "dist/server_unified.js",
   "scripts": {
     "dev": "tsx src/server_unified.ts",
-"build": "rm -rf dist && tsc",
+    "build": "rm -rf dist && tsc -p tsconfig.render.json",
     "postbuild": "npx prisma generate",
     "start": "node dist/server_unified.js",
     "deploy": "npm run build && npm run start",
-    "render": "tsc -p tsconfig.render.json && node dist/server_unified.js",
-    "debug:build": "node check_build_context.js",
     "ai:server": "tsx src/server_unified.ts",
     "reflex:v15plus": "tsx src/ai/reflex_v15_plus.ts",
     "reflex:v15": "tsx src/ai/reflex_v15.ts",
@@ -37,7 +35,7 @@
     "test:decimal": "tsx runTestDecimal.ts",
     "audit": "tsx verifyAudit.ts",
     "manifests:list": "tsx src/tools/listManifests.ts",
-    "postinstall": "echo 'Installing OMEGA backend — skipping local prisma generate'"
+    "postinstall": "echo 'Installing OMEGA backend — Prisma generate skipped locally'"
   },
   "keywords": [
     "backtesting",
