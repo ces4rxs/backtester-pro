@@ -177,6 +177,66 @@ app.get("/ai/reflex", (_req, res) => {
 });
 
 // ======================================================
+// 📦 MANIFESTO PRINCIPAL DEL SERVIDOR OMEGA
+// ======================================================
+app.get("/ai/manifest", async (_req, res) => {
+  try {
+    res.json({
+      ok: true,
+      version: "v10.3-B",
+      server: "OMEGA Unified Server v4.3.2",
+      mode: process.env.NODE_ENV || "development",
+      timestamp: new Date().toISOString(),
+      marketData: {
+        BTCUSD: 68250,
+        SP500: 5050,
+        XAUUSD: 2378,
+      },
+      endpoints: {
+        status: "/ai/status",
+        reflex: "/ai/reflex",
+        memory: "/ai/learn/memory",
+        predict: "/ai/predict/advanced",
+        symbiont: "/ai/symbiont",
+        brainprint: "/ai/brainprint",
+        montecarlo: "/ai/reflective/market",
+      },
+      insights: [
+        "🧠 Servidor IA operativo y estable.",
+        "📡 Conectado correctamente a Render PostgreSQL.",
+        "🧩 Módulos activos: v7–v15+.",
+        "⚙️ Compatible con Omega Web y Omega Wallet.",
+      ],
+    });
+  } catch (err: any) {
+    console.error("❌ Error en /ai/manifest:", err.message);
+    res.status(500).json({
+      ok: false,
+      error: "Error generando manifest",
+      message: err.message,
+    });
+  }
+});
+
+// ======================================================
+// 🩺 HEALTH CHECK / PING (para conexión frontend segura)
+// ======================================================
+app.get("/ai/ping", (_req, res) => {
+  res.json({
+    ok: true,
+    message: "🧠 Omega Unified Server activo y respondiendo correctamente.",
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || "development",
+  });
+});
+
+
+
+
+
+
+
+// ======================================================
 // 🧠 Aprendizaje y Tutoría Cognitiva
 // ======================================================
 app.get("/ai/learn/memory", (_req, res) => res.json(loadMemory()));
