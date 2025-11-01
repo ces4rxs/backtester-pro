@@ -1016,18 +1016,18 @@ app.get("/ai/markets/live", async (_req, res) => {
 
 
 
-
-// 🚀 SERVIDOR PRINCIPAL
+// 🚀 SERVIDOR PRINCIPAL (modo híbrido)
 const PORT = Number(process.env.PORT) || 4000;
 const HOST = "0.0.0.0";
-app.set("trust proxy", 1);
-app.listen(PORT, HOST, () => {
-  console.log(`💡 Omega AI Server v4.3.2 escuchando en :${PORT}`);
 
-  console.log("📡 Módulos activos: v7.1, v8, v9 (Synaptic), v10 (Symbiont + Brainprint)");
-  console.log("🧩 Modo de control Web Educativo v10.3-B activado");
-  console.log("🔒 AutoUpdater educativo habilitado (BTC, XAU, SP500)");
-
-  // 🧩 Iniciar actualizador de datos de mercado (modo pasivo)
-  startMarketAutoUpdater();
-});
+if (process.env.NODE_ENV !== "production") {
+  app.listen(PORT, HOST, () => {
+    console.log(`💡 Omega AI Server v4.3.2 escuchando en :${PORT}`);
+    console.log("📡 Módulos activos: v7.1, v8, v9 (Synaptic), v10 (Symbiont + Brainprint)");
+    console.log("🧩 Modo local de desarrollo activado");
+    startMarketAutoUpdater();
+  });
+} else {
+  console.log("⚙️ Omega AI Core cargado como módulo (Render/Producción)");
+  export default app;
+}
